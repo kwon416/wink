@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "887191585385",
+    "project_id": "wink-32bef",
+    "storage_bucket": "wink-32bef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:887191585385:android:adae5178b1a0662c27d8f8",
+        "android_client_info": {
+          "package_name": "com.springs.namp.wink.wink"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "887191585385-jvr3vaipvu5ie6e6es9g7cssu1hqi0ra.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1pjI0D7wMX1NM21pFXePEt3nNVSBt6D4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "887191585385-jvr3vaipvu5ie6e6es9g7cssu1hqi0ra.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "887191585385-3fh8icng8vo68nqcoejcpgm4ihualjfs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.springs.namp.wink.wink"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
