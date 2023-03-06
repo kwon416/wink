@@ -5,6 +5,7 @@ import 'package:wink/theme/theme_data.dart';
 import 'package:wink/theme/theme_manager.dart';
 import 'package:wink/toast/flutter_toast.dart';
 
+import 'Bloc/counter_bloc.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -27,8 +28,6 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 class _MyAppState extends State<MyApp> {
-
-
   @override
   void dispose(){
     _themeManager.removeListener(themeListener);
@@ -56,7 +55,10 @@ class _MyAppState extends State<MyApp> {
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: _themeManager.themeMode,
-      home: MyHomePage(),
+      home: BlocProvider(
+         create: (_) => CounterBloc(),
+        child: MyHomePage()
+      ),
     );
 
   }
@@ -64,7 +66,6 @@ class _MyAppState extends State<MyApp> {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
-
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -110,18 +111,43 @@ class _MyHomePageState extends State<MyHomePage> {
                     '앱 내용',
                     style: textTheme.headlineMedium,
                   ),
-                  BlocBuilder<BlocA, BlocAState>(
-                    bloc: blocA,
-                    buildWhen: (previoisState, state) {
-
-                    },
-                    builder: (context, state) {
-
+                  // BlocBuilder<BlocA, BlocAState>(
+                  //   bloc: blocA,
+                  //   buildWhen: (previoisState, state) {
+                  //
+                  //   },
+                  //   builder: (context, state) {
+                  //
+                  //   }
+                  // ),,
+                  BlocBuilder<CounterBloc, int>(
+                    builder: (context, count) {
+                      return Text('$count', style: textTheme.displayMedium,);
                     }
                   ),
                 ],
               ),
             ),
+          ),
+          floatingActionButton: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5.0),
+                child: FloatingActionButton(
+                  child: Icon(Icons.add),
+                  onPressed: () => context.read<CounterBloc>().add(CounterIncrementPressed()),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5.0),
+                child: FloatingActionButton(
+                  child: Icon(Icons.remove),
+                  onPressed: () => context.read<CounterBloc>().add(CounterDecrementPressed()),
+                ),
+              ),
+            ],
           ),
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: _selected,
