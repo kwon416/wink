@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:wink/authentication/authentication.dart';
-import 'package:wink/main.dart';
 import 'package:wink/theme/theme_data.dart';
 import 'package:wink/theme/theme_manager.dart';
 //import 'package:wink/home/home.dart';
@@ -98,12 +97,12 @@ class _AppViewState extends State<AppView> {
           listener: (context, state) {
             switch (state.status) {
               //todo 주석해제 임포트 부분도
-              // case AuthenticationStatus.authenticated:
-              //   _navigator.pushAndRemoveUntil(
-              //     HomePage.route(),
-              //     (route) => false,
-              //   );
-              //   break;
+              case AuthenticationStatus.authenticated:
+                // _navigator.pushAndRemoveUntil(
+                //   HomePage.route(),
+                //   (route) => false,
+                // );
+                break;
               case AuthenticationStatus.unauthenticated:
                 _navigator.pushAndRemoveUntil(
                   LoginPage.route(),
