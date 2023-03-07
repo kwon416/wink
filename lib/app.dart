@@ -8,9 +8,9 @@ import 'package:wink/authentication/authentication.dart';
 import 'package:wink/main.dart';
 import 'package:wink/theme/theme_data.dart';
 import 'package:wink/theme/theme_manager.dart';
-// import 'package:wink/home/home.dart';
-// import 'package:wink/login/login.dart';
-// import 'package:wink/splash/splash.dart';
+//import 'package:wink/home/home.dart';
+import 'package:wink/login/login.dart';
+import 'package:wink/splash/splash.dart';
 
 
 
@@ -97,12 +97,13 @@ class _AppViewState extends State<AppView> {
         return BlocListener<AuthenticationBloc, AuthenticationState>(
           listener: (context, state) {
             switch (state.status) {
-              case AuthenticationStatus.authenticated:
-                _navigator.pushAndRemoveUntil(
-                  HomePage.route(),
-                  (route) => false,
-                );
-                break;
+              //todo 주석해제 임포트 부분도
+              // case AuthenticationStatus.authenticated:
+              //   _navigator.pushAndRemoveUntil(
+              //     HomePage.route(),
+              //     (route) => false,
+              //   );
+              //   break;
               case AuthenticationStatus.unauthenticated:
                 _navigator.pushAndRemoveUntil(
                   LoginPage.route(),
