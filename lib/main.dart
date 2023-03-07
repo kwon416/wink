@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wink/app.dart';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wink/theme/theme_data.dart';
 import 'package:wink/theme/theme_manager.dart';
 import 'package:wink/toast/flutter_toast.dart';
@@ -16,7 +17,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
+  runApp(const App());
 }
 
 ThemeManager _themeManager = ThemeManager();
