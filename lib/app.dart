@@ -85,6 +85,7 @@ class _AppViewState extends State<AppView> {
       builder: (context, themeMode) {
         return MaterialApp(
           title: 'Wink app',
+          debugShowCheckedModeBanner: false,
           theme: lightTheme,
           darkTheme: darkTheme,
           themeMode: themeMode,
