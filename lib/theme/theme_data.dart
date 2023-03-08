@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-const seedColor = Color(0xff0099ff);
+// const seedColor = Color(0xff0099ff);
+const seedColor = Color(0xffff99ff);
 
 var elevatedButtonTheme = ElevatedButtonThemeData(
   style: ButtonStyle(
@@ -16,6 +17,7 @@ var elevatedButtonTheme = ElevatedButtonThemeData(
 );
 
 ThemeData lightTheme = ThemeData(
+  brightness: Brightness.light,
   colorScheme: ColorScheme.fromSeed(
     seedColor: seedColor,
     brightness: Brightness.light,
@@ -24,6 +26,7 @@ ThemeData lightTheme = ThemeData(
 );
 
 ThemeData darkTheme = ThemeData(
+  brightness: Brightness.dark,
   colorScheme: ColorScheme.fromSeed(
     seedColor: seedColor,
     brightness: Brightness.dark,
