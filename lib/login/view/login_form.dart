@@ -23,7 +23,9 @@ class LoginForm extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             _UsernameInput(),
+            const Padding(padding: EdgeInsets.all(12)),
             _PasswordInput(),
+            const Padding(padding: EdgeInsets.all(12)),
             _LoginButton(),
           ],
         ),
@@ -44,8 +46,8 @@ class _UsernameInput extends StatelessWidget {
           key: const Key('loginForm_usernameInput_textField'),
           onChanged: (username) => context.read<LoginBloc>().add(LoginUsernameChanged(username)),
           decoration: InputDecoration(
-            labelText: 'username',
-            errorText: state.username.invalid ? 'invalid username' : null,
+            labelText: '이메일 또는 전화번호',
+            errorText: state.username.invalid ? '유효하지 않은 이메일 또는 전화번호입니다' : null,
           ),
         );
       },
@@ -65,8 +67,8 @@ class _PasswordInput extends StatelessWidget {
               context.read<LoginBloc>().add(LoginPasswordChanged(password)),
           obscureText: true,
           decoration: InputDecoration(
-            labelText: 'password',
-            errorText: state.password.invalid ? 'invalid password' : null,
+            labelText: '비밀번호',
+            errorText: state.password.invalid ? '유효하지 않은 비밀번호입니다' : null,
           ),
         );
       },
@@ -89,7 +91,7 @@ class _LoginButton extends StatelessWidget {
             context.read<LoginBloc>().add(const LoginSubmitted());
           }
               : null,
-          child: const Text('Login'),
+          child: const Text('로그인'),
         );
       },
     );
