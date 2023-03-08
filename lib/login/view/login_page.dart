@@ -12,21 +12,35 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(12),
-        child: BlocProvider(
-          create: (context) {
-            return LoginBloc(
-              authenticationRepository: RepositoryProvider.of<AuthenticationRepository>(context),
-            );
-          },
-          child: const LoginForm(),
+
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
+    TextTheme textTheme = Theme.of(context).textTheme.apply(
+      bodyColor: colorScheme.onPrimaryContainer,
+      displayColor: colorScheme.onPrimaryContainer,
+    );
+
+    return Stack(
+      children: [
+        Container(color: colorScheme.primaryContainer,),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            backgroundColor: colorScheme.primaryContainer,
+            title: Text('Login', style: textTheme.titleLarge,),
+          ),
+          body: Padding(
+            padding: const EdgeInsets.all(12),
+            child: BlocProvider(
+              create: (context) {
+                return LoginBloc(
+                  authenticationRepository: RepositoryProvider.of<AuthenticationRepository>(context),
+                );
+              },
+              child: const LoginForm(),
+            ),
+          ),
         ),
-      ),
+      ],
     );
   }
 }

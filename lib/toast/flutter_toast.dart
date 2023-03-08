@@ -9,9 +9,9 @@ void showToast(String message, BuildContext context) {
   Fluttertoast.cancel();
   Fluttertoast.showToast(
     msg: message,
-    textColor: colorScheme.onSurfaceVariant,
+    textColor: colorScheme.onSecondary,
     fontSize: textTheme.titleLarge?.fontSize,
-    backgroundColor: colorScheme.surfaceVariant,
+    backgroundColor: colorScheme.secondary,
     toastLength: Toast.LENGTH_SHORT,
     gravity: ToastGravity.BOTTOM,
   );

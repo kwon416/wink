@@ -5,9 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:wink/authentication/authentication.dart';
-import 'package:wink/theme/theme_data.dart';
-import 'package:wink/theme/theme_manager.dart';
-//import 'package:wink/home/home.dart';
+import 'package:wink/theme/theme.dart';
+import 'package:wink/home/home.dart';
 import 'package:wink/login/login.dart';
 import 'package:wink/splash/splash.dart';
 
@@ -40,11 +39,18 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return RepositoryProvider.value(
       value: _authenticationRepository,
-      child: BlocProvider(
-        create: (_) => AuthenticationBloc(
-          authenticationRepository: _authenticationRepository,
-          userRepository: _userRepository,
-        ),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<AuthenticationBloc>(
+            create: (_) => AuthenticationBloc(
+              authenticationRepository: _authenticationRepository,
+              userRepository: _userRepository,
+            ),
+          ),
+          BlocProvider<ThemeCubit>(
+            create: (_) => ThemeCubit(),
+          ),
+        ],
         child: const AppView(),
       ),
     );
@@ -52,7 +58,6 @@ class _AppState extends State<App> {
 }
 
 
-ThemeManager _themeManager = ThemeManager();
 
 class AppView extends StatefulWidget {
   const AppView({Key? key}) : super(key: key);
@@ -67,56 +72,49 @@ class _AppViewState extends State<AppView> {
 
   @override
   void dispose(){
-    _themeManager.removeListener(themeListener);
     super.dispose();
   }
   @override
   void initState(){
     super.initState();
-    _themeManager.addListener(themeListener);
-  }
-
-  themeListener(){
-    if(mounted){
-      setState(() {
-
-      });
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Wink app',
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      themeMode: _themeManager.themeMode,
-      navigatorKey: _navigatorKey,
-      builder: (context, child) {
-        return BlocListener<AuthenticationBloc, AuthenticationState>(
-          listener: (context, state) {
-            switch (state.status) {
-              //todo 주석해제 임포트 부분도
-              case AuthenticationStatus.authenticated:
-                // _navigator.pushAndRemoveUntil(
-                //   HomePage.route(),
-                //   (route) => false,
-                // );
-                break;
-              case AuthenticationStatus.unauthenticated:
-                _navigator.pushAndRemoveUntil(
-                  LoginPage.route(),
-                  (route) => false
-                );
-                break;
-              case AuthenticationStatus.unknown:
-                break;
-            }
+    return BlocBuilder<ThemeCubit, ThemeMode>(
+      builder: (context, themeMode) {
+        return MaterialApp(
+          title: 'Wink app',
+          theme: lightTheme,
+          darkTheme: darkTheme,
+          themeMode: themeMode,
+          navigatorKey: _navigatorKey,
+          builder: (context, child) {
+            return BlocListener<AuthenticationBloc, AuthenticationState>(
+              listener: (context, state) {
+                switch (state.status) {
+                  case AuthenticationStatus.authenticated:
+                    _navigator.pushAndRemoveUntil(
+                      HomePage.route(),
+                      (route) => false,
+                    );
+                    break;
+                  case AuthenticationStatus.unauthenticated:
+                    _navigator.pushAndRemoveUntil(
+                      LoginPage.route(),
+                      (route) => false
+                    );
+                    break;
+                  case AuthenticationStatus.unknown:
+                    break;
+                }
+              },
+              child: child,
+            );
           },
-          child: child,
+          onGenerateRoute: (_) => SplashPage.route(),
         );
-      },
-      onGenerateRoute: (_) => SplashPage.route(),
+      }
     );
   }
 }
