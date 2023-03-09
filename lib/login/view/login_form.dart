@@ -176,10 +176,14 @@ class _LoginButton extends StatelessWidget {
                 key: const Key('loginForm_continue_raisedButton'),
                 onPressed: state.status.isValidated
                   ? () {
-                    context.read<LoginBloc>().add(const LoginSubmitted());
+                    // context.read<LoginBloc>().add(const LoginSubmitted());
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => OTPVerificationScreen()),
+                    );
                     }
                   : null,
-          child: Text('로그인', style: textTheme.labelLarge,),
+          child: Text('로그인',),
         );
       },
     );

@@ -23,6 +23,7 @@ ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
   ),
   elevatedButtonTheme: elevatedButtonTheme,
+  iconTheme: IconThemeData(color: Colors.black),
 );
 
 ThemeData darkTheme = ThemeData(
@@ -32,5 +33,6 @@ ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
   ),
   elevatedButtonTheme: elevatedButtonTheme,
+  iconTheme: IconThemeData(color: Colors.white),
 );
 

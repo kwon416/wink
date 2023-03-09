@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wink/toast/flutter_toast.dart';
 
-import '../../authentication/authentication.dart';
-import '../../theme/theme.dart';
+import 'package:wink/authentication/authentication.dart';
+import 'package:wink/theme/theme.dart';
 
 class HomeFragment extends StatelessWidget {
   const HomeFragment({Key? key}) : super(key: key);
