@@ -62,73 +62,20 @@ class LoginForm extends StatelessWidget {
   }
 }
 
-class _UsernameInput extends StatefulWidget {
+class _UsernameInput extends StatelessWidget {
   const _UsernameInput({Key? key}) : super(key: key);
-
-  @override
-  State<_UsernameInput> createState() => _UsernameInputState();
-}
-
-class _UsernameInputState extends State<_UsernameInput> {
-  Country? _selectedCountry;
-
-  @override
-  void initState() {
-    initCountry();
-    super.initState();
-  }
-
-  void initCountry() async {
-    final country = await getCountryByCountryCode(context, "KR");
-    _selectedCountry = country;
-    setState(() {});
-  }
-
-  bool checkPhoneNumber(String phoneNumber) {
-    String regexPattern = r'^(?:[+0][1-9])?[0-9]{10,12}$';
-    var regExp = RegExp(regexPattern);
-
-    if (phoneNumber.isEmpty) {
-      return false;
-    } else if (regExp.hasMatch(phoneNumber)) {
-      return true;
-    }
-    return false;
-  }
-
-  void _showCountryPicker() async {
-    final country = await showCountryPickerSheet(context);
-    if (country != null) {
-      setState(() {
-        _selectedCountry = country;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginBloc, LoginState>(
       buildWhen: (previous, current) => previous.username != current.username,
       builder: (context, state) {
-        return Form(
+        return TextField(
           key: const Key('loginForm_usernameInput_textField'),
-          child: TextFormField(
-            keyboardType: TextInputType.phone,
-            inputFormatters: [LengthLimitingTextInputFormatter(10)],
-            onChanged: (username) => context.read<LoginBloc>().add(LoginUsernameChanged(username)),
-            decoration: commonInputDecoration(
-              hintText: "전화번호를 입력하세요",
-              prefixIcon: Padding(
-                padding: EdgeInsets.all(16),
-                child: GestureDetector(
-                  onTap: () => _showCountryPicker(),
-                  child: Text(
-                    _selectedCountry == null ? "+82" : _selectedCountry!.callingCode,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                ),
-              ),
-            ),
+          onChanged: (username) => context.read<LoginBloc>().add(LoginUsernameChanged(username)),
+          decoration: InputDecoration(
+            labelText: '이메일',
+            errorText: state.username.invalid ? '유효하지 않은 이메일입니다' : null,
           ),
         );
       },
@@ -176,11 +123,8 @@ class _LoginButton extends StatelessWidget {
                 key: const Key('loginForm_continue_raisedButton'),
                 onPressed: state.status.isValidated
                   ? () {
-                    // context.read<LoginBloc>().add(const LoginSubmitted());
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => OTPVerificationScreen()),
-                    );
+                    context.read<LoginBloc>().add(const LoginSubmitted());
+
                     }
                   : null,
           child: Text('로그인',),

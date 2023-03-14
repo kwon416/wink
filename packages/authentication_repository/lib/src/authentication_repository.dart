@@ -12,6 +12,7 @@ class AuthenticationRepository {
   }
   
   Future<void> LogIn({required String username, required String password}) async {
+    //TODO 로그인 프로세스 구현
     await Future.delayed(
       const Duration(milliseconds: 300),
         () => _controller.add(AuthenticationStatus.authenticated),

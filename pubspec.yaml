@@ -28,6 +28,11 @@ dependencies:
   intl: ^0.18.0
   shared_preferences: ^2.0.18
   country_calling_code_picker: ^2.0.1
+  firebase_auth: ^4.2.2
+  firebase_core_platform_interface: ^4.5.3
+  google_sign_in: ^6.0.2
+  meta: ^1.8.0
+  get: ^4.6.5
 
 dev_dependencies:
   flutter_test:
