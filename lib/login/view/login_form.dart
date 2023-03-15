@@ -1,6 +1,5 @@
-import 'package:country_calling_code_picker/picker.dart';
+// import 'package:country_calling_code_picker/picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wink/custom_widget/space.dart';
 import 'package:wink/login/login.dart';
@@ -43,7 +42,7 @@ class LoginForm extends StatelessWidget {
                 Space(8),
                 Text("Please Login to your account", style: textTheme.bodyLarge,),
                 Space(16),
-                Image.asset(splash_logo, width: 100, height: 100, fit: BoxFit.cover),
+                Image.asset(splashLogo, width: 100, height: 100, fit: BoxFit.cover),
               ],
             ),
             Space(70),
@@ -51,7 +50,19 @@ class LoginForm extends StatelessWidget {
             const Padding(padding: EdgeInsets.all(12)),
             _PasswordInput(),
             const Padding(padding: EdgeInsets.all(12)),
-
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpPage()));
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Don't have account?", style: TextStyle(fontSize: 16)),
+                  Space(4),
+                  Text('회원가입', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                ],
+              ),
+            ),
             const Padding(padding: EdgeInsets.all(12)),
             _LoginButton(),
 

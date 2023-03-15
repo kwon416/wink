@@ -30,4 +30,4 @@ const String phonePay = "assets/images/phonepay.png";
 const String amazonPay = "assets/images/amazonPay.png";
 const String freeCharge = "assets/images/freeCharge.png";
 const String olaMoney = "assets/images/olaMoney.png";
-const String splash_logo = "assets/images/splash_logo.png";
+const String splashLogo = "assets/images/splash_logo.png";
