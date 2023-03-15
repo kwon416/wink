@@ -1,4 +1,5 @@
 import 'package:authentication_repository/authentication_repository.dart';
+import 'package:get/get.dart';
 import 'package:user_repository/user_repository.dart';
 
 import 'package:flutter/material.dart';
@@ -83,7 +84,7 @@ class _AppViewState extends State<AppView> {
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeCubit, ThemeMode>(
       builder: (context, themeMode) {
-        return MaterialApp(
+        return GetMaterialApp(
           title: 'Wink app',
           debugShowCheckedModeBanner: false,
           theme: lightTheme,
