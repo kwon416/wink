@@ -172,7 +172,7 @@ class _LoginButton extends StatelessWidget {
             onPressed: () {
                 controller.loginUser('admin@google.com', '123456');
               },
-      child: Text('강제 로그인',),
+      child: Text('어드민 로그인',),
     );
   }
 }

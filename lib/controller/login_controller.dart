@@ -18,8 +18,8 @@ class LoginController extends GetxController {
     }
   }
 
-  getUser()  {
-    return AuthenticationRepository.instance.firebaseUser;
+  getUserValue()  {
+    return AuthenticationRepository.instance.firebaseUser.value;
   }
 
   Future<void> logOutUser() async {

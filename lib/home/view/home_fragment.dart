@@ -44,7 +44,7 @@ class HomeFragment extends StatelessWidget {
               onPressed: (){
                 showToast('토스트 띄우기', context);
               },
-              child: Text('버튼',),
+              child: Text('토스트 버튼',),
             ),
           ],
         ),

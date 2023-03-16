@@ -25,7 +25,8 @@ class AccountFragment extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text("email: ${l.getUser().toString()}"),
+            Text("email: ${l.getUserValue().email}"),
+            Space(12),
             ElevatedButton(
               onPressed: () => Get.to(Other(), transition: Transition.topLevel),
               child: Text('새 페이지 get.to'),
