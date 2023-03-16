@@ -34,20 +34,10 @@ class HomeFragment extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Builder(
-              builder: (context) {
-                final userId = context.select(
-                  (AuthenticationBloc bloc) => bloc.state.user.id,
-                );
-                return Text('UserId: $userId', style: textTheme.bodyMedium,);
-              }
-            ),
             const Padding(padding: EdgeInsets.all(12)),
             ElevatedButton(
-              onPressed: () {
-                context.read<AuthenticationBloc>().add(AuthenticationLogoutRequested());
-              },
-              child: Text('로그아웃'),
+              onPressed: () {},
+              child: Text('버튼'),
             ),
             const Padding(padding: EdgeInsets.all(12)),
             ElevatedButton(

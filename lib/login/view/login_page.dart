@@ -46,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
                   authenticationRepository: RepositoryProvider.of<AuthenticationRepository>(context),
                 );
               },
-              child: const LoginForm(),
+              child: LoginForm(),
             ),
           ),
         ),

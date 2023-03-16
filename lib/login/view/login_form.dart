@@ -1,14 +1,25 @@
 // import 'package:country_calling_code_picker/picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
+import 'package:wink/controller/login_controller.dart';
 import 'package:wink/custom_widget/space.dart';
 import 'package:wink/login/login.dart';
 import 'package:formz/formz.dart';
 import 'package:wink/utils/images.dart';
 import 'package:wink/utils/widgets.dart';
 
-class LoginForm extends StatelessWidget {
-  const LoginForm({Key? key}) : super(key: key);
+class LoginForm extends StatefulWidget {
+  LoginForm({Key? key}) : super(key: key);
+
+  @override
+  State<LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
+  final controller = Get.put(LoginController());
+  final _formKey = GlobalKey<FormState>();
+  bool _securePassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -18,17 +29,10 @@ class LoginForm extends StatelessWidget {
       displayColor: colorScheme.onPrimaryContainer,
     );
 
-    return BlocListener<LoginBloc, LoginState>(
-      listener: (context, state) {
-        if (state.status.isSubmissionFailure) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(const SnackBar(content: Text('로그인 실패'))
-            );
-        }
-      },
-      child: Align(
-        alignment: const Alignment(0, -1/3),
+    return Align(
+      alignment: const Alignment(0, -1/3),
+      child: Form(
+        key: _formKey,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -46,9 +50,35 @@ class LoginForm extends StatelessWidget {
               ],
             ),
             Space(70),
-            _UsernameInput(),
+            TextFormField(
+              controller: controller.email,
+              keyboardType: TextInputType.emailAddress,
+              textInputAction: TextInputAction.next,
+              style: TextStyle(fontSize: 20),
+              decoration: commonInputDecoration(hintText: "이메일", prefixIcon: Icon(Icons.email_outlined)),
+            ),
             const Padding(padding: EdgeInsets.all(12)),
-            _PasswordInput(),
+            TextFormField(
+              controller: controller.password,
+              textInputAction: TextInputAction.done,
+              keyboardType: TextInputType.visiblePassword,
+              obscureText: _securePassword,
+              style: TextStyle(fontSize: 20),
+              decoration: commonInputDecoration(
+                hintText: "패스워드",
+                prefixIcon: Icon(Icons.lock_outline_rounded),
+                suffixIcon: Padding(
+                  padding: EdgeInsets.only(right: 5.0),
+                  child: IconButton(
+                    icon: Icon(_securePassword ? Icons.visibility_off : Icons.visibility, size: 18),
+                    onPressed: () {
+                      _securePassword = !_securePassword;
+                      setState(() {});
+                    },
+                  ),
+                ),
+              ),
+            ),
             const Padding(padding: EdgeInsets.all(12)),
             GestureDetector(
               onTap: () {
@@ -64,8 +94,20 @@ class LoginForm extends StatelessWidget {
               ),
             ),
             const Padding(padding: EdgeInsets.all(12)),
+            ElevatedButton(
+              key: const Key('loginForm_continue_raisedButton'),
+              onPressed: () {
+                print("email : ${controller.email.text}, password : ${controller.password.text}");
+                // if (_formKey.currentState.validate())
+                //context.read<LoginBloc>().add(const LoginSubmitted());
+                //print("email : ${state.username.value}, password : ${state.password.value}");
+                //todo 로그인 입력 폼 수정
+                //controller.loginUser('admin@google.com', '123456');
+              },
+              child: Text('로그인',),
+            ),
+            const Padding(padding: EdgeInsets.all(12)),
             _LoginButton(),
-
           ],
         ),
       ),
@@ -93,7 +135,6 @@ class _UsernameInput extends StatelessWidget {
     );
   }
 }
-
 class _PasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -116,6 +157,7 @@ class _PasswordInput extends StatelessWidget {
 }
 
 class _LoginButton extends StatelessWidget {
+  final controller = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -125,22 +167,12 @@ class _LoginButton extends StatelessWidget {
       displayColor: colorScheme.onPrimaryContainer,
     );
 
-    return BlocBuilder<LoginBloc, LoginState>(
-      buildWhen: (previous, current) => previous.status != current.status,
-      builder: (context, state) {
-        return state.status.isSubmissionInProgress
-            ? Center(child: CircularProgressIndicator())
-            : ElevatedButton(
-                key: const Key('loginForm_continue_raisedButton'),
-                onPressed: state.status.isValidated
-                  ? () {
-                    context.read<LoginBloc>().add(const LoginSubmitted());
-
-                    }
-                  : null,
-          child: Text('로그인',),
-        );
-      },
+    return ElevatedButton(
+            key: const Key('loginForm_continue_raisedButton'),
+            onPressed: () {
+                controller.loginUser('admin@google.com', '123456');
+              },
+      child: Text('강제 로그인',),
     );
   }
 }

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wink/controller/counter_controller.dart';
+import 'package:wink/controller/login_controller.dart';
 import 'package:wink/theme/theme.dart';
+
+import '../../custom_widget/space.dart';
 
 class AccountFragment extends StatelessWidget {
   const AccountFragment({Key? key}) : super(key: key);
@@ -9,6 +12,7 @@ class AccountFragment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final CounterController c = Get.put(CounterController());
+    final LoginController l = Get.put(LoginController());
 
     return Scaffold(
       appBar: AppBar(
@@ -18,9 +22,17 @@ class AccountFragment extends StatelessWidget {
         ],
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () => Get.to(Other()),
-          child: Text('새 페이지 get.to'),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text("email: ${l.getUser().toString()}"),
+            ElevatedButton(
+              onPressed: () => Get.to(Other(), transition: Transition.topLevel),
+              child: Text('새 페이지 get.to'),
+            ),
+            Space(12),
+            ElevatedButton(onPressed: () => LoginController().logOutUser(), child: Text('파이어베이스 로그아웃'))
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(

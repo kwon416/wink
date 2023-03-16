@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:wink/main.dart';
+import 'package:get/get.dart';
+import 'package:wink/controller/signup_controller.dart';
 // import 'package:wink/screens/otp_verification_screen.dart';
 import 'package:wink/login/view/login_page.dart';
+import 'package:wink/toast/flutter_toast.dart';
 import 'package:wink/utils/constant.dart';
 import 'package:wink/utils/widgets.dart';
 
@@ -16,6 +18,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  final controller = Get.put(SignUpController());
   final _signUpFormKey = GlobalKey<FormState>();
 
   final TextEditingController _passController = TextEditingController();
@@ -97,35 +100,39 @@ class _SignUpPageState extends State<SignUpPage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         TextFormField(
+                          controller: controller.userName,
                           keyboardType: TextInputType.name,
                           textInputAction: TextInputAction.next,
                           style: TextStyle(fontSize: 16),
-                          decoration: commonInputDecoration(hintText: "Username"),
+                          decoration: commonInputDecoration(hintText: "Username",prefixIcon: Icon(Icons.person_outline_rounded)),
                         ),
                         Space(16),
                         TextFormField(
+                          controller: controller.email,
                           keyboardType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.next,
                           style: TextStyle(fontSize: 20),
-                          decoration: commonInputDecoration(hintText: "Email"),
+                          decoration: commonInputDecoration(hintText: "Email", prefixIcon: Icon(Icons.email_outlined)),
                         ),
                         Space(16),
                         TextFormField(
+                          controller: controller.phoneNo,
                           keyboardType: TextInputType.phone,
                           textInputAction: TextInputAction.next,
-                          inputFormatters: [LengthLimitingTextInputFormatter(10)],
+                          inputFormatters: [LengthLimitingTextInputFormatter(11)],
                           style: TextStyle(fontSize: 20),
-                          decoration: commonInputDecoration(hintText: "Mobile Number"),
+                          decoration: commonInputDecoration(hintText: "Mobile Number", prefixIcon: Icon(Icons.numbers_outlined)),
                         ),
                         Space(16),
                         TextFormField(
-                          controller: _passController,
+                          controller: controller.password,
                           textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: _securePassword,
                           style: TextStyle(fontSize: 20),
                           decoration: commonInputDecoration(
                             hintText: "Password",
+                            prefixIcon: Icon(Icons.lock_outline_rounded),
                             suffixIcon: Padding(
                               padding: EdgeInsets.only(right: 5.0),
                               child: IconButton(
@@ -143,11 +150,12 @@ class _SignUpPageState extends State<SignUpPage> {
                           controller: _confirmPassController,
                           textInputAction: TextInputAction.done,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
-                          keyboardType: TextInputType.emailAddress,
+                          keyboardType: TextInputType.visiblePassword,
                           obscureText: _secureConfirmPassword,
                           style: TextStyle(fontSize: 20),
                           decoration: commonInputDecoration(
                             hintText: "Re-enter Password",
+                            prefixIcon: Icon(Icons.lock_reset_outlined),
                             suffixIcon: Padding(
                               padding: EdgeInsets.only(right: 5.0),
                               child: IconButton(
@@ -189,8 +197,14 @@ class _SignUpPageState extends State<SignUpPage> {
                               shape: StadiumBorder(),
                             ),
                             onPressed: () {
+                              if (controller.password.text != _confirmPassController.text) {
+                                showToast('비밀번호를 확인해주세요', context);
+                                return;
+                              }
                               if (_signUpFormKey.currentState!.validate()) {
-                                if (agreeWithTeams == true) {
+                                if (checkBoxValue == true) {
+                                  print('check success');
+                                  SignUpController.instance.registerUser(controller.email.text.trim(), controller.password.text.trim());
                                   // Navigator.push(
                                   //   context,
                                   //   MaterialPageRoute(builder: (context) => OTPVerificationScreen()),
@@ -213,7 +227,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             children: [
                               Text("Have an account?", style: TextStyle(fontSize: 16)),
                               Space(4),
-                              Text('Sign In', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                              Text('로그인하기', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                             ],
                           ),
                         )

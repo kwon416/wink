@@ -91,29 +91,29 @@ class _AppViewState extends State<AppView> {
           darkTheme: darkTheme,
           themeMode: themeMode,
           navigatorKey: _navigatorKey,
-          builder: (context, child) {
-            return BlocListener<AuthenticationBloc, AuthenticationState>(
-              listener: (context, state) {
-                switch (state.status) {
-                  case AuthenticationStatus.authenticated:
-                    _navigator.pushAndRemoveUntil(
-                      HomePage.route(),
-                      (route) => false,
-                    );
-                    break;
-                  case AuthenticationStatus.unauthenticated:
-                    _navigator.pushAndRemoveUntil(
-                      LoginPage.route(),
-                      (route) => false
-                    );
-                    break;
-                  case AuthenticationStatus.unknown:
-                    break;
-                }
-              },
-              child: child,
-            );
-          },
+          // builder: (context, child) {
+          //   return BlocListener<AuthenticationBloc, AuthenticationState>(
+          //     listener: (context, state) {
+          //       switch (state.status) {
+          //         case AuthenticationStatus.authenticated:
+          //           _navigator.pushAndRemoveUntil(
+          //             HomePage.route(),
+          //             (route) => false,
+          //           );
+          //           break;
+          //         case AuthenticationStatus.unauthenticated:
+          //           _navigator.pushAndRemoveUntil(
+          //             LoginPage.route(),
+          //             (route) => false
+          //           );
+          //           break;
+          //         case AuthenticationStatus.unknown:
+          //           break;
+          //       }
+          //     },
+          //     child: child,
+          //   );
+          // },
           onGenerateRoute: (_) => SplashPage.route(),
         );
       }
