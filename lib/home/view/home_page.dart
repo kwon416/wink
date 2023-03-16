@@ -45,55 +45,72 @@ class _HomePageState extends State<HomePage> {
       displayColor: colorScheme.onPrimaryContainer,
     );
 
-    return Stack(
-      children: [
-        Container(color: colorScheme.primaryContainer,),
-        Scaffold(
-          backgroundColor: Colors.transparent,
+    return WillPopScope(
+      onWillPop: () {
+        DateTime now = DateTime.now();
 
-          body: _pageItem[_selected],
+        if (_currentBackPressTime == null || now.difference(_currentBackPressTime!) > Duration(seconds: 2)) {
+          _currentBackPressTime = now;
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Press back again to exit'),
+            ),
+          );
 
-          bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            selectedIconTheme: IconThemeData(size: 30, opacity: 1, color: colorScheme.onPrimaryContainer,),
-            unselectedIconTheme: IconThemeData(size: 28, opacity: 0.5, color: colorScheme.primary,),
-            selectedLabelStyle: TextStyle(fontSize: 14),
-            unselectedLabelStyle: TextStyle(fontSize: 14),
-            currentIndex: _selected,
-            showUnselectedLabels: true,
-            onTap: (selected) {
-              setState(() {
-                _selected = selected;
-              });
-            },
-            elevation: 0,
+          return Future.value(false);
+        }
+        return Future.value(true);
+      },
+      child: Stack(
+        children: [
+          Container(color: colorScheme.primaryContainer,),
+          Scaffold(
             backgroundColor: Colors.transparent,
-            items: const [
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.home_outlined),
-                  activeIcon: Icon(Icons.home_rounded),
-                  label: "home",
-                  backgroundColor: Colors.transparent),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.newspaper_outlined),
-                  activeIcon: Icon(Icons.newspaper_rounded),
-                  label: "news",
-                  backgroundColor: Colors.transparent),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.notifications_outlined),
-                  activeIcon: Icon(Icons.notifications_rounded),
-                  label: "notification",
-                  backgroundColor: Colors.transparent),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.person_outline),
-                  activeIcon: Icon(Icons.person_rounded),
-                  label: "person",
-                  backgroundColor: Colors.transparent),
 
-            ],
+            body: _pageItem[_selected],
+
+            bottomNavigationBar: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              selectedIconTheme: IconThemeData(size: 30, opacity: 1, color: colorScheme.onPrimaryContainer,),
+              unselectedIconTheme: IconThemeData(size: 28, opacity: 0.5, color: colorScheme.primary,),
+              selectedLabelStyle: TextStyle(fontSize: 14),
+              unselectedLabelStyle: TextStyle(fontSize: 14),
+              currentIndex: _selected,
+              showUnselectedLabels: true,
+              onTap: (selected) {
+                setState(() {
+                  _selected = selected;
+                });
+              },
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              items: const [
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.home_outlined),
+                    activeIcon: Icon(Icons.home_rounded),
+                    label: "home",
+                    backgroundColor: Colors.transparent),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.newspaper_outlined),
+                    activeIcon: Icon(Icons.newspaper_rounded),
+                    label: "news",
+                    backgroundColor: Colors.transparent),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.notifications_outlined),
+                    activeIcon: Icon(Icons.notifications_rounded),
+                    label: "notification",
+                    backgroundColor: Colors.transparent),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.person_outline),
+                    activeIcon: Icon(Icons.person_rounded),
+                    label: "person",
+                    backgroundColor: Colors.transparent),
+
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

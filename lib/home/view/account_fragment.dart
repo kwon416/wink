@@ -28,7 +28,7 @@ class AccountFragment extends StatelessWidget {
             Text("email: ${l.getUserValue().email}"),
             Space(12),
             ElevatedButton(
-              onPressed: () => Get.to(Other(), transition: Transition.topLevel),
+              onPressed: () => Get.to(Other()),
               child: Text('새 페이지 get.to'),
             ),
             Space(12),

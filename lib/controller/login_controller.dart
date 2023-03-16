@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:user_repository/user_repository.dart';
 
 import 'package:wink/repository/authentication_repository/authentication_repository.dart';
 

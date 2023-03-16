@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wink/toast/flutter_toast.dart';
 
-import 'package:wink/authentication/authentication.dart';
 import 'package:wink/theme/theme.dart';
 
 class HomeFragment extends StatelessWidget {

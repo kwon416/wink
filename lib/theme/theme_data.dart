@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // const seedColor = Color(0xff0099ff);
 const seedColor = Color(0xffff99ff);
 
-var elevatedButtonTheme = ElevatedButtonThemeData(
+ElevatedButtonThemeData elevatedButtonTheme = ElevatedButtonThemeData(
   style: ButtonStyle(
     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
       EdgeInsets.symmetric(horizontal: 40, vertical: 20)
@@ -15,8 +15,13 @@ var elevatedButtonTheme = ElevatedButtonThemeData(
     ),
   )
 );
+AppBarTheme appBarTheme = AppBarTheme(
+  centerTitle: true,
+
+);
 
 ThemeData lightTheme = ThemeData(
+  appBarTheme: appBarTheme,
   brightness: Brightness.light,
   colorScheme: ColorScheme.fromSeed(
     seedColor: seedColor,
@@ -27,6 +32,7 @@ ThemeData lightTheme = ThemeData(
 );
 
 ThemeData darkTheme = ThemeData(
+  appBarTheme: appBarTheme,
   brightness: Brightness.dark,
   colorScheme: ColorScheme.fromSeed(
     seedColor: seedColor,

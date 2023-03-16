@@ -21,6 +21,7 @@ class AuthenticationRepository extends GetxController {
   ///앱 시작 화면 설정
   _setInitialScreen(User? user) async {
     await Future.delayed(Duration(seconds: 2));
+    print('Has user info? => ${user!=null}');
     user == null ? Get.offAll(() => const LoginPage()) : Get.offAll(() => HomePage());
   }
 
