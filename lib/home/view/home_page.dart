@@ -66,9 +66,7 @@ class _HomePageState extends State<HomePage> {
           Container(color: colorScheme.primaryContainer,),
           Scaffold(
             backgroundColor: Colors.transparent,
-
             body: _pageItem[_selected],
-
             bottomNavigationBar: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
               selectedIconTheme: IconThemeData(size: 30, opacity: 1, color: colorScheme.onPrimaryContainer,),
@@ -105,7 +103,6 @@ class _HomePageState extends State<HomePage> {
                     activeIcon: Icon(Icons.person_rounded),
                     label: "person",
                     backgroundColor: Colors.transparent),
-
               ],
             ),
           ),

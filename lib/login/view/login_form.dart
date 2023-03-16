@@ -1,11 +1,9 @@
 // import 'package:country_calling_code_picker/picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:wink/controller/login_controller.dart';
 import 'package:wink/custom_widget/space.dart';
 import 'package:wink/login/login.dart';
-import 'package:formz/formz.dart';
 import 'package:wink/utils/images.dart';
 import 'package:wink/utils/widgets.dart';
 
@@ -55,6 +53,12 @@ class _LoginFormState extends State<LoginForm> {
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.next,
               style: TextStyle(fontSize: 20),
+              validator: (text) {
+                if (text == null || text.isEmpty) {
+                  return '이메일을 입력해주세요';
+                }
+                return null;
+              },
               decoration: commonInputDecoration(hintText: "이메일", prefixIcon: Icon(Icons.email_outlined)),
             ),
             const Padding(padding: EdgeInsets.all(12)),
@@ -64,6 +68,12 @@ class _LoginFormState extends State<LoginForm> {
               keyboardType: TextInputType.visiblePassword,
               obscureText: _securePassword,
               style: TextStyle(fontSize: 20),
+              validator: (text) {
+                if (text == null || text.isEmpty) {
+                  return '패스워드를 입력해주세요';
+                }
+                return null;
+              },
               decoration: commonInputDecoration(
                 hintText: "패스워드",
                 prefixIcon: Icon(Icons.lock_outline_rounded),
@@ -95,14 +105,14 @@ class _LoginFormState extends State<LoginForm> {
             ),
             const Padding(padding: EdgeInsets.all(12)),
             ElevatedButton(
-              key: const Key('loginForm_continue_raisedButton'),
+              //key: const Key('loginForm_continue_raisedButton'),
               onPressed: () {
                 print("email : ${controller.email.text}, password : ${controller.password.text}");
-                // if (_formKey.currentState.validate())
-                //context.read<LoginBloc>().add(const LoginSubmitted());
-                //print("email : ${state.username.value}, password : ${state.password.value}");
-                //todo 로그인 입력 폼 수정
-                //controller.loginUser('admin@google.com', '123456');
+                if (_formKey.currentState!.validate()) {
+                  controller.loginUser(controller.email.text, controller.password.text);
+                  return;
+                }
+                print('로그인 실패');
               },
               child: Text('로그인',),
             ),
@@ -115,46 +125,46 @@ class _LoginFormState extends State<LoginForm> {
   }
 }
 
-class _UsernameInput extends StatelessWidget {
-  const _UsernameInput({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<LoginBloc, LoginState>(
-      buildWhen: (previous, current) => previous.username != current.username,
-      builder: (context, state) {
-        return TextField(
-          key: const Key('loginForm_usernameInput_textField'),
-          onChanged: (username) => context.read<LoginBloc>().add(LoginUsernameChanged(username)),
-          decoration: InputDecoration(
-            labelText: '이메일',
-            errorText: state.username.invalid ? '유효하지 않은 이메일입니다' : null,
-          ),
-        );
-      },
-    );
-  }
-}
-class _PasswordInput extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<LoginBloc, LoginState>(
-      buildWhen: (previous, current) => previous.password != current.password,
-      builder: (context, state) {
-        return TextField(
-          key: const Key('loginForm_passwordInput_textField'),
-          onChanged: (password) =>
-              context.read<LoginBloc>().add(LoginPasswordChanged(password)),
-          obscureText: true,
-          decoration: InputDecoration(
-            labelText: '비밀번호',
-            errorText: state.password.invalid ? '유효하지 않은 비밀번호입니다' : null,
-          ),
-        );
-      },
-    );
-  }
-}
+// class _UsernameInput extends StatelessWidget {
+//   const _UsernameInput({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocBuilder<LoginBloc, LoginState>(
+//       buildWhen: (previous, current) => previous.username != current.username,
+//       builder: (context, state) {
+//         return TextField(
+//           key: const Key('loginForm_usernameInput_textField'),
+//           onChanged: (username) => context.read<LoginBloc>().add(LoginUsernameChanged(username)),
+//           decoration: InputDecoration(
+//             labelText: '이메일',
+//             errorText: state.username.invalid ? '유효하지 않은 이메일입니다' : null,
+//           ),
+//         );
+//       },
+//     );
+//   }
+// }
+// class _PasswordInput extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocBuilder<LoginBloc, LoginState>(
+//       buildWhen: (previous, current) => previous.password != current.password,
+//       builder: (context, state) {
+//         return TextField(
+//           key: const Key('loginForm_passwordInput_textField'),
+//           onChanged: (password) =>
+//               context.read<LoginBloc>().add(LoginPasswordChanged(password)),
+//           obscureText: true,
+//           decoration: InputDecoration(
+//             labelText: '비밀번호',
+//             errorText: state.password.invalid ? '유효하지 않은 비밀번호입니다' : null,
+//           ),
+//         );
+//       },
+//     );
+//   }
+// }
 
 class _LoginButton extends StatelessWidget {
   final controller = Get.put(LoginController());
