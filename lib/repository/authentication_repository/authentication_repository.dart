@@ -36,14 +36,14 @@ class AuthenticationRepository extends GetxController {
         case "invalid-email":
           errorMessage = "이메일 주소의 형식이 잘못되었습니다";
           break;
-        case "wrong-password":
-          errorMessage = "패스워드가 잘못되었습니다";
+        case "email-already-in-use":
+          errorMessage = "이미 존재하는 이메일 주소입니다";
           break;
-        case "user-not-found":
-          errorMessage = "존재하지 않는 이메일 주소입니다";
+        case "operation-not-allowed":
+          errorMessage = "이메일 계정 생성이 비활성화되었습니다";
           break;
-        case "user-disabled":
-          errorMessage = "계정이 비활성화되었습니다";
+        case "weak-password":
+          errorMessage = "패스워드가 너무 짧습니다";
           break;
         case "ERROR_TOO_MANY_REQUESTS":
           errorMessage = "Too many requests. Try again later.";

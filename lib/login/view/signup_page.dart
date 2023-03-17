@@ -89,7 +89,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   Space(42),
                   Center(
                     child: Text(
-                      "Sign Up",
+                      "WINK",
                       style: TextStyle(fontSize: mainTitleTextSize, fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -104,7 +104,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           keyboardType: TextInputType.name,
                           textInputAction: TextInputAction.next,
                           style: TextStyle(fontSize: 16),
-                          decoration: commonInputDecoration(hintText: "Username",prefixIcon: Icon(Icons.person_outline_rounded)),
+                          decoration: commonInputDecoration(hintText: "이름",prefixIcon: Icon(Icons.person_outline_rounded)),
                         ),
                         Space(16),
                         TextFormField(
@@ -112,7 +112,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           keyboardType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.next,
                           style: TextStyle(fontSize: 20),
-                          decoration: commonInputDecoration(hintText: "Email", prefixIcon: Icon(Icons.email_outlined)),
+                          decoration: commonInputDecoration(hintText: "이메일", prefixIcon: Icon(Icons.email_outlined)),
                         ),
                         Space(16),
                         TextFormField(
@@ -121,7 +121,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           textInputAction: TextInputAction.next,
                           inputFormatters: [LengthLimitingTextInputFormatter(11)],
                           style: TextStyle(fontSize: 20),
-                          decoration: commonInputDecoration(hintText: "Mobile Number", prefixIcon: Icon(Icons.numbers_outlined)),
+                          decoration: commonInputDecoration(hintText: "전화번호", prefixIcon: Icon(Icons.numbers_outlined)),
                         ),
                         Space(16),
                         TextFormField(
@@ -131,7 +131,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           obscureText: _securePassword,
                           style: TextStyle(fontSize: 20),
                           decoration: commonInputDecoration(
-                            hintText: "Password",
+                            hintText: "패스워드",
                             prefixIcon: Icon(Icons.lock_outline_rounded),
                             suffixIcon: Padding(
                               padding: EdgeInsets.only(right: 5.0),
@@ -154,7 +154,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           obscureText: _secureConfirmPassword,
                           style: TextStyle(fontSize: 20),
                           decoration: commonInputDecoration(
-                            hintText: "Re-enter Password",
+                            hintText: "패스워드 확인",
                             prefixIcon: Icon(Icons.lock_reset_outlined),
                             suffixIcon: Padding(
                               padding: EdgeInsets.only(right: 5.0),
@@ -176,7 +176,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                             checkColor: colorScheme.onPrimary,
                             activeColor: colorScheme.primary,
-                            title: Text("I agree to the Terms and Conditions", style: textTheme.bodySmall),
+                            title: Text("이용약관 동의", style: textTheme.bodySmall),
                             value: checkBoxValue,
                             dense: true,
                             onChanged: (newValue) {
@@ -204,7 +204,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               if (_signUpFormKey.currentState!.validate()) {
                                 if (checkBoxValue == true) {
                                   print('check success');
-                                  SignUpController.instance.registerUser(controller.email.text.trim(), controller.password.text.trim());
+                                  controller.registerUser(controller.email.text.trim(), controller.password.text.trim());
                                   // Navigator.push(
                                   //   context,
                                   //   MaterialPageRoute(builder: (context) => OTPVerificationScreen()),

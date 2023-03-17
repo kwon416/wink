@@ -40,7 +40,7 @@ class _LoginFormState extends State<LoginForm> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Space(60),
-                Text("Welcome back!", style: textTheme.displaySmall,),
+                Text("WINK", style: textTheme.displaySmall,),
                 Space(8),
                 Text("Please Login to your account", style: textTheme.bodyLarge,),
                 Space(16),
