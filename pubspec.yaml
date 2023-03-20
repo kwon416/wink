@@ -33,6 +33,7 @@ dependencies:
   google_sign_in: ^6.0.2
   meta: ^1.8.0
   get: ^4.6.5
+  firebase_database: ^10.0.16
 
 dev_dependencies:
   flutter_test:
