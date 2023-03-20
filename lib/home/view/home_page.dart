@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:wink/controller/login_controller.dart';
+import 'package:wink/controller/membership_controller.dart';
 import 'package:wink/home/home.dart';
 
 
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
 
   static Route<void> route() {
     return MaterialPageRoute<void>(builder: (_) => const HomePage());
@@ -26,6 +30,9 @@ class _HomePageState extends State<HomePage> {
     AccountFragment(),
   ];
 
+  final MembershipController m = Get.put(MembershipController());
+  final LoginController l = Get.put(LoginController());
+
   @override
   void dispose(){
     super.dispose();
@@ -33,6 +40,8 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState(){
     super.initState();
+    String uid = l.getUser().value.uid;
+    m.getCurrentUser(uid);
   }
 
 

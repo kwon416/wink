@@ -13,12 +13,12 @@ class LoginController extends GetxController {
   Future<void> loginUser(String email, String password) async {
     String? error = await AuthenticationRepository.instance.loginWithEmailAndPassword(email, password);
     if(error != null) {
-      Get.showSnackbar(GetSnackBar(message: error.toString(),duration: Duration(seconds: 2),));
+      Get.showSnackbar(GetSnackBar(message: error.toString(), duration: Duration(seconds: 2),));
     }
   }
 
-  getUserValue()  {
-    return AuthenticationRepository.instance.firebaseUser.value;
+  getUser()  {
+    return AuthenticationRepository.instance.firebaseUser;
   }
 
   Future<void> logOutUser() async {
