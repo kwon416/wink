@@ -22,9 +22,10 @@ class AuthenticationRepository extends GetxController {
   _setInitialScreen(User? user) async {
     await Future.delayed(Duration(seconds: 2));
     print('Has user info? => ${user!=null}');
+    if (user?.email != null) {}
     user == null ? Get.offAll(() => const LoginPage()) : Get.offAll(() => HomePage());
   }
-
+  ///auth 계정 생성
   Future<String?> createUserWithEmailAndPassword(String email, String password) async {
     String errorMessage;
     try {
@@ -62,7 +63,7 @@ class AuthenticationRepository extends GetxController {
     }
     return null;
   }
-
+  ///auth 계정 로그인
   Future<String?> loginWithEmailAndPassword(String email, String password) async {
     String errorMessage;
     try {
@@ -82,8 +83,8 @@ class AuthenticationRepository extends GetxController {
         case "user-disabled":
           errorMessage = "계정이 비활성화되었습니다";
           break;
-        case "ERROR_TOO_MANY_REQUESTS":
-          errorMessage = "Too many requests. Try again later.";
+        case "network-request-failed":
+          errorMessage = "인터넷 연결을 확인해주세요";
           break;
         case "ERROR_OPERATION_NOT_ALLOWED":
           errorMessage = "Signing in with Email and Password is not enabled.";
@@ -99,6 +100,22 @@ class AuthenticationRepository extends GetxController {
     }
     return null;
   }
-
+  ///auth 계정 로그인 확인
+  Future<bool> isUserLogin() async {
+    var user =  _auth.currentUser;
+    return user != null;
+  }
+  Future<String?> updateProfile({String? displayName, String? phoneNumber}) async {
+    try {
+      if (displayName != null) {
+        await _auth.currentUser!.updateDisplayName(displayName);
+      }
+    } on FirebaseAuthException catch (error) {
+      return error.message;
+    } catch (e) {
+      print(e);
+      return e.toString();
+    }
+  }
   Future<void> logout() async => await _auth.signOut();
 }

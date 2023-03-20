@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wink/controller/counter_controller.dart';
 import 'package:wink/controller/login_controller.dart';
+import 'package:wink/controller/membership_controller.dart';
 import 'package:wink/theme/theme.dart';
 
 import '../../custom_widget/space.dart';
@@ -12,7 +13,8 @@ class AccountFragment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final CounterController c = Get.put(CounterController());
-    final LoginController l = Get.put(LoginController());
+    final MembershipController m = Get.put(MembershipController());
+
 
     return Scaffold(
       appBar: AppBar(
@@ -25,11 +27,26 @@ class AccountFragment extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text("email: ${l.getUserValue().email}"),
+            Column(
+              children: [
+                Text('User Data From Realtime DB From firebase'),
+                Text('get userName : ${m.userData.userName}'),
+                Text('get uid : ${m.userData.uid}'),
+                Text('get phoneNo : ${m.userData.phoneNo}'),
+                Text('get password : ${m.userData.password}'),
+                Text('get email : ${m.userData.email}'),
+              ],
+            ),
             Space(12),
             ElevatedButton(
               onPressed: () => Get.to(Other()),
               child: Text('새 페이지 get.to'),
+            ),
+            Space(12),
+            ElevatedButton(
+              onPressed: () async {
+              },
+              child: Text('btn'),
             ),
             Space(12),
             ElevatedButton(onPressed: () => LoginController().logOutUser(), child: Text('파이어베이스 로그아웃'))

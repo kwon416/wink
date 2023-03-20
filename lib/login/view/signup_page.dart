@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:wink/controller/signup_controller.dart';
 // import 'package:wink/screens/otp_verification_screen.dart';
 import 'package:wink/login/view/login_page.dart';
-import 'package:wink/toast/flutter_toast.dart';
 import 'package:wink/utils/constant.dart';
 import 'package:wink/utils/widgets.dart';
 
@@ -48,7 +47,7 @@ class _SignUpPageState extends State<SignUpPage> {
         return AlertDialog(
           title: Text('Alert'),
           content: SingleChildScrollView(
-            child: ListBody(children: const [Text('Please agree the terms and conditions')]),
+            child: ListBody(children: const [Text('이용약관에 동의해주세요')]),
           ),
           actions: [
             TextButton(
@@ -104,6 +103,12 @@ class _SignUpPageState extends State<SignUpPage> {
                           keyboardType: TextInputType.name,
                           textInputAction: TextInputAction.next,
                           style: TextStyle(fontSize: 16),
+                          validator: (text) {
+                            if (text == null || text.isEmpty) {
+                              return '이름을 입력해주세요';
+                            }
+                            return null;
+                          },
                           decoration: commonInputDecoration(hintText: "이름",prefixIcon: Icon(Icons.person_outline_rounded)),
                         ),
                         Space(16),
@@ -112,6 +117,17 @@ class _SignUpPageState extends State<SignUpPage> {
                           keyboardType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.next,
                           style: TextStyle(fontSize: 20),
+                          validator: (text) {
+                            Pattern pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                            RegExp regExp = RegExp(pattern.toString());
+                            if (text == null || text.isEmpty) {
+                              return '이메일을 입력해주세요';
+                            }
+                            if (!regExp.hasMatch(text)) {
+                              return '잘못된 이메일 형식입니다';
+                            }
+                            return null;
+                          },
                           decoration: commonInputDecoration(hintText: "이메일", prefixIcon: Icon(Icons.email_outlined)),
                         ),
                         Space(16),
@@ -121,6 +137,12 @@ class _SignUpPageState extends State<SignUpPage> {
                           textInputAction: TextInputAction.next,
                           inputFormatters: [LengthLimitingTextInputFormatter(11)],
                           style: TextStyle(fontSize: 20),
+                          validator: (text) {
+                            if (text == null || text.isEmpty) {
+                              return '전화번호를 입력해주세요';
+                            }
+                            return null;
+                          },
                           decoration: commonInputDecoration(hintText: "전화번호", prefixIcon: Icon(Icons.numbers_outlined)),
                         ),
                         Space(16),
@@ -130,8 +152,15 @@ class _SignUpPageState extends State<SignUpPage> {
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: _securePassword,
                           style: TextStyle(fontSize: 20),
+                          validator: (text) {
+                            if (text == null || text.isEmpty) {
+                              return '패스워드를 입력해주세요';
+                            }
+                            if(text.length < 6) return '패스워드가 너무 짧습니다.';
+                            return null;
+                          },
                           decoration: commonInputDecoration(
-                            hintText: "패스워드",
+                            hintText: "패스워드(6자리 이상)",
                             prefixIcon: Icon(Icons.lock_outline_rounded),
                             suffixIcon: Padding(
                               padding: EdgeInsets.only(right: 5.0),
@@ -153,6 +182,12 @@ class _SignUpPageState extends State<SignUpPage> {
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: _secureConfirmPassword,
                           style: TextStyle(fontSize: 20),
+                          validator: (text) {
+                            if (text != controller.password.text) {
+                              return '패스워드를 확인해주세요';
+                            }
+                            return null;
+                          },
                           decoration: commonInputDecoration(
                             hintText: "패스워드 확인",
                             prefixIcon: Icon(Icons.lock_reset_outlined),
@@ -196,15 +231,18 @@ class _SignUpPageState extends State<SignUpPage> {
                               textStyle: TextStyle(fontSize: 20),
                               shape: StadiumBorder(),
                             ),
-                            onPressed: () {
-                              if (controller.password.text != _confirmPassController.text) {
-                                showToast('비밀번호를 확인해주세요', context);
-                                return;
-                              }
+                            onPressed: () async {
                               if (_signUpFormKey.currentState!.validate()) {
                                 if (checkBoxValue == true) {
                                   print('check success');
-                                  controller.registerUser(controller.email.text.trim(), controller.password.text.trim());
+
+                                  controller.registerUser(
+                                    controller.email.text.trim(),
+                                    controller.password.text.trim(),
+                                    controller.userName.text.trim(),
+                                    controller.phoneNo.text.trim(),
+                                  );
+
                                   // Navigator.push(
                                   //   context,
                                   //   MaterialPageRoute(builder: (context) => OTPVerificationScreen()),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:wink/app.dart';
+import 'package:wink/repository/database_repository/database_repository.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -32,6 +33,7 @@ Future<void> initServices() async {
   /// 또는 연결 고정 또는 비동기적인 무엇이든 하세요.
   await Get.putAsync(() => DbService().init());
   Get.put(AuthenticationRepository());
+  Get.put(DatabaseRepository());
   // await Get.putAsync(SettingsService()).init();
   print('All services started...');
 }
