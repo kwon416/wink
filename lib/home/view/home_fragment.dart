@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wink/custom_widget/space.dart';
 import 'package:wink/toast/flutter_toast.dart';
 
 import 'package:wink/theme/theme.dart';
@@ -33,12 +34,12 @@ class HomeFragment extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Padding(padding: EdgeInsets.all(12)),
+            Space(12),
             ElevatedButton(
               onPressed: () {},
-              child: Text('버튼'),
+              child: Text('wink 보내기'),
             ),
-            const Padding(padding: EdgeInsets.all(12)),
+            Space(12),
             ElevatedButton(
               onPressed: (){
                 showToast('토스트 띄우기', context);
