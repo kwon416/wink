@@ -29,7 +29,7 @@ class SignUpController extends GetxController {
     if (rxUser.value != null) membershipController.createUser(rxUser,email,password,userName,phoneNumber);
   }
 
-  ///유저 정보 업데이트
+  ///유저 정보 업데이트 - 미사용
   void updateProfile({String? displayName, String? phoneNumber}) {
     Future<String?> error = AuthenticationRepository.instance.updateProfile(displayName: displayName, phoneNumber: phoneNumber);
     if(error != null) {

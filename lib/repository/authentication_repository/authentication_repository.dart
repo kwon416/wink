@@ -21,7 +21,7 @@ class AuthenticationRepository extends GetxController {
   ///앱 시작 화면 설정
   _setInitialScreen(User? user) async {
     await Future.delayed(Duration(seconds: 2));
-    print('Has user info? => ${user!=null}');
+    print('_setInitialScreen => Has user info? : ${user!=null}');
     if (user?.email != null) {}
     user == null ? Get.offAll(() => const LoginPage()) : Get.offAll(() => HomePage());
   }
@@ -30,7 +30,7 @@ class AuthenticationRepository extends GetxController {
     String errorMessage;
     try {
       await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      firebaseUser.value != null ? Get.offAll(() => const HomePage()) : Get.to(() => const LoginPage());
+      // firebaseUser.value != null ? Get.offAll(() => const HomePage()) : Get.to(() => const LoginPage());
     } on FirebaseAuthException catch (error) {
       print(error.code);
       switch (error.code) {

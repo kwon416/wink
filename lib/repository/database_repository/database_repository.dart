@@ -1,6 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
-import 'package:wink/login/models/user.dart';
+import 'package:wink/login/models/user_data.dart';
 
 class DatabaseRepository extends GetxController {
   static DatabaseRepository get instance => Get.find();
@@ -19,5 +19,13 @@ class DatabaseRepository extends GetxController {
        print('no data available');
        throw Exception('no data available');
      }
+  }
+
+  void updateUser(String uid, Map<String, dynamic> data) async {
+    await _ref.child(uid).update(data);
+  }
+
+  void deleteUser(String uid) async {
+    await _ref.child(uid).remove();
   }
 }

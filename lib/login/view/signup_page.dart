@@ -234,7 +234,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             onPressed: () async {
                               if (_signUpFormKey.currentState!.validate()) {
                                 if (checkBoxValue == true) {
-                                  print('check success');
+                                  print('signUp check success');
 
                                   controller.registerUser(
                                     controller.email.text.trim(),

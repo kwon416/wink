@@ -10,11 +10,11 @@ class UserData {
 
   factory UserData.fromJson(Map<Object?, dynamic> json) {
     return UserData(
-      userName : json["userName"],
-      email : json["email"],
-      uid : json["uid"],
-      password : json["password"],
-      phoneNo : json["phoneNo"],
+      userName : json["userName"] as String,
+      email : json["email"] as String,
+      uid : json["uid"] as String,
+      password : json["password"] as String,
+      phoneNo : json["phoneNo"] as String,
     );
     }
 
