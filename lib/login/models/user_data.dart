@@ -4,9 +4,10 @@ class UserData {
   String uid;
   String password;
   String phoneNo;
+  bool isVerified;
 
 
-  UserData({required this.userName, required this.email, required this.uid, required this.password, required this.phoneNo});
+  UserData({required this.userName, required this.email, required this.uid, required this.password, required this.phoneNo, this.isVerified = false});
 
   factory UserData.fromJson(Map<Object?, dynamic> json) {
     return UserData(

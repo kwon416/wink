@@ -25,8 +25,7 @@ class _HomePageState extends State<HomePage> {
 
   final _pageItem = [
     HomeFragment(),
-    SearchFragment(),
-    BookingFragment(),
+    WinkListFragment(),
     AccountFragment(),
   ];
 
@@ -93,24 +92,19 @@ class _HomePageState extends State<HomePage> {
               backgroundColor: Colors.transparent,
               items: const [
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.home_outlined),
-                    activeIcon: Icon(Icons.home_rounded),
-                    label: "home",
+                    icon: Icon(Icons.send_outlined),
+                    activeIcon: Icon(Icons.send_rounded),
+                    label: "wink 보내기",
                     backgroundColor: Colors.transparent),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.newspaper_outlined),
-                    activeIcon: Icon(Icons.newspaper_rounded),
-                    label: "news",
-                    backgroundColor: Colors.transparent),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.notifications_outlined),
-                    activeIcon: Icon(Icons.notifications_rounded),
-                    label: "notification",
+                    icon: Icon(Icons.call_received_outlined),
+                    activeIcon: Icon(Icons.call_received_rounded),
+                    label: "받은 wink",
                     backgroundColor: Colors.transparent),
                 BottomNavigationBarItem(
                     icon: Icon(Icons.person_outline),
                     activeIcon: Icon(Icons.person_rounded),
-                    label: "person",
+                    label: "마이페이지",
                     backgroundColor: Colors.transparent),
               ],
             ),

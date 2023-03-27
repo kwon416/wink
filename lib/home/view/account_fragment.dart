@@ -58,7 +58,7 @@ class AccountFragment extends StatelessWidget {
             Space(12),
             ElevatedButton(
               onPressed: () async {
-                m.deleteUser('IsAIyINVOBe0ZtG1DE6W1siUTwP2');
+                // m.deleteUser('IsAIyINVOBe0ZtG1DE6W1siUTwP2');
               },
               child: Text('delete test'),
             ),

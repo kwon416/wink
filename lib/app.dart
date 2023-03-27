@@ -91,6 +91,7 @@ class _AppViewState extends State<AppView> {
           darkTheme: darkTheme,
           themeMode: themeMode,
           navigatorKey: _navigatorKey,
+
           // builder: (context, child) {
           //   return BlocListener<AuthenticationBloc, AuthenticationState>(
           //     listener: (context, state) {

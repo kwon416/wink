@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:wink/repository/database_repository/database_repository.dart';
@@ -10,8 +11,23 @@ class MembershipController extends GetxController {
 
   ///유저 데이터
   ///Map<String, dynamic>
-  late var userData;
+  var userData;
   late String uid;
+
+  ///임시 인증 변수
+  bool isVerified = false;
+  void verify() {
+    isVerified = true;
+    update();
+  }
+  ///임시 winkTo 등록
+  final phoneNo =TextEditingController();
+  String winkTo = '';
+  void updateWinkTo(String value) {
+    winkTo = value;
+    update();
+  }
+
 
   void createUser(Rx<User?> rxUser, String email, String password, String userName, String phoneNumber) {
     final user = UserData(
@@ -28,6 +44,7 @@ class MembershipController extends GetxController {
     this.uid = uid;
     print(uid);
     userData  = await DatabaseRepository.instance.readUser(uid);
+    Future.delayed(Duration.zero);
     update();
   }
 
