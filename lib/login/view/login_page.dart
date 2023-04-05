@@ -29,28 +29,32 @@ class _LoginPageState extends State<LoginPage> {
       displayColor: colorScheme.onPrimaryContainer,
     );
 
-    return Stack(
-      children: [
-        Container(color: colorScheme.primaryContainer,),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          // appBar: AppBar(
-          //   backgroundColor: colorScheme.primaryContainer,
-          //   title: Text('Login', style: textTheme.titleLarge,),
-          // ),
-          body: SingleChildScrollView(
-            padding: EdgeInsets.all(20.0),
-            child: BlocProvider(
-              create: (context) {
-                return LoginBloc(
-                  authenticationRepository: RepositoryProvider.of<AuthenticationRepository>(context),
-                );
-              },
-              child: LoginForm(),
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      onVerticalDragEnd: (_) => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Stack(
+        children: [
+          Container(color: colorScheme.primaryContainer,),
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            // appBar: AppBar(
+            //   backgroundColor: colorScheme.primaryContainer,
+            //   title: Text('Login', style: textTheme.titleLarge,),
+            // ),
+            body: SingleChildScrollView(
+              padding: EdgeInsets.all(20.0),
+              child: BlocProvider(
+                create: (context) {
+                  return LoginBloc(
+                    authenticationRepository: RepositoryProvider.of<AuthenticationRepository>(context),
+                  );
+                },
+                child: LoginForm(),
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

@@ -1,6 +1,7 @@
 // import 'package:country_calling_code_picker/picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:wink/controller/login_controller.dart';
 import 'package:wink/custom_widget/space.dart';
 import 'package:wink/login/login.dart';
@@ -115,6 +116,21 @@ class _LoginFormState extends State<LoginForm> {
                 print('로그인 실패');
               },
               child: Text('로그인',),
+            ),
+            const Padding(padding: EdgeInsets.all(12)),
+            ElevatedButton(
+
+              onPressed: () {
+                controller.signInWithGoogle();
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GoogleLogoWidget(),
+                  Space(12),
+                  Text('구글 로그인',),
+                ],
+              ),
             ),
             const Padding(padding: EdgeInsets.all(12)),
             _LoginButton(),

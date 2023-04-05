@@ -13,6 +13,7 @@ class AccountFragment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final CounterController c = Get.put(CounterController());
+    final LoginController l = Get.put(LoginController());
     final MembershipController m = Get.put(MembershipController());
 
 
@@ -28,16 +29,19 @@ class AccountFragment extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             GetBuilder<MembershipController>(
-
-              builder: (_) {
+              builder: (controller) {
                 return Column(
                   children: [
+                    Text('auth user instance'),
+                    Text(l.getUser().toString()),
+                    Space(20),
                     Text('User Data From Realtime DB From firebase'),
-                    Text('get userName : ${m.userData.userName}'),
-                    Text('get uid : ${m.userData.uid}'),
-                    Text('get phoneNo : ${m.userData.phoneNo}'),
-                    Text('get password : ${m.userData.password}'),
-                    Text('get email : ${m.userData.email}'),
+                    Text('get userName : ${controller.userData?.userName}'),
+                    Text('get uid : ${controller.userData?.uid}'),
+                    Text('get phoneNo : ${controller.userData?.phoneNo}'),
+                    Text('get password : ${controller.userData?.password}'),
+                    Text('get email : ${controller.userData?.email}'),
+                    Text('get isVerifired : ${controller.userData?.isVerified}'),
                   ],
                 );
               }
@@ -50,10 +54,9 @@ class AccountFragment extends StatelessWidget {
             Space(12),
             ElevatedButton(
               onPressed: () async {
-                m.updateUser(m.userData.uid, userName: '테스트');
-                m.getCurrentUser(m.userData.uid);
+                m.updateUser(m.userData.uid, userName: '권보궁');
               },
-              child: Text('update test'),
+              child: Text('username update test'),
             ),
             Space(12),
             ElevatedButton(

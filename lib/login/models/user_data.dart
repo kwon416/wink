@@ -16,6 +16,7 @@ class UserData {
       uid : json["uid"] as String,
       password : json["password"] as String,
       phoneNo : json["phoneNo"] as String,
+      isVerified : json["isVerified"] as bool,
     );
     }
 
@@ -27,7 +28,7 @@ class UserData {
       'uid': uid,
       'password': password,
       'phoneNo': phoneNo,
-
+      'isVerified': isVerified,
     };
   }
 }

@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:wink/controller/membership_controller.dart';
 
 import '../../home/home.dart';
 import '../../login/login.dart';
@@ -20,9 +24,11 @@ class AuthenticationRepository extends GetxController {
 
   ///앱 시작 화면 설정
   _setInitialScreen(User? user) async {
-    await Future.delayed(Duration(seconds: 2));
+    if (user?.email != null) {
+      await Get.put(MembershipController()).getCurrentUser(user!.uid);
+    }
+    await Future.delayed(Duration(seconds: 1));
     print('_setInitialScreen => Has user info? : ${user!=null}');
-    if (user?.email != null) {}
     user == null ? Get.offAll(() => const LoginPage()) : Get.offAll(() => HomePage());
   }
   ///auth 계정 생성
@@ -100,11 +106,67 @@ class AuthenticationRepository extends GetxController {
     }
     return null;
   }
+  ///auth 구글 로그인
+  Future<String?> signInWithGoogle() async {
+    try {
+      // Trigger the authentication flow
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+      // Create a new credential
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      await _auth.signInWithCredential(credential);
+
+    } on FirebaseAuthException catch (error) {
+      print(error.code);
+    } catch (e){
+      return e.toString();
+    }
+
+
+  }
+  ///auth 전화번호 인증
+  Future<String?> verifyPhoneNumber(String phoneNumber) async {
+    final completer = Completer<String>();
+      if (GetPlatform.isMobile) {
+        print('is mobile --> phoneNumber : $phoneNumber');
+        await _auth.verifyPhoneNumber(
+          phoneNumber: '+82$phoneNumber',
+          timeout: const Duration(seconds: 60),
+          verificationCompleted: (PhoneAuthCredential credential) {},
+          verificationFailed: (FirebaseAuthException error) {
+            print(error.code);
+            String errorMessage;
+            switch (error.code) {
+              case "invalid-phone-number":
+                errorMessage = "휴대폰 번호의 형식이 잘못되었습니다";
+                break;
+              default:
+                errorMessage = "알 수 없는 오류가 발생했습니다.";
+              }
+              completer.complete(errorMessage);
+            },
+          codeSent: (String verificationId, int? resendToken) async {
+            await Get.put(MembershipController()).setVerificationId(verificationId);
+
+          },
+          codeAutoRetrievalTimeout: (String verificationId) {},
+        );
+        return completer.future;
+      }
+    return null;
+  }
+
   ///auth 계정 로그인 확인
   Future<bool> isUserLogin() async {
     var user =  _auth.currentUser;
     return user != null;
   }
+
   Future<String?> updateProfile({String? displayName, String? phoneNumber}) async {
     try {
       if (displayName != null) {
@@ -117,5 +179,6 @@ class AuthenticationRepository extends GetxController {
       return e.toString();
     }
   }
+
   Future<void> logout() async => await _auth.signOut();
 }

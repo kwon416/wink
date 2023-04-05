@@ -35,7 +35,7 @@ class _WinkListFragmentState extends State<WinkListFragment> {
 
           ),
           backgroundColor: Colors.transparent,
-          body: controller.isVerified
+          body: controller.userData?.isVerified ?? false
             ? ListView.builder(
             padding: EdgeInsets.only(bottom: 16),
             itemCount: itemCount,

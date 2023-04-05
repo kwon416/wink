@@ -40,7 +40,7 @@ class _HomeFragmentState extends State<HomeFragment> {
             elevation: 0.3,
             title: Text('WINK 보내기', style: textTheme.titleLarge,),
             actions: [
-              if (controller.isVerified)
+              if (controller.userData?.isVerified?? false)
                 Stack(
                 children: <Widget>[
                   Container(
@@ -72,7 +72,7 @@ class _HomeFragmentState extends State<HomeFragment> {
             ],
           ),
           backgroundColor: Colors.transparent,
-          body: controller.isVerified
+          body: controller.userData?.isVerified ?? false
             ? controller.winkTo == ''
               ? Center(
                   child: Padding(
