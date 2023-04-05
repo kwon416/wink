@@ -16,13 +16,23 @@ class LoginController extends GetxController {
   final email = TextEditingController();
   final password = TextEditingController();
 
-  Future<void> loginUser(String email, String password) async {
+  ///이메일 패스워드 로그인 ->> 현재는 어드민 로그인
+  Future<void> loginEmailUser(String email, String password) async {
     String? error = await AuthenticationRepository.instance.loginWithEmailAndPassword(email, password);
     if(error != null) {
       Get.showSnackbar(GetSnackBar(message: error.toString(), duration: Duration(seconds: 2),));
     }
   }
 
+  ///전화번호 로그인 현재 사용
+  Future<void> loginUser(String phoneNumber, bool hasAccount) async {
+    String? error = await AuthenticationRepository.instance.verifyPhoneNumber(phoneNumber);
+    if(error != null) {
+      Get.showSnackbar(GetSnackBar(message: error.toString(), duration: Duration(seconds: 2),));
+    }
+  }
+
+  ///미사용
   signInWithGoogle() async {
     var result = await AuthenticationRepository.instance.signInWithGoogle();
 

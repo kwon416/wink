@@ -11,6 +11,7 @@ class DatabaseRepository extends GetxController {
     await _ref.child(user.uid).set(user.toJson());
   }
 
+  ///유저 중복 체크
   Future<bool> hasUser(String uid) async {
     final snapshot = await _ref.child(uid).get();
     if (snapshot.exists) {

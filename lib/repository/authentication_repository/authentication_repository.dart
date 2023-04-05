@@ -69,7 +69,7 @@ class AuthenticationRepository extends GetxController {
     }
     return null;
   }
-  ///auth 계정 로그인
+  ///auth 계정 이메일 로그인
   Future<String?> loginWithEmailAndPassword(String email, String password) async {
     String errorMessage;
     try {
@@ -108,6 +108,7 @@ class AuthenticationRepository extends GetxController {
   }
   ///auth 구글 로그인
   Future<String?> signInWithGoogle() async {
+    String errorMessage;
     try {
       // Trigger the authentication flow
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -123,13 +124,21 @@ class AuthenticationRepository extends GetxController {
 
     } on FirebaseAuthException catch (error) {
       print(error.code);
+      switch (error.code) {
+        case "invalid-credential":
+          errorMessage = '';
+          break;
+        default:
+          errorMessage = '';
+      }
+      return errorMessage;
     } catch (e){
       return e.toString();
     }
 
 
   }
-  ///auth 전화번호 인증
+  ///auth 전화번호 로그인
   Future<String?> verifyPhoneNumber(String phoneNumber) async {
     final completer = Completer<String>();
       if (GetPlatform.isMobile) {

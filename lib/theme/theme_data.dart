@@ -6,7 +6,7 @@ const seedColor = Color(0xff0099ff);
 ElevatedButtonThemeData elevatedButtonTheme = ElevatedButtonThemeData(
   style: ButtonStyle(
     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-      EdgeInsets.symmetric(horizontal: 40, vertical: 20)
+      EdgeInsets.symmetric(horizontal: 20, vertical: 20)
     ),
     shape: MaterialStateProperty.all<OutlinedBorder>(
       RoundedRectangleBorder(

@@ -77,7 +77,7 @@ class MembershipController extends GetxController {
     }
   }
 
-  ///유저 전화번호 인증 완료
+  ///유저 전화번호 인증 완료 db 저장
   Future<void> verifyUser(String uid, String phoneNumber) async {
     final Map<String, dynamic> data = {};
     data.addAll({"isVerified" : true});

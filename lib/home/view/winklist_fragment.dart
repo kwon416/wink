@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:wink/controller/membership_controller.dart';
 import 'package:wink/custom_widget/space.dart';
+import 'package:wink/utils/images.dart';
 
 import '../home.dart';
 
@@ -62,7 +63,7 @@ class _WinkListFragmentState extends State<WinkListFragment> {
                       child: FadeInImage(
                         fit: BoxFit.cover,
                         placeholder: AssetImage('Loading'),
-                        image: Image.asset('assets/images/splash_logo.png', height: 35, width: 20).image,
+                        image: Image.asset(splashLogo, height: 35, width: 20).image,
                       ),
                     ),
                   ),

@@ -16,6 +16,7 @@ class SignUpController extends GetxController {
   final password = TextEditingController();
   final userName = TextEditingController();
   final phoneNo = TextEditingController();
+  RxString gender = ''.obs;
 
   ///회원가입
   Future<void> registerUser(String email, String password, String userName, String phoneNumber) async {
