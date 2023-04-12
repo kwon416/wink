@@ -141,11 +141,11 @@ class _SignUpPageState extends State<SignUpPage> {
                                   _selectedMenu[i] = i == index;
                                 }
                                 if(index == 0){
-                                  controller.gender = '1'.obs;
+                                  controller.gender = '남자'.obs;
                                 } else if(index == 1){
-                                  controller.gender = '2'.obs;
+                                  controller.gender = '여자'.obs;
                                 } else{
-                                  controller.gender = '0'.obs;
+                                  controller.gender = '미공개'.obs;
                                 }
                               });
                             },

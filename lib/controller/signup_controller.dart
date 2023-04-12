@@ -18,8 +18,8 @@ class SignUpController extends GetxController {
   final phoneNo = TextEditingController();
   RxString gender = ''.obs;
 
-  ///회원가입
-  Future<void> registerUser(String email, String password, String userName, String phoneNumber) async {
+  ///이메일 회원가입 (미사용)
+  Future<void> registerEmailUser(String email, String password, String userName, String phoneNumber) async {
     ///firebase auth 계정 생성
     String? error = await AuthenticationRepository.instance.createUserWithEmailAndPassword(email, password);
     if(error != null) {
@@ -27,7 +27,17 @@ class SignUpController extends GetxController {
     }
     ///firebase realtime database 저장
     Rx<User?> rxUser = AuthenticationRepository.instance.firebaseUser;
-    if (rxUser.value != null) membershipController.createUser(rxUser,email,password,userName,phoneNumber);
+    if (rxUser.value != null) membershipController.createEmailUser(rxUser,email,password,userName,phoneNumber);
+  }
+  ///전화번호 회원가입
+  Future<void> registerUser(String phoneNumber) async {
+    //번호 인증
+    String? error = await AuthenticationRepository.instance.verifyPhoneNumber(phoneNumber);
+    if(error != null) {
+      print('에러 있나요');
+      print(error.toString());
+      Get.showSnackbar(GetSnackBar(message: error.toString(), duration: Duration(seconds: 2),));
+    }
   }
 
   ///유저 정보 업데이트 - 미사용

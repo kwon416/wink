@@ -24,7 +24,7 @@ class DatabaseRepository extends GetxController {
    Future<UserData> readUser(String uid) async {
      final snapshot = await _ref.child(uid).get();
      if (snapshot.exists) {
-       return UserData.fromJson(snapshot.value as Map<Object?, dynamic>);
+       return UserData.fromJson(snapshot.value as Map<Object?, Object?>);
      } else {
        print('no data available');
        throw Exception('no data available');

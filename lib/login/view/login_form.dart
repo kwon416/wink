@@ -47,7 +47,7 @@ class _LoginFormState extends State<LoginForm> {
                 Space(8),
                 Text("Please Login to your account", style: textTheme.bodyLarge,),
                 Space(16),
-                Image.asset(splashLogo, width: Get.width*0.8, fit: BoxFit.cover),
+                Image.asset(splashLogo, width: Get.height*0.3, fit: BoxFit.cover),
               ],
             ),
             Space(70),
@@ -103,7 +103,7 @@ class _LoginFormState extends State<LoginForm> {
                 //   return;
                 // }
                 // print('로그인 실패');
-                Get.to(() => VerificationScreen());
+                Get.to(() => VerificationScreen(), arguments: 'logIn');
               },
               child: Text('기존 회원 로그인',),
             ),

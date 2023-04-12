@@ -25,7 +25,7 @@ class LoginController extends GetxController {
   }
 
   ///전화번호 로그인 현재 사용
-  Future<void> loginUser(String phoneNumber, bool hasAccount) async {
+  Future<void> loginUser(String phoneNumber) async {
     String? error = await AuthenticationRepository.instance.verifyPhoneNumber(phoneNumber);
     if(error != null) {
       Get.showSnackbar(GetSnackBar(message: error.toString(), duration: Duration(seconds: 2),));
@@ -38,7 +38,7 @@ class LoginController extends GetxController {
 
     ///firebase realtime database 저장
     Rx<User?> rxUser = AuthenticationRepository.instance.firebaseUser;
-    if (! await DatabaseRepository.instance.hasUser(rxUser.value!.uid) && rxUser.value != null) membershipController.createUser(rxUser,"email","password","userName","phoneNumber");
+    if (! await DatabaseRepository.instance.hasUser(rxUser.value!.uid) && rxUser.value != null) membershipController.createEmailUser(rxUser,"email","password","userName","phoneNumber");
   }
 
   getUser()  {

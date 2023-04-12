@@ -40,7 +40,7 @@ class _HomeFragmentState extends State<HomeFragment> {
             elevation: 0.3,
             title: Text('WINK 보내기', style: textTheme.titleLarge,),
             actions: [
-              if (controller.userData?.isVerified?? false)
+              // if (controller.userData?.isVerified?? false)
                 Stack(
                 children: <Widget>[
                   Container(
@@ -72,7 +72,8 @@ class _HomeFragmentState extends State<HomeFragment> {
             ],
           ),
           backgroundColor: Colors.transparent,
-          body: controller.userData?.isVerified ?? false
+          // body: controller.userData?.isVerified ?? false
+          body: true
             ? controller.winkTo == ''
               ? Center(
                   child: Padding(
@@ -85,8 +86,8 @@ class _HomeFragmentState extends State<HomeFragment> {
                             return RichText(
                               text: TextSpan(
                                 children: [
-                                  TextSpan(text: '이메일 : ', style: textTheme.titleLarge),
-                                  TextSpan(text: controller.userData?.email ?? '', style: textTheme.bodyLarge),
+                                  TextSpan(text: '내 아이디 : ', style: textTheme.titleLarge),
+                                  TextSpan(text: controller.userData?.uid ?? '', style: textTheme.bodyLarge),
                                 ]
                               ),
                             );

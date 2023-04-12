@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wink/controller/counter_controller.dart';
@@ -39,9 +41,9 @@ class AccountFragment extends StatelessWidget {
                     Text('get userName : ${controller.userData?.userName}'),
                     Text('get uid : ${controller.userData?.uid}'),
                     Text('get phoneNo : ${controller.userData?.phoneNo}'),
-                    Text('get password : ${controller.userData?.password}'),
-                    Text('get email : ${controller.userData?.email}'),
-                    Text('get isVerifired : ${controller.userData?.isVerified}'),
+                    Text('get gender : ${controller.userData?.gender}'),
+                    Text('get coin : ${controller.userData?.coin}'),
+                    Text('get winkData : ${controller.userData?.wink}'),
                   ],
                 );
               }
@@ -61,9 +63,16 @@ class AccountFragment extends StatelessWidget {
             Space(12),
             ElevatedButton(
               onPressed: () async {
-                // m.deleteUser('IsAIyINVOBe0ZtG1DE6W1siUTwP2');
+                m.getCurrentUser(l.getUser().value.uid);
               },
-              child: Text('delete test'),
+              child: Text('getCurrentUser'),
+            ),
+            Space(12),
+            ElevatedButton(
+              onPressed: () async {
+                exit(0);
+              },
+              child: Text('강제 종료'),
             ),
             Space(12),
             ElevatedButton(onPressed: () => LoginController().logOutUser(), child: Text('파이어베이스 로그아웃'))

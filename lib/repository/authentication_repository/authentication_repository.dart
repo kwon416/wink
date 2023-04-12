@@ -24,8 +24,8 @@ class AuthenticationRepository extends GetxController {
 
   ///앱 시작 화면 설정
   _setInitialScreen(User? user) async {
-    if (user?.email != null) {
-      await Get.put(MembershipController()).getCurrentUser(user!.uid);
+    if (user?.phoneNumber != null) {
+      //await Get.put(MembershipController()).getCurrentUser(user!.uid);
     }
     await Future.delayed(Duration(seconds: 1));
     print('_setInitialScreen => Has user info? : ${user!=null}');
@@ -160,6 +160,7 @@ class AuthenticationRepository extends GetxController {
               completer.complete(errorMessage);
             },
           codeSent: (String verificationId, int? resendToken) async {
+            print('code is sent');
             await Get.put(MembershipController()).setVerificationId(verificationId);
 
           },

@@ -1,22 +1,26 @@
+import 'dart:ffi';
+
 class UserData {
   String userName;
-  String email;
-  String uid;
-  String password;
+  String gender;
   String phoneNo;
-  bool isVerified;
+  String uid;
+  int coin;
+  String fcmToken;
+  Map<Object?, Object?> wink;
 
 
-  UserData({required this.userName, required this.email, required this.uid, required this.password, required this.phoneNo, this.isVerified = false});
+  UserData({required this.userName, required this.gender, required this.phoneNo, required this.uid, required this.coin, required this.fcmToken, required this.wink });
 
-  factory UserData.fromJson(Map<Object?, dynamic> json) {
+  factory UserData.fromJson(Map<Object?, Object?> json) {
     return UserData(
       userName : json["userName"] as String,
-      email : json["email"] as String,
-      uid : json["uid"] as String,
-      password : json["password"] as String,
+      gender : json["gender"] as String,
       phoneNo : json["phoneNo"] as String,
-      isVerified : json["isVerified"] as bool,
+      uid : json["uid"] as String,
+      coin : json["coin"] as int,
+      fcmToken : json["fcmToken"] as String,
+      wink : json["wink"] as Map<Object?, Object?>,
     );
     }
 
@@ -24,11 +28,12 @@ class UserData {
   Map<String, dynamic> toJson() {
     return {
       'userName': userName,
-      'email': email,
-      'uid': uid,
-      'password': password,
+      'gender': gender,
       'phoneNo': phoneNo,
-      'isVerified': isVerified,
+      'uid': uid,
+      'coin': coin,
+      'fcmToken': fcmToken,
+      'wink': wink,
     };
   }
 }

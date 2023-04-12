@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:quiver/async.dart';
+import 'package:wink/controller/login_controller.dart';
 import 'package:wink/controller/membership_controller.dart';
 import 'package:wink/custom_widget/space.dart';
 import 'package:wink/toast/flutter_toast.dart';
@@ -30,6 +31,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
   final membershipController = Get.put(MembershipController());
   final signUpController = Get.put(SignUpController());
+  final loginController = Get.put(LoginController());
 
   final int _start = 60;
   int _current = 60;
@@ -125,8 +127,16 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                 if (_phoneNoInputKey.currentState!.validate()) {
                                   print('입력 전화번호 : ${_phonNoInputController.value.text}');
 
-                                  //TODO sms 인증?
+                                  ///TODO
+                                  ///1. 로그인 인데 회원가입이 안되있는 경우
+                                  ///2. 회원가입인데 이미 가입되어 있는 경우
                                   // membershipController.verifyPhoneNumber(_phonNoInputController.value.text);
+
+                                  if (Get.arguments == "logIn") {
+                                    loginController.loginUser(_phonNoInputController.value.text);
+                                  } else if (Get.arguments == "signUp") {
+                                    signUpController.registerUser(_phonNoInputController.value.text);
+                                  }
 
                                   Get.focusScope!.unfocus();
                                   setState(() {
@@ -212,14 +222,20 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                         // Sign the user in (or link) with the credential
                                         //await FirebaseAuth.instance.signInWithCredential(credential);
 
-                                        //todo 회원 가입한 경우 유저 db저장
+                                        //todo 회원 가입한 경우 유저 db저장 후 로그인
                                         if (Get.arguments == "signUp") {
                                           print('case : signUp');
                                           print(signUpController.userName.text);
                                           print(signUpController.gender);
-                                          //await controller.verifyUser(controller.uid, _phonNoInputController.text.trim());
-                                        } else {
-                                          print('case : login');
+
+                                          // auth 회원 가입 후 credential로 로그인
+                                          await FirebaseAuth.instance.signInWithCredential(credential);
+                                          // db에 회원 정보 생성
+                                          controller.createUser(signUpController.userName.text, signUpController.gender.toString(), _phonNoInputController.text.trim());
+                                        } else if (Get.arguments == "logIn"){
+                                          print('case : logIn');
+
+                                          await FirebaseAuth.instance.signInWithCredential(credential);
                                         }
                                       }
                                     },

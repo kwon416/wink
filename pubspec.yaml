@@ -35,7 +35,7 @@ dependencies:
   get: ^4.6.5
   firebase_database: ^10.0.16
   nb_utils: ^5.0.6
-  flutter_local_notifications: ^8.2.0
+  flutter_local_notifications: ^13.0.0
   firebase_messaging: ^14.4.0
   quiver: ^3.2.1
 
