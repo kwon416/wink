@@ -62,7 +62,6 @@ class MembershipController extends GetxController {
     );
     DatabaseRepository.instance.createUser(user);
   }
-
   ///현재 uid 값으로 db에서 유저데이터 가져오기
   Future<void> getCurrentUser(String uid) async {
     this.uid = uid;
@@ -73,10 +72,17 @@ class MembershipController extends GetxController {
     print('End run getCurrentUser');
 
   }
+  ///fcm Token 업데이트
+  Future<void> updateFcmToken(String uid, String fcmToken) async {
+    final Map<String, dynamic> data = {"fcmToken": fcmToken};
+    await DatabaseRepository.instance.updateUser(uid, data);
+    await getCurrentUser(uid);
+  }
 
-  Future<void> updateUser(String uid, {String? phoneNo, String? userName}) async {
+  ///유저 정보 업데이트(성별, 이름)
+  Future<void> updateUser(String uid, {String? gender, String? userName}) async {
     final Map<String, dynamic> data = {};
-    if (phoneNo != null) data.addAll({"phoneNo" : phoneNo});
+    if (gender != null) data.addAll({"gender" : gender});
     if (userName != null) data.addAll({"userName" : userName});
 
     await DatabaseRepository.instance.updateUser(uid, data);

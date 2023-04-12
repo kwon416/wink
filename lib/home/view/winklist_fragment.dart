@@ -63,7 +63,7 @@ class _WinkListFragmentState extends State<WinkListFragment> {
                       borderRadius: BorderRadius.circular(40),
                       child: FadeInImage(
                         fit: BoxFit.cover,
-                        placeholder: AssetImage('Loading'),
+                        placeholder: AssetImage(loading),
                         image: Image.asset(splashLogo, height: 35, width: 20).image,
                       ),
                     ),

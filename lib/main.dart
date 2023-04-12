@@ -42,7 +42,7 @@ import 'home/home.dart';
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await setupFlutterNotifications();
-  showFlutterNotification(message);
+  // showFlutterNotification(message);
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
   print('Handling a background message ${message.messageId}');
@@ -53,10 +53,9 @@ void onSelectNotification(NotificationResponse notificationResponse) async {
   print(notificationResponse);
   final String? payload = notificationResponse.payload;
   if (notificationResponse.payload != null) {
-    debugPrint('notificaiton payload: $payload');
-    if (payload == "notification") {
-
-      Get.to(() => NotificationScreen());
+    debugPrint('notificaiton routing payload: $payload');
+    if (payload != null) {
+      await Get.toNamed(payload);
     }
 
   }
@@ -142,14 +141,6 @@ Future<void> setupFlutterNotifications() async {
       AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
 
-  // ///파이어 베이스 포어 그라운드 푸시 알림 처리 app.dart 에서 초기화
-  // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-  //   print('Got a message whilst in the foreground!');
-  //   print('Message data: ${message.data}');
-  //   //TODO 알림으로 보여줄지 스낵바로 보여줄지
-  //   showFlutterNotification(message);
-  // });
-
   /// Update the iOS foreground notification presentation options to allow
   /// heads up notifications.
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
@@ -196,7 +187,7 @@ void showFlutterNotification(RemoteMessage message) {
           //sound: 'slow_spring_board.aiff',
         ),
       ),
-      payload: data['payload'],
+      payload: data['status'],
       // payload: message?.data as String,
     );
   }
@@ -218,9 +209,6 @@ void main() async {
   //수직 고정
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
-  var token = await FirebaseMessaging.instance.getToken();
-  print("FCM token : ${token ?? 'token NULL!'}");
-
   if (!kIsWeb) {
     await setupFlutterNotifications();
   }
@@ -239,7 +227,7 @@ Future<void> initServices() async {
   print('starting services ...');
   /// 여기에서 get_storage, hive, shared_pref 초기화를 하세요.
   /// 또는 연결 고정 또는 비동기적인 무엇이든 하세요.
-  await Get.putAsync(() => DbService().init());
+  //await Get.putAsync(() => DbService().init());
   Get.put(AuthenticationRepository());
   Get.put(DatabaseRepository());
   // await Get.putAsync(SettingsService()).init();

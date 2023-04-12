@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:wink/controller/login_controller.dart';
 import 'package:wink/controller/membership_controller.dart';
 import 'package:wink/home/home.dart';
+import 'package:wink/main.dart';
 
 
 
@@ -33,7 +34,7 @@ class _HomePageState extends State<HomePage> {
   final MembershipController m = Get.put(MembershipController());
   final LoginController l = Get.put(LoginController());
 
-  ///파이어베이스 알림 권한 요청?
+  ///파이어베이스 알림 권한 요청 + fcmToken 관리
   void initializeNotification() async {
     FirebaseMessaging messaging = FirebaseMessaging.instance;
 
@@ -46,10 +47,48 @@ class _HomePageState extends State<HomePage> {
       provisional: false,
       sound: true,
     );
-
     print('User granted permission: ${settings.authorizationStatus}');
+
+    FirebaseMessaging.instance.getToken().then((token){
+      print("get FCM token : ${token ?? 'token NULL!'}");
+      // FCM 토큰을 서버에 저장 👈👈👈👈👈👈👈👈👈👈👈
+      if(token != null) m.updateFcmToken(l.getUser().value.uid, token);
+      // client.post(Uri.parse(Constants.API + 'booster/v1/fcm-token'), body: jsonEncode({ 'fcmToken': "$token" }));
+    });
+
+    FirebaseMessaging.instance.onTokenRefresh.listen((token) {
+      print("on refresh FCM token : $token");
+      m.updateFcmToken(l.getUser().value.uid, token);
+      // FCM 토큰을 서버에 저장 👈👈👈👈👈👈👈👈👈👈👈
+      // client.post(Uri.parse(Constants.API + 'booster/v1/fcm-token'), body: jsonEncode({ 'fcmToken': "$token" }));
+    });
+
   }
 
+  Future<void> _firebaseMessagingForegroundHandler() async {
+    RemoteMessage? initialMessage =
+    await FirebaseMessaging.instance.getInitialMessage();
+
+    if (initialMessage != null) {
+      _handleMessage(initialMessage);
+    }
+
+    ///파이어 베이스 포어 그라운드 푸시 알림 처리
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print('Got a message whilst in the foreground!');
+      print('Message data: ${message.data}');
+      //TODO 알림으로 보여줄지 스낵바로 보여줄지
+      showFlutterNotification(message);
+    });
+    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+  }
+
+  void _handleMessage(RemoteMessage message) {
+    if (message.data['status'] != null) {
+      Get.toNamed('${message.data['status']}');
+
+    }
+  }
 
   @override
   void dispose(){
@@ -58,8 +97,17 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState(){
     super.initState();
+
+    _firebaseMessagingForegroundHandler();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
     String uid = l.getUser().value.uid;
     m.getCurrentUser(uid);
+
     initializeNotification();
   }
 
