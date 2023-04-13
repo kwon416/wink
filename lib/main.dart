@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:wink/app.dart';
+import 'package:wink/controller/membership_controller.dart';
 import 'package:wink/repository/database_repository/database_repository.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -227,26 +228,19 @@ Future<void> initServices() async {
   print('starting services ...');
   /// 여기에서 get_storage, hive, shared_pref 초기화를 하세요.
   /// 또는 연결 고정 또는 비동기적인 무엇이든 하세요.
-  //await Get.putAsync(() => DbService().init());
-  Get.put(AuthenticationRepository());
-  Get.put(DatabaseRepository());
-  // await Get.putAsync(SettingsService()).init();
+  await Get.putAsync(() => DbService().init());
+
   print('All services started...');
 }
 
 class DbService extends GetxService {
   Future<DbService> init() async {
     print('$runtimeType delays 2 sec');
+    Get.put(AuthenticationRepository());
+    Get.put(DatabaseRepository());
     await 2.delay();
     print('$runtimeType ready!');
     return this;
   }
 }
 
-// class SettingsService extends GetxService {
-//   void init() async {
-//     print('$runtimeType delays 1 sec');
-//     await 1.delay();
-//     print('$runtimeType ready!');
-//   }
-// }

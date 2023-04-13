@@ -38,6 +38,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           style: TextStyle(color: Get.isDarkMode ? Colors.white : Colors.black),
         ),
       ),
+      backgroundColor: colorScheme.primaryContainer,
       body: ListView.builder(
         padding: EdgeInsets.all(8),
         itemCount: 20,

@@ -22,6 +22,20 @@ class HomeFragment extends StatefulWidget {
 class _HomeFragmentState extends State<HomeFragment> {
 
   final _sendWinkKey = GlobalKey<FormState>();
+  // MembershipController membershipController = Get.put(MembershipController());
+  //  final membershipController;
+  @override
+  void initState() {
+    super.initState();
+    print('home frag init ');
+
+  }
+  @override
+  void didChangeDependencies() {
+    // membershipController = Get.put(membershipController());
+    super.didChangeDependencies();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +44,9 @@ class _HomeFragmentState extends State<HomeFragment> {
       bodyColor: colorScheme.onPrimaryContainer,
       displayColor: colorScheme.onPrimaryContainer,
     );
+    print('home frag build');
 
-    //핸드폰 인증 확인
+    var membershipController = Get.put(MembershipController());
     return GetBuilder<MembershipController>(
       builder: (controller) {
         return Scaffold(
@@ -64,17 +79,11 @@ class _HomeFragmentState extends State<HomeFragment> {
                   )
                 ],
               ),
-              // Switch(
-              //     value: context.watch<ThemeCubit>().state == ThemeMode.dark,
-              //     onChanged: (newValue){
-              //       context.read<ThemeCubit>().toggleTheme(newValue);
-              //     }),
             ],
           ),
           backgroundColor: Colors.transparent,
-          // body: controller.userData?.isVerified ?? false
-          body: true
-            ? controller.winkTo == ''
+          body: controller.userData?.phoneNo != null
+            ? controller.userData?.wink['winkTo'] == ''
               ? Center(
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
@@ -94,7 +103,20 @@ class _HomeFragmentState extends State<HomeFragment> {
                           }
                         ),
                         Space(12),
-                        Text('전화번호를 입력하세요'),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+
+                          children: [
+                            Container(
+                              height: 30,
+                              decoration: BoxDecoration(shape: BoxShape.circle),
+                              child: Image.asset('assets/icons/heart.png')
+                            ),
+                            Text(' : ${controller.userData?.coin}개')
+                          ],
+                        ),
+                        Text('코인이 50개 필요합니다'),
+                        Text('윙크를 보낼 전화번호를 입력하세요'),
                         Space(12),
                         GetBuilder<MembershipController>(
                           builder: (controller) {
@@ -102,7 +124,7 @@ class _HomeFragmentState extends State<HomeFragment> {
                               child: Form(
                                 key: _sendWinkKey,
                                 child: TextFormField(
-                                  controller: controller.phoneNo,
+                                  controller: controller.winkToInput,
                                   keyboardType: TextInputType.phone,
                                   textInputAction: TextInputAction.send,
                                   inputFormatters: [LengthLimitingTextInputFormatter(11)],
@@ -123,11 +145,13 @@ class _HomeFragmentState extends State<HomeFragment> {
                         GetBuilder<MembershipController>(
                           builder: (controller) {
                             return ElevatedButton(
-                              onPressed: () {
+                              onPressed: () async {
                                 if (_sendWinkKey.currentState!.validate()) {
-                                  controller.updateWinkTo(controller.phoneNo.value.text);
+                                  showToast('wink to ${controller.winkToInput.value.text}', context);
+                                  await controller.updateUser(controller.userData.uid, winkTo: controller.winkToInput.value.text.trim());
+                                  controller.winkToInput.clear();
                                 }
-                                showToast('wink to ${controller.winkTo}', context);
+
                               },
                               child: Text('wink 보내기'),
                             );
@@ -150,10 +174,17 @@ class _HomeFragmentState extends State<HomeFragment> {
                 return Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('내가 wink 보낸 상대 : ${controller.winkTo}'),
+                    Text('내가 wink 보낸 상대 : ${controller.userData?.wink['winkTo']}'),
                     Space(20),
                     Text('result'),
                     Text('null'),
+                    ElevatedButton(
+                      onPressed: () {
+                        controller.updateUser(controller.userData.uid, winkTo: '');
+                        showToast('reset wink', context);
+                      },
+                      child: Text('wink 초기화'),
+                    ),
                   ],
                 );
               }
@@ -180,7 +211,7 @@ class NotVerifiedScreen extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               showToast('인증 화면으로 이동', context);
-              Get.to(() => VerificationScreen());
+              Get.to(() => VerificationScreen(), arguments: 'logIn');
             },
             child: Text('핸드폰 번호 인증하기'),
           ),

@@ -102,11 +102,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies() async {
     super.didChangeDependencies();
 
-    String uid = l.getUser().value.uid;
-    m.getCurrentUser(uid);
+    // String uid = l.getUser().value.uid;
+    // await m.getCurrentUser(uid);
 
     initializeNotification();
   }

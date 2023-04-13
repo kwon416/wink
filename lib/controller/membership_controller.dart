@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wink/provider/sample_provider.dart';
+
 
 import 'package:wink/repository/database_repository/database_repository.dart';
 import 'package:wink/repository/authentication_repository/authentication_repository.dart';
@@ -29,12 +31,12 @@ class MembershipController extends GetxController {
     update();
   }
   ///임시 winkTo 등록
-  final phoneNo =TextEditingController();
-  String winkTo = '';
-  void updateWinkTo(String value) {
-    winkTo = value;
-    update();
-  }
+  final winkToInput =TextEditingController();
+  // String winkTo = '';
+  // void updateWinkTo(String value) {
+  //   winkTo = value;
+  //   update();
+  // }
 
 
   void createEmailUser(Rx<User?> rxUser, String email, String password, String userName, String phoneNumber) {
@@ -74,16 +76,18 @@ class MembershipController extends GetxController {
   }
   ///fcm Token 업데이트
   Future<void> updateFcmToken(String uid, String fcmToken) async {
+    print("start FCM Token update");
     final Map<String, dynamic> data = {"fcmToken": fcmToken};
     await DatabaseRepository.instance.updateUser(uid, data);
     await getCurrentUser(uid);
   }
 
-  ///유저 정보 업데이트(성별, 이름)
-  Future<void> updateUser(String uid, {String? gender, String? userName}) async {
+  ///유저 정보 업데이트(성별, 이름, 윙크)
+  Future<void> updateUser(String uid, {String? gender, String? userName, String? winkTo}) async {
     final Map<String, dynamic> data = {};
     if (gender != null) data.addAll({"gender" : gender});
     if (userName != null) data.addAll({"userName" : userName});
+    if (winkTo != null) data.addAll({"wink/winkTo" : winkTo});
 
     await DatabaseRepository.instance.updateUser(uid, data);
     await getCurrentUser(uid);
@@ -98,6 +102,11 @@ class MembershipController extends GetxController {
   //   await DatabaseRepository.instance.veryfyUser(uid, data);
   //   await getCurrentUser(uid);
   // }
+
+  SampleProvider sampleProvider = SampleProvider();
+  void fcmPushNoti() {
+    sampleProvider.postPushNotification();
+  }
 
   void deleteUser(String uid) {
     DatabaseRepository.instance.deleteUser(uid);

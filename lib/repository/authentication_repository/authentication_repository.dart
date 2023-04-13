@@ -8,7 +8,7 @@ import 'package:wink/controller/membership_controller.dart';
 import '../../home/home.dart';
 import '../../login/login.dart';
 
-class AuthenticationRepository extends GetxController {
+class AuthenticationRepository extends GetxService {
   static AuthenticationRepository get instance => Get.find();
 
   final _auth = FirebaseAuth.instance;
@@ -25,11 +25,13 @@ class AuthenticationRepository extends GetxController {
   ///앱 시작 화면 설정
   _setInitialScreen(User? user) async {
     if (user?.phoneNumber != null) {
-      //await Get.put(MembershipController()).getCurrentUser(user!.uid);
+      await Get.put(MembershipController()).getCurrentUser(user!.uid);
     }
     await Future.delayed(Duration(seconds: 1));
-    print('_setInitialScreen => Has user info? : ${user!=null}');
-    user == null ? Get.offAll(() => const LoginPage()) : Get.offAll(() => HomePage());
+    print('_setInitialScreen => Has user info? : $user');
+    user == null
+        ? Get.offAll(() => const LoginPage())
+        : {Get.offAll(() => HomePage())};
   }
   ///auth 계정 생성
   Future<String?> createUserWithEmailAndPassword(String email, String password) async {

@@ -63,21 +63,18 @@ class AccountFragment extends StatelessWidget {
                 },
                 child: Text('username update test'),
               ),
+              Space(12), ElevatedButton(
+                onPressed: () async {
+                  m.fcmPushNoti();
+                },
+                child: Text('fcmPushNoti'),
+              ),
               Space(12),
               ElevatedButton(
                 onPressed: () async {
                   m.getCurrentUser(l.getUser().value.uid);
                 },
                 child: Text('getCurrentUser'),
-              ),
-              Space(12),
-              ElevatedButton(
-                onPressed: () async {
-                  FlutterLocalNotificationsPlugin().show(
-                    0, '제목', '내용', NotificationDetails()
-                  );
-                },
-                child: Text('local push notification'),
               ),
               Space(12),
               ElevatedButton(

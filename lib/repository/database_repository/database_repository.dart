@@ -2,7 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:wink/login/models/user_data.dart';
 
-class DatabaseRepository extends GetxController {
+class DatabaseRepository extends GetxService {
   static DatabaseRepository get instance => Get.find();
 
   final DatabaseReference _ref = FirebaseDatabase.instance.ref("user/");

@@ -17,11 +17,15 @@ ElevatedButtonThemeData elevatedButtonTheme = ElevatedButtonThemeData(
 );
 AppBarTheme appBarTheme = AppBarTheme(
   centerTitle: true,
-
+ // backgroundColor: Colors.transparent
+  elevation: 0.3,
 );
+
+const scaffoldBackgroundColor = Colors.transparent;
 
 ThemeData lightTheme = ThemeData(
   appBarTheme: appBarTheme,
+  scaffoldBackgroundColor: scaffoldBackgroundColor,
   brightness: Brightness.light,
   colorScheme: ColorScheme.fromSeed(
     seedColor: seedColor,
@@ -33,6 +37,7 @@ ThemeData lightTheme = ThemeData(
 
 ThemeData darkTheme = ThemeData(
   appBarTheme: appBarTheme,
+  scaffoldBackgroundColor: scaffoldBackgroundColor,
   brightness: Brightness.dark,
   colorScheme: ColorScheme.fromSeed(
     seedColor: seedColor,
