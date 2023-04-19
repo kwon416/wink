@@ -16,8 +16,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     TextTheme textTheme = Theme.of(context).textTheme.apply(
-      bodyColor: colorScheme.onPrimaryContainer,
-      displayColor: colorScheme.onPrimaryContainer,
+      // bodyColor: colorScheme.onPrimaryContainer,
+      // displayColor: colorScheme.onPrimaryContainer,
     );
 
     return Scaffold(
@@ -25,18 +25,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
         centerTitle: true,
         elevation: 0,
         backgroundColor: colorScheme.primaryContainer,
-        iconTheme: IconThemeData(color: Get.isDarkMode ? Colors.white : Colors.black),
+        // iconTheme: IconThemeData(color: Get.isDarkMode ? Colors.white : Colors.black),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
             Get.back();
           },
         ),
-        title: Text(
-          "알림",
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Get.isDarkMode ? Colors.white : Colors.black),
-        ),
+        title: Text("알림",),
       ),
       backgroundColor: colorScheme.primaryContainer,
       body: ListView.builder(

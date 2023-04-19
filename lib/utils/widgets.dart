@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:home_hub/models/last_bookings_model.dart';
 // import 'package:home_hub/screens/dashboard_screen.dart';
 import 'package:wink/utils/colors.dart';
+import 'package:nb_utils/nb_utils.dart';
 //
 InputDecoration commonInputDecoration({String? hintText, Widget? prefixIcon, Widget? suffixIcon}) {
   return InputDecoration(
@@ -15,6 +16,72 @@ InputDecoration commonInputDecoration({String? hintText, Widget? prefixIcon, Wid
     border: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide.none),
   );
 }
+
+BoxDecoration boxDecorations({double radius = 8, Color color = Colors.transparent, Color? bgColor, var showShadow = false}) {
+  return BoxDecoration(
+    color: bgColor,
+    boxShadow: showShadow ? [BoxShadow(color: boxShadow, blurRadius: 10, spreadRadius: 2)] : [BoxShadow(color: Colors.transparent)],
+    border: Border.all(color: color),
+    borderRadius: BorderRadius.all(Radius.circular(radius)),
+  );
+}
+
+BoxDecoration boxDecoration(
+    {double radius = 80.0, Color backGroundColor = transparent, double blurRadius = 8.0, double spreadRadius = 8.0, Color radiusColor = Colors.black12, Gradient? gradient}) {
+  return BoxDecoration(
+    borderRadius: BorderRadius.circular(radius),
+    boxShadow: [
+      BoxShadow(
+        color: radiusColor,
+        blurRadius: blurRadius,
+        spreadRadius: spreadRadius,
+      ),
+    ],
+    color: backGroundColor,
+    gradient: gradient,
+  );
+}
+
+// ignore: must_be_immutable
+class SDButton extends StatefulWidget {
+  static String tag = '/T4Button';
+  var textContent;
+  VoidCallback onPressed;
+  var isStroked = false;
+  var height = 40.0;
+
+  SDButton({super.key, required this.textContent, required this.onPressed, this.isStroked = false, this.height = 45.0});
+
+  @override
+  SDButtonState createState() => SDButtonState();
+}
+
+class SDButtonState extends State<SDButton> {
+  @override
+  Widget build(BuildContext context) {
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
+    TextTheme textTheme = Theme.of(context).textTheme.apply(
+      // bodyColor: colorScheme.onPrimaryContainer,
+      // displayColor: colorScheme.onPrimaryContainer,
+    );
+    return GestureDetector(
+      onTap: widget.onPressed,
+      child: Container(
+        height: widget.height,
+        padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
+        alignment: Alignment.center,
+        decoration: widget.isStroked ? boxDecorations(bgColor: Colors.transparent, color: colorScheme.primary) : boxDecorations(bgColor: colorScheme.primary, radius: 6),
+        child: Text(
+          widget.textContent,
+          textAlign: TextAlign.center,
+          // style: boldTextStyle(size: 16, color: colorScheme.onPrimary, letterSpacing: 2),
+          style: textTheme.bodyLarge,
+        ),
+      ),
+    );
+  }
+}
+
 //
 // Widget homeTitleWidget({
 //   String? titleText,

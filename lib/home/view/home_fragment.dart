@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:wink/custom_widget/space.dart';
 import 'package:wink/home/view/notification_screen.dart';
+import 'package:wink/main.dart';
 import 'package:wink/toast/flutter_toast.dart';
 
 import 'package:wink/theme/theme.dart';
@@ -22,8 +24,6 @@ class HomeFragment extends StatefulWidget {
 class _HomeFragmentState extends State<HomeFragment> {
 
   final _sendWinkKey = GlobalKey<FormState>();
-  // MembershipController membershipController = Get.put(MembershipController());
-  //  final membershipController;
   @override
   void initState() {
     super.initState();
@@ -41,22 +41,24 @@ class _HomeFragmentState extends State<HomeFragment> {
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     TextTheme textTheme = Theme.of(context).textTheme.apply(
-      bodyColor: colorScheme.onPrimaryContainer,
-      displayColor: colorScheme.onPrimaryContainer,
+      //bodyColor: colorScheme.onPrimaryContainer,
+      //displayColor: colorScheme.onPrimaryContainer,
     );
     print('home frag build');
 
-    var membershipController = Get.put(MembershipController());
+
+    //var controller = Get.put(MembershipController());
     return GetBuilder<MembershipController>(
       builder: (controller) {
+        // ever(controller.userData?.wink['winkTo'], (callback) => print('dffdfd'));
         return Scaffold(
           appBar: AppBar(
             backgroundColor: colorScheme.primaryContainer,
             elevation: 0.3,
-            title: Text('WINK 보내기', style: textTheme.titleLarge,),
+            title: Text('WINK 보내기',style: textTheme.titleLarge,),
             actions: [
               // if (controller.userData?.isVerified?? false)
-                Stack(
+              Stack(
                 children: <Widget>[
                   Container(
                     margin: EdgeInsets.only(left: 10),
@@ -82,115 +84,108 @@ class _HomeFragmentState extends State<HomeFragment> {
             ],
           ),
           backgroundColor: Colors.transparent,
-          body: controller.userData?.phoneNo != null
-            ? controller.userData?.wink['winkTo'] == ''
+          body: controller.userData?.wink['winkTo'] == ''
               ? Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        GetBuilder<MembershipController>(
-                          builder: (controller) {
-                            return RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(text: '내 아이디 : ', style: textTheme.titleLarge),
-                                  TextSpan(text: controller.userData?.uid ?? '', style: textTheme.bodyLarge),
-                                ]
-                              ),
-                            );
-                          }
-                        ),
-                        Space(12),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-
-                          children: [
-                            Container(
-                              height: 30,
-                              decoration: BoxDecoration(shape: BoxShape.circle),
-                              child: Image.asset('assets/icons/heart.png')
-                            ),
-                            Text(' : ${controller.userData?.coin}개')
-                          ],
-                        ),
-                        Text('코인이 50개 필요합니다'),
-                        Text('윙크를 보낼 전화번호를 입력하세요'),
-                        Space(12),
-                        GetBuilder<MembershipController>(
-                          builder: (controller) {
-                            return SizedBox(
-                              child: Form(
-                                key: _sendWinkKey,
-                                child: TextFormField(
-                                  controller: controller.winkToInput,
-                                  keyboardType: TextInputType.phone,
-                                  textInputAction: TextInputAction.send,
-                                  inputFormatters: [LengthLimitingTextInputFormatter(11)],
-                                  style: TextStyle(fontSize: 20),
-                                  validator: (text) {
-                                    if (text == null || text.isEmpty) {
-                                      return '전화번호를 입력해주세요';
-                                    }
-                                    return null;
-                                  },
-                                  decoration: commonInputDecoration(hintText: "전화번호", prefixIcon: Icon(Icons.numbers_outlined)),
-                                ),
-                              ),
-                            );
-                          }
-                        ),
-                        Space(12),
-                        GetBuilder<MembershipController>(
-                          builder: (controller) {
-                            return ElevatedButton(
-                              onPressed: () async {
-                                if (_sendWinkKey.currentState!.validate()) {
-                                  showToast('wink to ${controller.winkToInput.value.text}', context);
-                                  await controller.updateUser(controller.userData.uid, winkTo: controller.winkToInput.value.text.trim());
-                                  controller.winkToInput.clear();
-                                }
-
-                              },
-                              child: Text('wink 보내기'),
-                            );
-                          }
-                        ),
-                        Space(12),
-                        ElevatedButton(
-                          onPressed: (){
-                            showToast('토스트 띄우기', context);
-                          },
-                          child: Text('토스트 버튼',),
-                        ),
-                      ],
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  RichText(
+                    text: TextSpan(
+                        children: [
+                          TextSpan(text: '내 아이디 : ', style: textTheme.titleLarge),
+                          TextSpan(text: controller.userData?.uid ?? '', style: textTheme.bodyLarge),
+                          // TextSpan(text: controller.userData?.uid ?? '', style: textTheme.bodyLarge),
+                        ]
                     ),
                   ),
-                )
-              : Center(
-            child: GetBuilder<MembershipController>(
-              builder: (controller) {
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text('내가 wink 보낸 상대 : ${controller.userData?.wink['winkTo']}'),
-                    Space(20),
-                    Text('result'),
-                    Text('null'),
-                    ElevatedButton(
-                      onPressed: () {
-                        controller.updateUser(controller.userData.uid, winkTo: '');
-                        showToast('reset wink', context);
-                      },
-                      child: Text('wink 초기화'),
+                  Space(12),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+
+                    children: [
+                      Container(
+                          height: 30,
+                          decoration: BoxDecoration(shape: BoxShape.circle),
+                          child: Image.asset('assets/icons/heart.png')
+                      ),
+                      Text(' : ${controller.userData?.coin}개')
+                    ],
+                  ),
+                  Text('코인이 50개 필요합니다'),
+                  Text('윙크를 보낼 전화번호를 입력하세요'),
+                  Space(12),
+                  SizedBox(
+                    child: Form(
+                      key: _sendWinkKey,
+                      child: TextFormField(
+                        controller: controller.winkToInput,
+                        keyboardType: TextInputType.phone,
+                        textInputAction: TextInputAction.send,
+                        inputFormatters: [LengthLimitingTextInputFormatter(11)],
+                        style: TextStyle(fontSize: 20),
+                        validator: (text) {
+                          if (text == null || text.isEmpty) {
+                            return '전화번호를 입력해주세요';
+                          }
+                          return null;
+                        },
+                        decoration: commonInputDecoration(hintText: "전화번호", prefixIcon: Icon(Icons.numbers_outlined)),
+                      ),
                     ),
-                  ],
-                );
-              }
+                  ),
+                  Space(12),
+                  ElevatedButton(
+                    onPressed: () async {
+                      if (_sendWinkKey.currentState!.validate()) {
+                        showToast('wink to ${controller.winkToInput.value.text}', context);
+                        await controller.updateUser(controller.userData.uid, winkTo: controller.winkToInput.value.text.trim());
+                        controller.winkToInput.clear();
+                      }
+
+                    },
+                    child: Text('wink 보내기'),
+                  ),
+                  Space(12),
+                  ElevatedButton(
+                    onPressed: (){
+                      controller.getCurrentUser(controller.uid);
+                    },
+                    child: Text('get Current User',),
+                  ),
+                ],
+              ),
             ),
           )
-            : NotVerifiedScreen(),
+              : Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('내가 wink 보낸 상대 : ${controller.userData?.wink['winkTo']}'),
+                  Space(20),
+                  Text('result'),
+                  Text('null'),
+                  ElevatedButton(
+                    onPressed: () {
+                      controller.updateUser(controller.userData.uid, winkTo: '');
+                      showToast('reset wink', context);
+                    },
+                    child: Text('wink 초기화'),
+                  ),
+                  Space(12),
+                  SDButton(
+                      textContent: 'local noti',
+                      onPressed: () {
+                        FlutterLocalNotificationsPlugin().show(0, 'title', 'body', NotificationDetails());
+                      }
+                  ),
+                ],
+              ),
+            ),
+          ),
         );
       }
     );

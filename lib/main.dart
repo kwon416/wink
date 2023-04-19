@@ -43,7 +43,9 @@ import 'home/home.dart';
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await setupFlutterNotifications();
-  // showFlutterNotification(message);
+  //notification이 있으면 백그라운드 알림 뜸
+  //notification이 없으면 파이어베이스 알림이 안뜨므로 data로 로컬 노티 생성
+  if (message.notification == null) showFlutterNotification(message);
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
   print('Handling a background message ${message.messageId}');
@@ -145,7 +147,7 @@ Future<void> setupFlutterNotifications() async {
   /// Update the iOS foreground notification presentation options to allow
   /// heads up notifications.
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-    alert: true,
+    alert: false,
     badge: true,
     sound: true,
   );
@@ -158,11 +160,11 @@ void showFlutterNotification(RemoteMessage message) {
   RemoteNotification? notification = message.notification;
   Map<String, dynamic>? data = message.data;
   // AndroidNotification? android = message.notification?.android;
-  if (data.isNotEmpty) {
+  if (true) {
     flutterLocalNotificationsPlugin.show(
-      data.hashCode,
-      data['title'],
-      data['body'],
+      notification?.hashCode ?? data.hashCode,
+      notification?.title ?? data['title'],
+      notification?.body ?? data['body'],
       NotificationDetails(
         android: AndroidNotificationDetails(
           channel.id,
@@ -172,13 +174,13 @@ void showFlutterNotification(RemoteMessage message) {
           priority: Priority.high,
           ticker: 'ticker',
           icon: '@mipmap/ic_launcher',
-          actions: <AndroidNotificationAction>[
-            AndroidNotificationAction(
-                'id_1', data["key_1"],
-            ),
-            AndroidNotificationAction('id_2', data["key_2"]),
-            AndroidNotificationAction('id_3', 'Action 3'),
-          ],
+          // actions: <AndroidNotificationAction>[
+          //   AndroidNotificationAction(
+          //       'id_1', data["key_1"] ?? '',
+          //   ),
+          //   AndroidNotificationAction('id_2', data["key_2"] ?? ''),
+          //   AndroidNotificationAction('id_3', 'Action 3'),
+          // ],
           // TODO add a proper drawable resource to android, for now using
           //      one that already exists in example app.
         ),

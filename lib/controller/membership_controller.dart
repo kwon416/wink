@@ -16,7 +16,6 @@ class MembershipController extends GetxController {
   ///Map<String, dynamic>
   var userData;
   late String uid;
-
   ///임시 verificationId
   String verificationId = '';
   setVerificationId(String s) {
@@ -24,20 +23,8 @@ class MembershipController extends GetxController {
     update();
   }
 
-  ///임시 인증 변수
-  bool isVerified = false;
-  void verify() {
-    isVerified = true;
-    update();
-  }
   ///임시 winkTo 등록
   final winkToInput =TextEditingController();
-  // String winkTo = '';
-  // void updateWinkTo(String value) {
-  //   winkTo = value;
-  //   update();
-  // }
-
 
   void createEmailUser(Rx<User?> rxUser, String email, String password, String userName, String phoneNumber) {
     // final user = UserData(
@@ -65,14 +52,14 @@ class MembershipController extends GetxController {
     DatabaseRepository.instance.createUser(user);
   }
   ///현재 uid 값으로 db에서 유저데이터 가져오기
-  Future<void> getCurrentUser(String uid) async {
+  Future<bool> getCurrentUser(String uid) async {
     this.uid = uid;
-    print('run getCurrentUser');
-    userData  = await DatabaseRepository.instance.readUser(uid);
-    Future.delayed(Duration.zero);
+    print('run getCurrentUser uid: $uid');
+    userData  =  await DatabaseRepository.instance.readUser(uid);
+    // Future.delayed(Duration.zero);
     update();
     print('End run getCurrentUser');
-
+    return Future.value(true);
   }
   ///fcm Token 업데이트
   Future<void> updateFcmToken(String uid, String fcmToken) async {

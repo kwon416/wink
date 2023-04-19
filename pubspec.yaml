@@ -27,7 +27,6 @@ dependencies:
   formz: ^0.4.0
   intl: ^0.18.0
   shared_preferences: ^2.0.20
-  country_calling_code_picker: ^2.0.1
   firebase_auth: ^4.2.2
   firebase_core_platform_interface: ^4.5.3
   google_sign_in: ^6.0.2
@@ -38,6 +37,7 @@ dependencies:
   flutter_local_notifications: ^13.0.0
   firebase_messaging: ^14.4.0
   quiver: ^3.2.1
+  google_fonts: ^4.0.3
 
 dev_dependencies:
   flutter_test:

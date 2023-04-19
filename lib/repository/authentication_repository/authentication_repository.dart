@@ -24,14 +24,15 @@ class AuthenticationRepository extends GetxService {
 
   ///앱 시작 화면 설정
   _setInitialScreen(User? user) async {
-    if (user?.phoneNumber != null) {
-      await Get.put(MembershipController()).getCurrentUser(user!.uid);
-    }
     await Future.delayed(Duration(seconds: 1));
     print('_setInitialScreen => Has user info? : $user');
-    user == null
-        ? Get.offAll(() => const LoginPage())
-        : {Get.offAll(() => HomePage())};
+    if(user == null) {
+      Get.offAll(() => const LoginPage());
+    } else {
+      MembershipController m = Get.put(MembershipController(), permanent: true);
+      await m.getCurrentUser(user.uid);
+      Get.offAll(() => HomePage());
+    }
   }
   ///auth 계정 생성
   Future<String?> createUserWithEmailAndPassword(String email, String password) async {
@@ -142,6 +143,7 @@ class AuthenticationRepository extends GetxService {
   }
   ///auth 전화번호 로그인
   Future<String?> verifyPhoneNumber(String phoneNumber) async {
+    print('start verifycation phoneNo');
     final completer = Completer<String>();
       if (GetPlatform.isMobile) {
         print('is mobile --> phoneNumber : $phoneNumber');
@@ -150,7 +152,7 @@ class AuthenticationRepository extends GetxService {
           timeout: const Duration(seconds: 60),
           verificationCompleted: (PhoneAuthCredential credential) {},
           verificationFailed: (FirebaseAuthException error) {
-            print(error.code);
+            print("verificationFailed error.code: ${error.code}");
             String errorMessage;
             switch (error.code) {
               case "invalid-phone-number":

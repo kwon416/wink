@@ -59,6 +59,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
       bodyColor: colorScheme.onPrimaryContainer,
       displayColor: colorScheme.onPrimaryContainer,
     );
+
+
+
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       onVerticalDragEnd: (_) => FocusManager.instance.primaryFocus?.unfocus(),
@@ -80,9 +83,15 @@ class _VerificationScreenState extends State<VerificationScreen> {
             appBar: AppBar(
               centerTitle: true,
               elevation: 0,
-              title: Image.asset(splashLogo,fit: BoxFit.cover,height: Get.statusBarHeight,),
+              title: SizedBox(child: Image.asset(splashLogo,fit: BoxFit.cover,height: AppBar().preferredSize.height )),
               backgroundColor: Colors.transparent,
-              iconTheme: IconThemeData(color:colorScheme.onPrimaryContainer),
+              iconTheme: IconThemeData(color: Get.isDarkMode ? Colors.white : Colors.black),
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () {
+                  Get.back();
+                },
+              ),
             ),
             body: Center(
                 child: Padding(
@@ -133,6 +142,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                   // membershipController.verifyPhoneNumber(_phonNoInputController.value.text);
 
                                   if (Get.arguments == "logIn") {
+                                    print('로그인 인증번호 발송');
                                     loginController.loginUser(_phonNoInputController.value.text);
                                   } else if (Get.arguments == "signUp") {
                                     signUpController.registerUser(_phonNoInputController.value.text);
@@ -205,45 +215,41 @@ class _VerificationScreenState extends State<VerificationScreen> {
                             ],
                           ),
                           Space(20),
-                          GetBuilder<MembershipController>(
-                              builder: (controller) {
-                                return SizedBox(
-                                  width: Get.width,
-                                  child: ElevatedButton(
-                                    onPressed: () async {
-                                      if (_verifyNoKey.currentState!.validate()) {
-                                        showToast('인증 성공', context);
+                          SizedBox(
+                            width: Get.width,
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                if (_verifyNoKey.currentState!.validate()) {
 
-                                        // Create a PhoneAuthCredential with the code
-                                        PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: controller.verificationId.toString(), smsCode: _verifyNoController.text);
 
-                                        print(credential);
+                                  // Create a PhoneAuthCredential with the code
+                                  PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: membershipController.verificationId.toString(), smsCode: _verifyNoController.text);
 
-                                        // Sign the user in (or link) with the credential
-                                        //await FirebaseAuth.instance.signInWithCredential(credential);
+                                  print(credential);
 
-                                        //todo 회원 가입한 경우 유저 db저장 후 로그인
-                                        if (Get.arguments == "signUp") {
-                                          print('case : signUp');
-                                          print(signUpController.userName.text);
-                                          print(signUpController.gender);
+                                  // Sign the user in (or link) with the credential
+                                  //await FirebaseAuth.instance.signInWithCredential(credential);
 
-                                          // auth 회원 가입 후 credential로 로그인
-                                          await FirebaseAuth.instance.signInWithCredential(credential);
-                                          // db에 회원 정보 생성
-                                          controller.createUser(signUpController.userName.text, signUpController.gender.toString(), _phonNoInputController.text.trim());
-                                        } else if (Get.arguments == "logIn"){
-                                          print('case : logIn');
+                                  //todo 회원 가입한 경우 유저 db저장 후 로그인
+                                  if (Get.arguments == "signUp") {
+                                    print('case : signUp');
+                                    print(signUpController.userName.text);
+                                    print(signUpController.gender);
 
-                                          await FirebaseAuth.instance.signInWithCredential(credential);
-                                        }
-                                      }
-                                    },
-                                    child: Text('인증완료'),
-                                  ),
-                                );
-                              }
-                          ),
+                                    // auth 회원 가입 후 credential로 로그인
+                                    await FirebaseAuth.instance.signInWithCredential(credential);
+                                    // db에 회원 정보 생성
+                                    membershipController.createUser(signUpController.userName.text, signUpController.gender.toString(), _phonNoInputController.text.trim());
+                                  } else if (Get.arguments == "logIn"){
+                                    print('case : logIn');
+
+                                    await FirebaseAuth.instance.signInWithCredential(credential);
+                                  }
+                                }
+                              },
+                              child: Text('인증완료'),
+                            ),
+                          )
                         ],
                       ),
 

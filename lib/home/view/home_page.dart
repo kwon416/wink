@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
 
   }
 
-  Future<void> _firebaseMessagingForegroundHandler() async {
+  Future<void>  _firebaseMessagingForegroundHandler() async {
     RemoteMessage? initialMessage =
     await FirebaseMessaging.instance.getInitialMessage();
 
@@ -78,6 +78,7 @@ class _HomePageState extends State<HomePage> {
       print('Got a message whilst in the foreground!');
       print('Message data: ${message.data}');
       //TODO 알림으로 보여줄지 스낵바로 보여줄지
+      //
       showFlutterNotification(message);
     });
     FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
@@ -99,6 +100,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
 
     _firebaseMessagingForegroundHandler();
+    initializeNotification();
   }
 
   @override
@@ -108,7 +110,7 @@ class _HomePageState extends State<HomePage> {
     // String uid = l.getUser().value.uid;
     // await m.getCurrentUser(uid);
 
-    initializeNotification();
+    // initializeNotification();
   }
 
 
