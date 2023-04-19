@@ -138,11 +138,13 @@ class AuthenticationRepository extends GetxService {
     } catch (e){
       return e.toString();
     }
+    return null;
 
 
   }
   ///auth 전화번호 로그인
   Future<String?> verifyPhoneNumber(String phoneNumber) async {
+    MembershipController m = Get.find();
     print('start verifycation phoneNo');
     final completer = Completer<String>();
       if (GetPlatform.isMobile) {
@@ -150,7 +152,12 @@ class AuthenticationRepository extends GetxService {
         await _auth.verifyPhoneNumber(
           phoneNumber: '+82$phoneNumber',
           timeout: const Duration(seconds: 60),
-          verificationCompleted: (PhoneAuthCredential credential) {},
+          verificationCompleted: (PhoneAuthCredential credential) async {
+            // ANDROID ONLY!
+
+            // Sign the user in (or link) with the auto-generated credential
+            await _auth.signInWithCredential(credential);
+          },
           verificationFailed: (FirebaseAuthException error) {
             print("verificationFailed error.code: ${error.code}");
             String errorMessage;
@@ -165,10 +172,12 @@ class AuthenticationRepository extends GetxService {
             },
           codeSent: (String verificationId, int? resendToken) async {
             print('code is sent');
-            await Get.put(MembershipController()).setVerificationId(verificationId);
+            if (resendToken != null) m.setResendToken(resendToken);
+            await m.setVerificationId(verificationId);
 
           },
           codeAutoRetrievalTimeout: (String verificationId) {},
+          forceResendingToken: m.resendToken,
         );
         return completer.future;
       }
@@ -192,6 +201,7 @@ class AuthenticationRepository extends GetxService {
       print(e);
       return e.toString();
     }
+    return null;
   }
 
   Future<void> logout() async => await _auth.signOut();

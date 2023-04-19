@@ -283,7 +283,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               ),
                               onPressed: () async {
                                 if (_signUpFormKey.currentState!.validate()) {
-                                  if (controller.gender != '') {
+                                  if (controller.gender.value != '') {
                                     print(controller.gender);
                                     if (checkBoxValue == true) {
                                       print('signUp check success');

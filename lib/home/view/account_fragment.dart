@@ -1,10 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
-import 'package:nb_utils/nb_utils.dart';
-import 'package:wink/controller/counter_controller.dart';
 import 'package:wink/controller/login_controller.dart';
 import 'package:wink/controller/membership_controller.dart';
 import 'package:wink/theme/theme.dart';

@@ -16,10 +16,15 @@ class MembershipController extends GetxController {
   ///Map<String, dynamic>
   var userData;
   late String uid;
-  ///임시 verificationId
+  ///전화번호 로그인 변수값
   String verificationId = '';
+  int? resendToken;
   setVerificationId(String s) {
     verificationId = s;
+    update();
+  }
+  setResendToken(int? s) {
+    resendToken = s;
     update();
   }
 

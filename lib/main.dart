@@ -5,14 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:wink/app.dart';
-import 'package:wink/controller/membership_controller.dart';
 import 'package:wink/repository/database_repository/database_repository.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:wink/repository/authentication_repository/authentication_repository.dart';
 
-import 'home/home.dart';
 
 /// Working example of FirebaseMessaging.
 /// Please use this in order to verify messages are working in foreground, background & terminated state.

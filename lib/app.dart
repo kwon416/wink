@@ -1,5 +1,4 @@
 import 'package:authentication_repository/authentication_repository.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:user_repository/user_repository.dart';
 
@@ -14,7 +13,6 @@ import 'package:wink/theme/theme.dart';
 // import 'package:wink/login/login.dart';
 import 'package:wink/splash/splash.dart';
 
-import 'main.dart';
 
 
 

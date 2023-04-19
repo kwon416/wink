@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:wink/controller/membership_controller.dart';
-import 'package:wink/custom_widget/space.dart';
 import 'package:wink/utils/images.dart';
 
-import '../home.dart';
 
 class WinkListFragment extends StatefulWidget {
   const WinkListFragment({Key? key}) : super(key: key);
@@ -34,9 +30,7 @@ class _WinkListFragmentState extends State<WinkListFragment> {
 
       ),
       backgroundColor: Colors.transparent,
-      // body: controller.userData?.isVerified ?? false
-      body: true
-        ? ListView.builder(
+      body: ListView.builder(
         padding: EdgeInsets.only(bottom: 16),
         itemCount: itemCount,
         shrinkWrap: true,
@@ -83,8 +77,7 @@ class _WinkListFragmentState extends State<WinkListFragment> {
             ),
           );
         },
-      )
-        : NotVerifiedScreen(),
+      ),
       // body: ListView.builder(
       //   shrinkWrap: true,
       //   itemCount: 15,

@@ -35,7 +35,7 @@ class LoginController extends GetxController {
   ///미사용
   signInWithGoogle() async {
     var result = await AuthenticationRepository.instance.signInWithGoogle();
-
+    print(result);
     ///firebase realtime database 저장
     Rx<User?> rxUser = AuthenticationRepository.instance.firebaseUser;
     if (! await DatabaseRepository.instance.hasUser(rxUser.value!.uid) && rxUser.value != null) membershipController.createEmailUser(rxUser,"email","password","userName","phoneNumber");

@@ -4,11 +4,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:wink/custom_widget/space.dart';
-import 'package:wink/home/view/notification_screen.dart';
-import 'package:wink/main.dart';
 import 'package:wink/toast/flutter_toast.dart';
 
-import 'package:wink/theme/theme.dart';
 import 'package:wink/utils/widgets.dart';
 
 import '../../controller/membership_controller.dart';
@@ -50,7 +47,6 @@ class _HomeFragmentState extends State<HomeFragment> {
     //var controller = Get.put(MembershipController());
     return GetBuilder<MembershipController>(
       builder: (controller) {
-        // ever(controller.userData?.wink['winkTo'], (callback) => print('dffdfd'));
         return Scaffold(
           appBar: AppBar(
             backgroundColor: colorScheme.primaryContainer,
