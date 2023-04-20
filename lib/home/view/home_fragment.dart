@@ -10,6 +10,7 @@ import 'package:wink/toast/flutter_toast.dart';
 import 'package:wink/utils/widgets.dart';
 
 import '../../controller/membership_controller.dart';
+import '../../theme/theme.dart';
 import '../home.dart';
 
 class HomeFragment extends StatefulWidget {
@@ -53,23 +54,25 @@ class _HomeFragmentState extends State<HomeFragment> {
             backgroundColor: colorScheme.primaryContainer,
             elevation: 0.3,
             title: Text('WINK 보내기',style: textTheme.titleLarge,),
+            leading: IconButton(onPressed: () => Get.changeTheme(Get.isDarkMode? lightTheme : darkTheme), icon: Icon(Icons.change_circle_rounded)),
             actions: [
               // if (controller.userData?.isVerified?? false)
               Stack(
                 children: <Widget>[
                   Container(
                     margin: EdgeInsets.only(left: 10),
-                    padding: EdgeInsets.only(left: 10, top: 5, right: 15),
+                    padding: EdgeInsets.only(left: 10, top: 10, right: 15),
                     child: InkWell(
                       onTap: () {
                         Get.to(() => NotificationScreen());
                       },
-                      child: Icon(Icons.notifications_none, size: 30, color: Get.isDarkMode ? white : black),
+                      child: Icon(Icons.notifications_none),
                     ),
                   ),
+                  //배지 개수 표시
                   Positioned(
                     right: 9,
-                    top: 0,
+                    top: 4,
                     child: CircleAvatar(
                       radius: 10,
                       backgroundColor: Colors.red,
@@ -179,7 +182,8 @@ class _HomeFragmentState extends State<HomeFragment> {
                   SDButton(
                       textContent: 'local noti',
                       onPressed: () {
-                        FlutterLocalNotificationsPlugin().show(0, 'title', 'body', NotificationDetails());
+                        toast('tost');
+                        // FlutterLocalNotificationsPlugin().show(0, 'title', 'body', NotificationDetails());
                       }
                   ),
                 ],

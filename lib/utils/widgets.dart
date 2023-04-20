@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 // import 'package:home_hub/models/last_bookings_model.dart';
 // import 'package:home_hub/screens/dashboard_screen.dart';
 import 'package:wink/utils/colors.dart';
-//
+
+import 'constant.dart';
+//텍스트 입력 폼
 InputDecoration commonInputDecoration({String? hintText, Widget? prefixIcon, Widget? suffixIcon}) {
   return InputDecoration(
     filled: true,
@@ -10,9 +12,13 @@ InputDecoration commonInputDecoration({String? hintText, Widget? prefixIcon, Wid
     hintText: hintText,
     prefixIcon: prefixIcon,
     suffixIcon: suffixIcon,
-    hintStyle: TextStyle(color: hintTextColor, fontSize: 16),
-    contentPadding: EdgeInsets.symmetric(horizontal: 16),
-    border: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide.none),
+    hintStyle: TextStyle(color: hintTextColor, fontSize: textSizeMedium),
+    contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+    border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide.none
+    ),
+
   );
 }
 
@@ -60,8 +66,8 @@ class SDButtonState extends State<SDButton> {
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     TextTheme textTheme = Theme.of(context).textTheme.apply(
-      // bodyColor: colorScheme.onPrimaryContainer,
-      // displayColor: colorScheme.onPrimaryContainer,
+      bodyColor: colorScheme.onPrimary,
+      displayColor: colorScheme.onPrimary,
     );
     return GestureDetector(
       onTap: widget.onPressed,
@@ -74,7 +80,7 @@ class SDButtonState extends State<SDButton> {
           widget.textContent,
           textAlign: TextAlign.center,
           // style: boldTextStyle(size: 16, color: colorScheme.onPrimary, letterSpacing: 2),
-          style: textTheme.bodyLarge,
+          style: textTheme.labelMedium?.copyWith(fontSize: textSizeMedium),
         ),
       ),
     );

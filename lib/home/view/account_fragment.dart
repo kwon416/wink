@@ -111,7 +111,6 @@ class Other extends StatelessWidget {
         centerTitle: true,
         elevation: 0,
         backgroundColor: colorScheme.primaryContainer,
-        iconTheme: IconThemeData(color: Get.isDarkMode ? Colors.white : Colors.black),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {

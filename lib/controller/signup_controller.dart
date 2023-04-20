@@ -31,13 +31,18 @@ class SignUpController extends GetxController {
     Rx<User?> rxUser = AuthenticationRepository.instance.firebaseUser;
     if (rxUser.value != null) membershipController.createEmailUser(rxUser,email,password,userName,phoneNumber);
   }
-  ///전화번호 회원가입
-  Future<void> registerUser(String phoneNumber) async {
+  ///전화번호 인증
+  Future<void> verifyRegisterUser(String phoneNumber) async {
     //번호 인증
     String? error = await AuthenticationRepository.instance.verifyPhoneNumber(phoneNumber);
     if(error != null) {
-      print('에러 있나요');
-      print(error.toString());
+      Get.showSnackbar(GetSnackBar(message: error.toString(), duration: Duration(seconds: 2),));
+    }
+  }
+  ///전화번호 인증번호 로그인
+  Future<void> loginUser(PhoneAuthCredential credential) async {
+    String? error = await AuthenticationRepository.instance.signInWithCredential(credential);
+    if(error != null) {
       Get.showSnackbar(GetSnackBar(message: error.toString(), duration: Duration(seconds: 2),));
     }
   }

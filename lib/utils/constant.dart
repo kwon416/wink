@@ -11,3 +11,8 @@ const textSizeNormal = 20.0;
 const textSizeLarge = 24.0;
 const textSizeXLarge = 30.0;
 const textSizeXXLarge = 35.0;
+
+/* icon sizes */
+const iconSizeSmall = 24.0;
+const iconSizeMedium = 28.0;
+const iconSizeLarge = 32.0;

@@ -91,7 +91,6 @@ class _SignUpPageState extends State<SignUpPage> {
       onVerticalDragEnd: (_) => FocusManager.instance.primaryFocus?.unfocus(),
       child: Stack(
         children: [
-
           Scaffold(
             backgroundColor: colorScheme.primaryContainer,
             body: SingleChildScrollView(
@@ -101,6 +100,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    Space(AppBar().preferredSize.height),
                     Image.asset(splashLogo,height: Get.statusBarHeight,),
                     Space(42),
                     Center(
@@ -111,7 +111,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     IconButton(onPressed: () => Get.changeTheme(Get.isDarkMode? lightTheme : darkTheme), icon: Icon(Icons.change_circle_rounded)),
                     Space(60),
-                    Text('이름을 입력해주세요'),
+                    Center(child: Text('이름을 입력해주세요')),
                     Space(12),
                     Form(
                       key: _signUpFormKey,
@@ -149,7 +149,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 }
                               });
                             },
-                            borderRadius: const BorderRadius.all(Radius.circular(20)),
+                            borderRadius: const BorderRadius.all(Radius.circular(10)),
                             selectedBorderColor: colorScheme.secondary,
                             selectedColor: colorScheme.primaryContainer,
                             fillColor: colorScheme.primary,
@@ -276,11 +276,11 @@ class _SignUpPageState extends State<SignUpPage> {
                           SizedBox(
                             width: MediaQuery.of(context).size.width,
                             child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                padding: EdgeInsets.all(16),
-                                textStyle: TextStyle(fontSize: 16),
-                                shape: StadiumBorder(),
-                              ),
+                              // style: ElevatedButton.styleFrom(
+                              //   padding: EdgeInsets.all(16),
+                              //   textStyle: TextStyle(fontSize: 16),
+                              //   shape: StadiumBorder(),
+                              // ),
                               onPressed: () async {
                                 if (_signUpFormKey.currentState!.validate()) {
                                   if (controller.gender.value != '') {
@@ -320,9 +320,9 @@ class _SignUpPageState extends State<SignUpPage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text("Have an account?", style: TextStyle(fontSize: 16)),
+                                Text("이미 계정이 있으신가요?"),
                                 Space(4),
-                                Text('로그인하기', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                                Text('로그인', style: TextStyle(fontWeight: FontWeight.bold)),
                               ],
                             ),
                           )

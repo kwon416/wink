@@ -62,7 +62,7 @@ class AuthenticationRepository extends GetxService {
           errorMessage = "Signing in with Email and Password is not enabled.";
           break;
         default:
-          errorMessage = "알 수 없는 오류가 발생했습니다.";
+          errorMessage = "알 수 없는 오류가 발생했습니다";
 
       }
       return errorMessage;
@@ -99,7 +99,7 @@ class AuthenticationRepository extends GetxService {
           errorMessage = "Signing in with Email and Password is not enabled.";
           break;
         default:
-          errorMessage = "알 수 없는 오류가 발생했습니다.";
+          errorMessage = "알 수 없는 오류가 발생했습니다";
 
       }
       return errorMessage;
@@ -142,7 +142,7 @@ class AuthenticationRepository extends GetxService {
 
 
   }
-  ///auth 전화번호 로그인
+  ///auth 전화번호 인증
   Future<String?> verifyPhoneNumber(String phoneNumber) async {
     MembershipController m = Get.find();
     print('start verifycation phoneNo');
@@ -165,22 +165,72 @@ class AuthenticationRepository extends GetxService {
               case "invalid-phone-number":
                 errorMessage = "휴대폰 번호의 형식이 잘못되었습니다";
                 break;
+              case "too-many-requests":
+                errorMessage = "요청이 너무 많습니다. 잠시 후 다시 시도하세요";
+                break;
               default:
-                errorMessage = "알 수 없는 오류가 발생했습니다.";
+                errorMessage = "알 수 없는 오류가 발생했습니다";
               }
               completer.complete(errorMessage);
             },
           codeSent: (String verificationId, int? resendToken) async {
             print('code is sent');
-            if (resendToken != null) m.setResendToken(resendToken);
+            print("verificationId : $verificationId, resenToken : $resendToken");
+            if (resendToken != null) {
+              print('인증번호 재전송');
+              m.setResendToken(resendToken);
+            }
             await m.setVerificationId(verificationId);
-
           },
           codeAutoRetrievalTimeout: (String verificationId) {},
           forceResendingToken: m.resendToken,
         );
         return completer.future;
+
+      } else {
+        return '모바일 환경에서만 인증할 수 있습니다';
       }
+    return null;
+  }
+  ///credential로 로그인
+  Future<String?> signInWithCredential(PhoneAuthCredential credential) async {
+    MembershipController m = Get.find();
+    print('start login with credential');
+    final completer = Completer<String>();
+    if (GetPlatform.isMobile) {
+      print('is mobile --> credential : $credential');
+      try {
+        await _auth.signInWithCredential(credential);
+
+      } on FirebaseAuthException catch (error) {
+        print(error.code);
+        String errorMessage;
+        switch (error.code) {
+          case "invalid-verification-code":
+            errorMessage = '잘못된 인증번호입니다';
+            break;
+          case "invalid-verification-id":
+            errorMessage = 'verification ID of the credential is not valid.id';
+            break;
+          case "user-disabled":
+            errorMessage = '계정이 비활성화되었습니다';
+            break;
+          case "operation-not-allowed":
+            errorMessage = '현재 로그인이 비활성화되었습니다';
+            break;
+          case "invalid-credential":
+            errorMessage = '인증 시간이 만료되었습니다. 다시 시도해주세요';
+            break;
+          default:
+            errorMessage = '알 수 없는 오류가 발생했습니다';
+        }
+        completer.complete(errorMessage);
+        return completer.future;
+      } catch (e){
+        return e.toString();
+      }
+
+    }
     return null;
   }
 

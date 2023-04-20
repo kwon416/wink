@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:wink/login/models/user_data.dart';
@@ -19,6 +21,16 @@ class DatabaseRepository extends GetxService {
     } else {
       return Future.value(false);
     }
+  }
+  ///가입되어 있는 전화번호인지 체크
+  Future<bool> checkPhoneNo(String phoneNo) async {
+    var value = await _ref.orderByChild('phoneNo').equalTo(phoneNo).once();
+    if (value.snapshot.value != null) {
+      return true;
+    } else {
+      return false;
+    }
+
   }
   
    Future<UserData> readUser(String uid) async {

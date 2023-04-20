@@ -10,33 +10,49 @@ const seedColor = Color(0xff0099ff);
 
 IconButtonThemeData iconButtonTheme = IconButtonThemeData(
   style: ButtonStyle(
+    //눌렀을 때 그림자 색
     shadowColor: MaterialStateProperty.all<Color?>(Colors.transparent),
+    //눌렀을 때 퍼지는 스플래시 효과
     splashFactory: NoSplash.splashFactory,
   ),
 );
 
 ElevatedButtonThemeData elevatedButtonTheme = ElevatedButtonThemeData(
   style: ButtonStyle(
+    //눌렀을 때 퍼지는 색
     overlayColor: MaterialStateProperty.all<Color?>(Colors.transparent),
+    //눌렀을 때 그림자 색
     shadowColor: MaterialStateProperty.all<Color?>(Colors.transparent),
+    //눌렀을 때 퍼지는 스플래시 효과
     splashFactory: NoSplash.splashFactory,
-    //backgroundColor: MaterialStateProperty.all<Color>,
     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
       EdgeInsets.symmetric(horizontal: 20, vertical: 20)
     ),
     shape: MaterialStateProperty.all<OutlinedBorder>(
       RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(10),
       ),
+    ),
+    textStyle: MaterialStateProperty.all<TextStyle>(
+      TextStyle(
+        fontSize: textSizeMedium,
+      )
     ),
   )
 );
 AppBarTheme appBarTheme = AppBarTheme(
-
   centerTitle: true,
   // titleTextStyle: TextStyle(fontSize: textSizeNormal),
   // backgroundColor: Colors.transparent,
   elevation: 0.3,
+);
+
+IconThemeData iconThemeData = IconThemeData(
+    size: iconSizeMedium,
+);
+
+TextTheme textTheme = TextTheme(
+  bodyMedium: TextStyle(fontSize: textSizeMedium),
 );
 
 const scaffoldBackgroundColor = Colors.transparent;
@@ -47,7 +63,7 @@ ThemeData lightTheme = ThemeData(
   shadowColor: transparent,
   highlightColor: transparent,
   appBarTheme: appBarTheme.copyWith(
-      iconTheme: IconThemeData(color: black),
+      iconTheme: iconThemeData.copyWith(color: black),
       titleTextStyle: TextStyle(color: black, fontSize: textSizeNormal),
   ),
   scaffoldBackgroundColor: scaffoldBackgroundColor,
@@ -61,6 +77,7 @@ ThemeData lightTheme = ThemeData(
   iconTheme: IconThemeData(
       color: Colors.black,
   ),
+  textTheme: textTheme,
 ).copyWith(
   pageTransitionsTheme: PageTransitionsTheme(builders: const <TargetPlatform, PageTransitionsBuilder>{
     TargetPlatform.android: OpenUpwardsPageTransitionsBuilder(),
@@ -76,7 +93,7 @@ ThemeData darkTheme = ThemeData(
   shadowColor: transparent,
   highlightColor: transparent,
   appBarTheme: appBarTheme.copyWith(
-    iconTheme: IconThemeData(color: white),
+    iconTheme: iconThemeData.copyWith(color: white),
     titleTextStyle: TextStyle(color: white, fontSize: textSizeNormal, fontWeight: fontWeightBoldGlobal)
   ),
   scaffoldBackgroundColor: scaffoldBackgroundColor,
@@ -88,7 +105,10 @@ ThemeData darkTheme = ThemeData(
   elevatedButtonTheme: elevatedButtonTheme,
   iconButtonTheme: iconButtonTheme,
   visualDensity: VisualDensity.adaptivePlatformDensity,
-  iconTheme: IconThemeData(color: Colors.white),
+  iconTheme: IconThemeData(
+      color: Colors.white
+  ),
+  textTheme: textTheme,
 ).copyWith(
   pageTransitionsTheme: PageTransitionsTheme(builders: const <TargetPlatform, PageTransitionsBuilder>{
     TargetPlatform.android: OpenUpwardsPageTransitionsBuilder(),

@@ -107,6 +107,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         key: _phoneNoInputKey,
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Expanded(
                               child: TextFormField(
@@ -132,21 +133,26 @@ class _VerificationScreenState extends State<VerificationScreen> {
                             ),
                             Space(5),
                             ElevatedButton(
-                              onPressed: () {
+                              onPressed: () async {
                                 if (_phoneNoInputKey.currentState!.validate()) {
                                   print('입력 전화번호 : ${_phonNoInputController.value.text}');
-
-                                  ///TODO
-                                  ///1. 로그인 인데 회원가입이 안되있는 경우
-                                  ///2. 회원가입인데 이미 가입되어 있는 경우
-                                  ///처리 후 리턴으로 종료
-                                  // membershipController.verifyPhoneNumber(_phonNoInputController.value.text);
+                                  bool isMember = await loginController.checkPhoneNo(_phonNoInputController.value.text);
 
                                   if (Get.arguments == "logIn") {
+                                    ///1. 로그인 인데 회원가입이 안되있는 경우
+                                    if(!isMember) {
+                                      Get.showSnackbar(GetSnackBar(message: '사용자 정보가 없습니다', duration: Duration(seconds: 2),));
+                                      return;
+                                    }
                                     print('로그인 인증번호 발송');
-                                    loginController.loginUser(_phonNoInputController.value.text);
+                                    loginController.verifyLoginUser(_phonNoInputController.value.text);
                                   } else if (Get.arguments == "signUp") {
-                                    signUpController.registerUser(_phonNoInputController.value.text);
+                                    ///2. 회원가입인데 이미 가입되어 있는 경우
+                                    if(isMember) {
+                                      Get.showSnackbar(GetSnackBar(message: '이미 가입되어있는 사용자입니다', duration: Duration(seconds: 2),));
+                                      return;
+                                    }
+                                    signUpController.verifyRegisterUser(_phonNoInputController.value.text);
                                   }
 
                                   Get.focusScope!.unfocus();
@@ -156,7 +162,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                   startTimer();
                                 }
                               },
-                              child: Text('인증번호 받기'),
+                              child: Text(_sendComplete ? '     재발송     ' : '인증번호 받기'),
                             ),
                           ],
                         ),
@@ -165,20 +171,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       if (_sendComplete)
                       Column(
                         children: [
-                          GestureDetector(
-                            onTap: () {
-                              showToast('message re-send', context);
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("인증번호 안왔냐?", style: TextStyle(fontSize: 16)),
-                                Space(4),
-                                Text('재전송(미구현)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                              ],
-                            ),
-                          ),
-                          Space(12),
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -204,7 +196,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                       if (text == null || text.isEmpty) {
                                         return '인증번호를 입력해주세요';
                                       }
-                                      if (text.length < 6) return '잘못된 인증번호입니다';
+                                      if (text.length < 6) return '인증번호 6자리를 입력해주세요';
                                       return null;
                                     },
                                     decoration: commonInputDecoration(hintText: "", prefixIcon: Icon(Icons.check_outlined)),
@@ -221,30 +213,22 @@ class _VerificationScreenState extends State<VerificationScreen> {
                             child: ElevatedButton(
                               onPressed: () async {
                                 if (_verifyNoKey.currentState!.validate()) {
-
-
                                   // Create a PhoneAuthCredential with the code
                                   PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: membershipController.verificationId.toString(), smsCode: _verifyNoController.text);
-
                                   print(credential);
 
-                                  // Sign the user in (or link) with the credential
-                                  //await FirebaseAuth.instance.signInWithCredential(credential);
-
-                                  //todo 회원 가입한 경우 유저 db저장 후 로그인
                                   if (Get.arguments == "signUp") {
                                     print('case : signUp');
-                                    print(signUpController.userName.text);
-                                    print(signUpController.gender);
+                                    print("이름 : ${signUpController.userName.text}");
+                                    print("성별 : ${signUpController.gender}");
 
                                     // auth 회원 가입 후 credential로 로그인
-                                    await FirebaseAuth.instance.signInWithCredential(credential);
+                                    await signUpController.loginUser(credential);
                                     // db에 회원 정보 생성
                                     signUpController.createUser(signUpController.userName.text, signUpController.gender.toString(), _phonNoInputController.text.trim());
                                   } else if (Get.arguments == "logIn"){
                                     print('case : logIn');
-
-                                    await FirebaseAuth.instance.signInWithCredential(credential);
+                                    await loginController.loginUser(credential);
                                   }
                                 }
                               },

@@ -15,7 +15,7 @@ class MembershipController extends GetxController {
   ///Map<String, dynamic>
   var userData;
   late String uid;
-  ///전화번호 로그인 변수값
+  ///전화번호 로그인 변수
   String verificationId = '';
   int? resendToken;
   setVerificationId(String s) {
@@ -27,7 +27,7 @@ class MembershipController extends GetxController {
     update();
   }
 
-  ///임시 winkTo 등록
+  ///winkTo 등록
   final winkToInput =TextEditingController();
 
   void createEmailUser(Rx<User?> rxUser, String email, String password, String userName, String phoneNumber) {

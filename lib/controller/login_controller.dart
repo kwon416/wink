@@ -23,10 +23,25 @@ class LoginController extends GetxController {
       Get.showSnackbar(GetSnackBar(message: error.toString(), duration: Duration(seconds: 2),));
     }
   }
+  ///회원인지 체크
+  Future<bool> checkPhoneNo(String phoneNo) async {
+    bool isMember = await DatabaseRepository.instance.checkPhoneNo(phoneNo);
+    print('check phoneNo --> isMember? : $isMember');
+    return isMember;
+  }
 
-  ///전화번호 로그인 현재 사용
-  Future<void> loginUser(String phoneNumber) async {
+  ///전화번호 인증
+  Future<bool> verifyLoginUser(String phoneNumber) async {
     String? error = await AuthenticationRepository.instance.verifyPhoneNumber(phoneNumber);
+    if(error != null) {
+      Get.showSnackbar(GetSnackBar(message: error.toString(), duration: Duration(seconds: 2),));
+      return Future.value(false);
+    }
+    return Future.value(true);
+  }
+  ///전화번호 인증번호 로그인
+  Future<void> loginUser(PhoneAuthCredential credential) async {
+    String? error = await AuthenticationRepository.instance.signInWithCredential(credential);
     if(error != null) {
       Get.showSnackbar(GetSnackBar(message: error.toString(), duration: Duration(seconds: 2),));
     }
