@@ -6,6 +6,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:wink/custom_widget/space.dart';
 import 'package:wink/toast/flutter_toast.dart';
 
+
 import 'package:wink/utils/widgets.dart';
 
 import '../../controller/membership_controller.dart';
@@ -145,10 +146,13 @@ class _HomeFragmentState extends State<HomeFragment> {
                   ),
                   Space(12),
                   ElevatedButton(
+
+                    style: ElevatedButton.styleFrom(
+                    ),
                     onPressed: (){
-                      controller.getCurrentUser(controller.uid);
+                      // controller.getCurrentUser(controller.uid);
                     },
-                    child: Text('get Current User',),
+                    child: Text('elevatedzbutton',),
                   ),
                 ],
               ),

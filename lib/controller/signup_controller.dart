@@ -2,9 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wink/controller/membership_controller.dart';
+import 'package:wink/login/models/user_data.dart';
 
 
 import 'package:wink/repository/authentication_repository/authentication_repository.dart';
+import 'package:wink/repository/database_repository/database_repository.dart';
 
 class SignUpController extends GetxController {
   static SignUpController get instance => Get.find();
@@ -38,6 +40,21 @@ class SignUpController extends GetxController {
       print(error.toString());
       Get.showSnackbar(GetSnackBar(message: error.toString(), duration: Duration(seconds: 2),));
     }
+  }
+
+  ///신규 회원 디비 저장
+  void createUser(String userName, String gender, String phoneNumber) {
+    Rx<User?> rxUser = AuthenticationRepository.instance.firebaseUser;
+    final user = UserData(
+        userName: rxUser.value?.displayName ?? userName,
+        gender: gender,
+        phoneNo: phoneNumber,
+        uid: rxUser.value!.uid,
+        coin: 0,
+        fcmToken: '',
+        wink: {"winkTo": '', "winkFrom": ""}
+    );
+    DatabaseRepository.instance.createUser(user);
   }
 
   ///유저 정보 업데이트 - 미사용

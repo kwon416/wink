@@ -5,8 +5,7 @@ import 'package:wink/provider/sample_provider.dart';
 
 
 import 'package:wink/repository/database_repository/database_repository.dart';
-import 'package:wink/repository/authentication_repository/authentication_repository.dart';
-import 'package:wink/login/models/user_data.dart';
+
 
 class MembershipController extends GetxController {
   static MembershipController get instance => Get.find();
@@ -41,20 +40,6 @@ class MembershipController extends GetxController {
     //   isVerified: false,
     // );
     // DatabaseRepository.instance.createUser(user);
-  }
-
-  void createUser(String userName, String gender, String phoneNumber) {
-    Rx<User?> rxUser = AuthenticationRepository.instance.firebaseUser;
-    final user = UserData(
-        userName: rxUser.value?.displayName ?? userName,
-        gender: gender,
-        phoneNo: phoneNumber,
-        uid: rxUser.value!.uid,
-        coin: 0,
-        fcmToken: '',
-        wink: {"winkTo": '', "winkFrom": ""}
-    );
-    DatabaseRepository.instance.createUser(user);
   }
   ///현재 uid 값으로 db에서 유저데이터 가져오기
   Future<bool> getCurrentUser(String uid) async {

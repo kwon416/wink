@@ -139,6 +139,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                   ///TODO
                                   ///1. 로그인 인데 회원가입이 안되있는 경우
                                   ///2. 회원가입인데 이미 가입되어 있는 경우
+                                  ///처리 후 리턴으로 종료
                                   // membershipController.verifyPhoneNumber(_phonNoInputController.value.text);
 
                                   if (Get.arguments == "logIn") {
@@ -239,7 +240,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                     // auth 회원 가입 후 credential로 로그인
                                     await FirebaseAuth.instance.signInWithCredential(credential);
                                     // db에 회원 정보 생성
-                                    membershipController.createUser(signUpController.userName.text, signUpController.gender.toString(), _phonNoInputController.text.trim());
+                                    signUpController.createUser(signUpController.userName.text, signUpController.gender.toString(), _phonNoInputController.text.trim());
                                   } else if (Get.arguments == "logIn"){
                                     print('case : logIn');
 
