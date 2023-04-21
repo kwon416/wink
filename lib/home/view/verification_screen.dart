@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:quiver/async.dart';
+import 'package:nb_utils/nb_utils.dart';
+// import 'package:quiver/async.dart';
 import 'package:wink/controller/login_controller.dart';
 import 'package:wink/controller/membership_controller.dart';
 import 'package:wink/custom_widget/space.dart';
@@ -33,23 +36,39 @@ class _VerificationScreenState extends State<VerificationScreen> {
   final signUpController = Get.put(SignUpController());
   final loginController = Get.put(LoginController());
 
-  final int _start = 60;
-  int _current = 60;
+  late Timer _timer;
+  int _start = 60;
+  bool _isActive = false;
   void startTimer() {
-    CountdownTimer countDownTimer = CountdownTimer(
-      Duration(seconds: _start),
-      Duration(seconds: 1),
-    );
-
-    var sub = countDownTimer.listen(null);
-    sub.onData((duration) {
-      if(mounted) setState(() { _current = _start - duration.elapsed.inSeconds; });
+    setState(() {
+      _isActive = true;
     });
-
-    sub.onDone(() {
-      print("Done");
-      sub.cancel();
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (_start == 0) {
+        setState(() {
+          // _isActive = false;
+          timer.cancel();
+        });
+      } else {
+        setState(() {
+          _start--;
+        });
+      }
     });
+  }
+
+  void resetTimer() {
+    setState(() {
+      _isActive = false;
+      _start = 60;
+    });
+    _timer.cancel();
+    startTimer();
+  }
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 
   @override
@@ -59,9 +78,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
       bodyColor: colorScheme.onPrimaryContainer,
       displayColor: colorScheme.onPrimaryContainer,
     );
-
-
-
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       onVerticalDragEnd: (_) => FocusManager.instance.primaryFocus?.unfocus(),
@@ -70,16 +86,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
           Container(color: colorScheme.primaryContainer,),
           Scaffold(
             backgroundColor: Colors.transparent,
-            // appBar: AppBar(
-            //   backgroundColor: Colors.transparent,
-            //   title: Text('휴대폰 인증',style: textTheme.titleLarge,),
-            //   leading: IconButton(
-            //     icon: Icon(Icons.arrow_back, color: colorScheme.onPrimaryContainer,),
-            //     onPressed: () {
-            //       Get.back();
-            //     },
-            //   ),
-            // ),
             appBar: AppBar(
               centerTitle: true,
               elevation: 0,
@@ -159,7 +165,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                   setState(() {
                                     _sendComplete = true;
                                   });
-                                  startTimer();
+                                  _isActive ? resetTimer() : startTimer();
                                 }
                               },
                               child: Text(_sendComplete ? '     재발송     ' : '인증번호 받기'),
@@ -203,8 +209,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                   ),
                                 ),
                               ),
-                              Space(5),
-                              Text('$_current sec')
+                              Space(10),
+                              Text('$_start', style: boldTextStyle(color: redColor,decoration: TextDecoration.underline),),
                             ],
                           ),
                           Space(20),

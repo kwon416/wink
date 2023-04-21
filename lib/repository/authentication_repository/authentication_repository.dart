@@ -168,6 +168,9 @@ class AuthenticationRepository extends GetxService {
               case "too-many-requests":
                 errorMessage = "요청이 너무 많습니다. 잠시 후 다시 시도하세요";
                 break;
+              case "web-context-cancelled":
+                errorMessage = "인증 화면이 종료되었습니다. 다시 시도하세요";
+                break;
               default:
                 errorMessage = "알 수 없는 오류가 발생했습니다";
               }
@@ -175,7 +178,7 @@ class AuthenticationRepository extends GetxService {
             },
           codeSent: (String verificationId, int? resendToken) async {
             print('code is sent');
-            print("verificationId : $verificationId, resenToken : $resendToken");
+            print("verificationId : $verificationId, \n resenToken : $resendToken");
             if (resendToken != null) {
               print('인증번호 재전송');
               m.setResendToken(resendToken);
@@ -194,11 +197,8 @@ class AuthenticationRepository extends GetxService {
   }
   ///credential로 로그인
   Future<String?> signInWithCredential(PhoneAuthCredential credential) async {
-    MembershipController m = Get.find();
-    print('start login with credential');
+    print('start login with credential : $credential');
     final completer = Completer<String>();
-    if (GetPlatform.isMobile) {
-      print('is mobile --> credential : $credential');
       try {
         await _auth.signInWithCredential(credential);
 
@@ -230,7 +230,6 @@ class AuthenticationRepository extends GetxService {
         return e.toString();
       }
 
-    }
     return null;
   }
 
