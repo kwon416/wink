@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 class PlatformDetails {
   static final PlatformDetails _singleton = PlatformDetails._internal();
 
-  //factory생성자로 만들어서 싱글톤구현
   factory PlatformDetails(){
     return _singleton;
   }

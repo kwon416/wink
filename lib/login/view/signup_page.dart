@@ -96,7 +96,7 @@ class _SignUpPageState extends State<SignUpPage> {
             body: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: EdgeInsets.all(appPadding),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -149,7 +149,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 }
                               });
                             },
-                            borderRadius: const BorderRadius.all(Radius.circular(10)),
+                            borderRadius: const BorderRadius.all(Radius.circular(borderRadius)),
                             selectedBorderColor: colorScheme.secondary,
                             selectedColor: colorScheme.primaryContainer,
                             fillColor: colorScheme.primary,
@@ -258,7 +258,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             data: ThemeData(unselectedWidgetColor: colorScheme.primary),
                             child: CheckboxListTile(
                               contentPadding: EdgeInsets.all(0),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius)),
                               checkColor: colorScheme.onPrimary,
                               activeColor: colorScheme.primary,
                               title: Text("이용약관 동의", style: textTheme.bodySmall),

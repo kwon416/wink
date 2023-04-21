@@ -9,7 +9,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:wink/controller/login_controller.dart';
 import 'package:wink/controller/membership_controller.dart';
 import 'package:wink/custom_widget/space.dart';
-import 'package:wink/toast/flutter_toast.dart';
+import 'package:wink/utils/constant.dart';
 import 'package:wink/utils/images.dart';
 import 'package:wink/utils/widgets.dart';
 
@@ -27,7 +27,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
   final _phonNoInputController = TextEditingController();
 
   var _sendComplete = false;
-  // var _sendComplete = true;
+  bool isProcessing = false;
 
   final _verifyNoKey =GlobalKey<FormState>();
   final _verifyNoController = TextEditingController();
@@ -65,6 +65,12 @@ class _VerificationScreenState extends State<VerificationScreen> {
     _timer.cancel();
     startTimer();
   }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   void dispose() {
     _timer.cancel();
@@ -101,7 +107,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
             ),
             body: Center(
                 child: Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: EdgeInsets.all(appPadding),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -139,8 +145,11 @@ class _VerificationScreenState extends State<VerificationScreen> {
                             ),
                             Space(5),
                             ElevatedButton(
-                              onPressed: () async {
+                              onPressed: isProcessing ? (){} : () async {
                                 if (_phoneNoInputKey.currentState!.validate()) {
+                                  setState(() {
+                                    isProcessing = true;
+                                  });
                                   print('입력 전화번호 : ${_phonNoInputController.value.text}');
                                   bool isMember = await loginController.checkPhoneNo(_phonNoInputController.value.text);
 
@@ -148,6 +157,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                     ///1. 로그인 인데 회원가입이 안되있는 경우
                                     if(!isMember) {
                                       Get.showSnackbar(GetSnackBar(message: '사용자 정보가 없습니다', duration: Duration(seconds: 2),));
+                                      setState(() {
+                                        isProcessing = false;
+                                      });
                                       return;
                                     }
                                     print('로그인 인증번호 발송');
@@ -156,6 +168,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                     ///2. 회원가입인데 이미 가입되어 있는 경우
                                     if(isMember) {
                                       Get.showSnackbar(GetSnackBar(message: '이미 가입되어있는 사용자입니다', duration: Duration(seconds: 2),));
+                                      setState(() {
+                                        isProcessing = false;
+                                      });
                                       return;
                                     }
                                     signUpController.verifyRegisterUser(_phonNoInputController.value.text);
@@ -166,6 +181,10 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                     _sendComplete = true;
                                   });
                                   _isActive ? resetTimer() : startTimer();
+
+                                  setState(() {
+                                    isProcessing = false;
+                                  });
                                 }
                               },
                               child: Text(_sendComplete ? '     재발송     ' : '인증번호 받기'),
@@ -186,7 +205,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                   width: Get.width*0.6,
                                   child: TextFormField(
                                     controller: _verifyNoController,
-                                    autofocus: true,
                                     keyboardType: TextInputType.phone,
                                     textInputAction: TextInputAction.done,
                                     inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9]')),LengthLimitingTextInputFormatter(6)],
@@ -217,8 +235,11 @@ class _VerificationScreenState extends State<VerificationScreen> {
                           SizedBox(
                             width: Get.width,
                             child: ElevatedButton(
-                              onPressed: () async {
+                              onPressed: isProcessing ? (){} : () async {
                                 if (_verifyNoKey.currentState!.validate()) {
+                                  setState(() {
+                                    isProcessing = true;
+                                  });
                                   // Create a PhoneAuthCredential with the code
                                   PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: membershipController.verificationId.toString(), smsCode: _verifyNoController.text);
                                   print(credential);
@@ -236,6 +257,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                     print('case : logIn');
                                     await loginController.loginUser(credential);
                                   }
+                                  setState(() {
+                                    isProcessing = false;
+                                  });
                                 }
                               },
                               child: Text('인증완료'),

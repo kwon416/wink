@@ -6,6 +6,8 @@ import 'package:wink/home/home.dart';
 import 'package:wink/login/login.dart';
 import 'package:wink/utils/images.dart';
 
+import '../../utils/constant.dart';
+
 class LoginForm extends StatefulWidget {
   LoginForm({Key? key}) : super(key: key);
 
@@ -118,9 +120,9 @@ class _LoginFormState extends State<LoginForm> {
             //     ],
             //   ),
             // ),
-            const Padding(padding: EdgeInsets.all(12)),
+            Space(appPadding),
             _LoginButton(),
-            const Padding(padding: EdgeInsets.all(12)),
+            Space(appPadding),
             GestureDetector(
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpPage()));

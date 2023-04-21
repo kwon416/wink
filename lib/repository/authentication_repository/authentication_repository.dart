@@ -171,6 +171,9 @@ class AuthenticationRepository extends GetxService {
               case "web-context-cancelled":
                 errorMessage = "인증 화면이 종료되었습니다. 다시 시도하세요";
                 break;
+              case "quota-exceeded":
+                errorMessage = "인증 할당량이 초과되었습니다";
+                break;
               default:
                 errorMessage = "알 수 없는 오류가 발생했습니다";
               }
@@ -193,7 +196,7 @@ class AuthenticationRepository extends GetxService {
       } else {
         return '모바일 환경에서만 인증할 수 있습니다';
       }
-    return null;
+
   }
   ///credential로 로그인
   Future<String?> signInWithCredential(PhoneAuthCredential credential) async {
@@ -203,7 +206,7 @@ class AuthenticationRepository extends GetxService {
         await _auth.signInWithCredential(credential);
 
       } on FirebaseAuthException catch (error) {
-        print(error.code);
+        print("login credential error : ${error.code}");
         String errorMessage;
         switch (error.code) {
           case "invalid-verification-code":
@@ -211,6 +214,9 @@ class AuthenticationRepository extends GetxService {
             break;
           case "invalid-verification-id":
             errorMessage = 'verification ID of the credential is not valid.id';
+            break;
+          case "missing-verification-id":
+            errorMessage = '인증번호가 전송되지 않았습니다. 재전송해주세요';
             break;
           case "user-disabled":
             errorMessage = '계정이 비활성화되었습니다';

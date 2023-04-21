@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 
 import 'package:wink/custom_widget/space.dart';
 
+import '../../utils/constant.dart';
+
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({Key? key}) : super(key: key);
 
@@ -35,11 +37,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
       ),
       backgroundColor: colorScheme.primaryContainer,
       body: ListView.builder(
-        padding: EdgeInsets.all(8),
+        shrinkWrap: true,
+        padding: EdgeInsets.symmetric(horizontal: appPadding),
         itemCount: 20,
         itemBuilder: (context, index) {
           return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            padding: EdgeInsets.symmetric(vertical: 4),
             child: ElevatedButton(
               onPressed: () {},
               child: Row(

@@ -2,11 +2,15 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:wink/controller/login_controller.dart';
 import 'package:wink/controller/membership_controller.dart';
 import 'package:wink/theme/theme.dart';
+import 'package:wink/utils/colors.dart';
+import 'package:wink/utils/images.dart';
 
 import '../../custom_widget/space.dart';
+import '../../utils/constant.dart';
 import '../../utils/widgets.dart';
 
 class AccountFragment extends StatelessWidget {
@@ -21,73 +25,122 @@ class AccountFragment extends StatelessWidget {
     );
 
     final LoginController l = Get.put(LoginController());
-    //final MembershipController controller = Get.put(MembershipController());
     return GetBuilder<MembershipController>(
       builder: (controller) {
         return Scaffold(
           appBar: AppBar(
             // iconTheme: IconThemeData(color: Get.isDarkMode ? Colors.white : Colors.black),
             backgroundColor: colorScheme.primaryContainer,
-            title: Text('계정 관리',),
+            title: Text('프로필',),
             actions: [
               IconButton(onPressed: () => Get.changeTheme(Get.isDarkMode? lightTheme : darkTheme), icon: Icon(Icons.change_circle_rounded))
             ],
           ),
-          body: SingleChildScrollView(
-            child: Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Column(
+          body: Center(
+            child: Stack(
+              children: [
+                Container(width: Get.width, color: Colors.black12,),
+
+                Container(
+                  alignment: Alignment.topRight,
+                  margin: EdgeInsets.only(top: 40, right: 16),
+                  child: IconButton(
+                    onPressed: () {
+                    },
+                    icon: Icon(Icons.close, color: white, size: 30),
+                  ),
+                ),
+
+                SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text('auth user instance'),
-                      Text(l.getUser().toString()),
-                      Space(20),
-                      Text('User Data From Realtime DB From firebase'),
-                      Text('get userName : ${controller.userData?.userName}'),
-                      Text('get uid : ${controller.userData?.uid}'),
-                      Text('get fcmToken : ${controller.userData?.fcmToken}'),
-                      Text('get phoneNo : ${controller.userData?.phoneNo}'),
-                      Text('get gender : ${controller.userData?.gender}'),
-                      Text('get coin : ${controller.userData?.coin}'),
-                      Text('get winkData : ${controller.userData?.wink}'),
+                      Container(
+                        padding: EdgeInsets.all(appPadding),
+                        decoration: boxDecorationWithShadow(
+                          borderRadius: BorderRadius.circular(borderRadius),
+                          backgroundColor: transparent,
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            CircleAvatar(backgroundImage: AssetImage(splashLogo), radius: 70,backgroundColor: colorScheme.primary),
+                            10.width,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                5.height,
+                                Text(controller.userData?.userName, style: boldTextStyle(color: colorScheme.onPrimaryContainer)),
+                                5.height,
+                                Text(controller.userData?.phoneNo, style: primaryTextStyle(color: colorScheme.onPrimaryContainer)),
+                                5.height,
+                                Text(controller.userData?.uid, style: secondaryTextStyle(color: colorScheme.secondary)),
+                              ],
+                            ).expand()
+                          ],
+                        ),
+                      ),
+
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(borderRadius), topRight: Radius.circular(borderRadius)),
+                          color: colorScheme.primary,
+                        ),
+                        padding: EdgeInsets.symmetric(vertical: appPadding, horizontal: appPadding),
+                        width: Get.width,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            settIngContainer(
+                              icon: Icons.edit,
+                              title: 'Edit Profile',
+                              boxColor: colorScheme.primaryContainer,
+                              textColor: colorScheme.onPrimaryContainer,
+                              onTap: () {
+                                Get.to(() => Other());
+                                // SHEditProfileScreen().launch(
+                                //   context,
+                                //   pageRouteAnimation: PageRouteAnimation.SlideBottomTop,
+                                // );
+                              },
+                            ),
+                            settIngContainer(
+                              icon: Icons.person,
+                              title: 'Member',
+                              boxColor: colorScheme.primaryContainer,
+                              textColor: colorScheme.onPrimaryContainer,
+                              onTap: () {
+                                controller.getCurrentUser(l.getUser().value.uid);
+                                // SHMemberScreen().launch(context, pageRouteAnimation: PageRouteAnimation.SlideBottomTop);
+                              },
+                            ),
+                            settIngContainer(icon: Icons.settings, title: 'Setting', boxColor: colorScheme.primaryContainer,
+                                textColor: colorScheme.onPrimaryContainer),
+                            16.height,
+                            settIngContainer(icon: Icons.chat, title: 'Terms of use', boxColor: colorScheme.primaryContainer,
+                                textColor: colorScheme.onPrimaryContainer),
+                            settIngContainer(icon: Icons.send, title: 'Contact', boxColor: colorScheme.primaryContainer,
+                                textColor: colorScheme.onPrimaryContainer),
+                            16.height,
+                            settIngContainer(
+                              icon: Icons.logout,
+                              title: '로그아웃',
+                              boxColor: colorScheme.primaryContainer,
+                              textColor: Colors.deepOrange,
+                              onTap: () {
+                                  LoginController().logOutUser();
+                              },
+                            ),
+                            Row(children: [Text('v', style: primaryTextStyle(color: colorScheme.primaryContainer),), VersionInfoWidget(textStyle: primaryTextStyle(color: colorScheme.primaryContainer)),],).paddingLeft(16),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
-                  Space(12),
-                  ElevatedButton(
-                    onPressed: () => Get.to(() => Other()),
-                    child: Text('새 페이지 get.to'),
-                  ),
-                  Space(12),
-                  ElevatedButton(onPressed: () => LoginController().logOutUser(), child: Text('파이어베이스 로그아웃')),
-
-                  Space(12), ElevatedButton(
-                    onPressed: () async {
-                      controller.fcmPushNoti();
-                    },
-                    child: Text('fcmPushNoti'),
-                  ),
-                  Space(12),
-                  ElevatedButton(
-                    onPressed: () async {
-                      controller.getCurrentUser(l.getUser().value.uid);
-                    },
-                    child: Text('getCurrentUser'),
-                  ),
-                  Space(12),
-                  ElevatedButton(
-                    onPressed: () async {
-                      exit(0);
-                    },
-                    child: Text('강제 종료'),
-                  ),
-                ],
-              ),
+                )
+              ],
             ),
-          ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {},
-            child: Icon(Icons.add)
           ),
         );
       }
@@ -95,7 +148,7 @@ class AccountFragment extends StatelessWidget {
   }
 }
 
-class Other extends StatelessWidget {
+class Other extends GetView<MembershipController> {
   Other({Key? key}) : super(key: key);
 
   @override
@@ -105,7 +158,7 @@ class Other extends StatelessWidget {
       bodyColor: colorScheme.onPrimaryContainer,
       displayColor: colorScheme.onPrimaryContainer,
     );
-
+    LoginController l = Get.find();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -121,17 +174,27 @@ class Other extends StatelessWidget {
       body: Center(
         child: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.only(left: 25, right: 25),
+            padding: EdgeInsets.symmetric(horizontal: appPadding),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('새 페이지'),
+                Text('auth user instance', style: boldTextStyle(),),
+                        Text(l.getUser().toString()),
+                        Space(20),
+                        Text('User Data From Realtime DB From firebase', style: boldTextStyle(),),
+                        Text('get userName : ${controller.userData?.userName}'),
+                        Text('get uid : ${controller.userData?.uid}'),
+                        Text('get fcmToken : ${controller.userData?.fcmToken}'),
+                        Text('get phoneNo : ${controller.userData?.phoneNo}'),
+                        Text('get gender : ${controller.userData?.gender}'),
+                        Text('get coin : ${controller.userData?.coin}'),
+                        Text('get winkData : ${controller.userData?.wink}'),
+
                 Space(12),
                 SDButton(
-                  textContent: 'nb util button 유틸 버튼',
+                  textContent: '강제종료',
                   onPressed: () {
-
-
+                    exit(0);
                   },
                 ),
               ],

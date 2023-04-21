@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nb_utils/nb_utils.dart';
 // import 'package:home_hub/models/last_bookings_model.dart';
 // import 'package:home_hub/screens/dashboard_screen.dart';
 import 'package:wink/utils/colors.dart';
@@ -13,16 +14,16 @@ InputDecoration commonInputDecoration({String? hintText, Widget? prefixIcon, Wid
     prefixIcon: prefixIcon,
     suffixIcon: suffixIcon,
     hintStyle: TextStyle(color: hintTextColor, fontSize: textSizeMedium),
-    contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+    contentPadding: EdgeInsets.all(buttonPadding),
     border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(borderRadius),
         borderSide: BorderSide.none
     ),
 
   );
 }
 
-BoxDecoration boxDecorations({double radius = 8, Color color = Colors.transparent, Color? bgColor, var showShadow = false}) {
+BoxDecoration boxDecorations({double radius = borderRadius, Color color = Colors.transparent, Color? bgColor, var showShadow = false}) {
   return BoxDecoration(
     color: bgColor,
     boxShadow: showShadow ? [BoxShadow(color: boxShadow, blurRadius: 10, spreadRadius: 2)] : [BoxShadow(color: Colors.transparent)],
@@ -72,10 +73,10 @@ class SDButtonState extends State<SDButton> {
     return GestureDetector(
       onTap: widget.onPressed,
       child: Container(
-        height: widget.height,
-        padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
+        // height: widget.height,
+        padding: EdgeInsets.all(buttonPadding),
         alignment: Alignment.center,
-        decoration: widget.isStroked ? boxDecorations(bgColor: Colors.transparent, color: colorScheme.primary) : boxDecorations(bgColor: colorScheme.primary, radius: 6),
+        decoration: widget.isStroked ? boxDecorations(bgColor: Colors.transparent, color: colorScheme.primary) : boxDecorations(bgColor: colorScheme.primary, radius: borderRadius),
         child: Text(
           widget.textContent,
           textAlign: TextAlign.center,
@@ -85,6 +86,17 @@ class SDButtonState extends State<SDButton> {
       ),
     );
   }
+}
+
+settIngContainer({String? title, IconData? icon, Function? onTap, Color? textColor, Color? boxColor}) {
+  return Container(
+    padding: EdgeInsets.all(buttonPadding),
+    margin: EdgeInsets.only(top: 8, bottom: 8),
+    decoration: BoxDecoration(borderRadius: BorderRadius.circular(borderRadius), color: boxColor),
+    child: Row(
+      children: [Icon(icon), 16.width, Text(title!, style: TextStyle(color: textColor),)],
+    ),
+  ).onTap(onTap);
 }
 
 //

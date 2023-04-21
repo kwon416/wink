@@ -7,6 +7,8 @@ import 'package:wink/home/home.dart';
 // import 'package:home_hub/screens/dashboard_screen.dart';
 import 'package:wink/utils/colors.dart';
 
+import '../../utils/constant.dart';
+
 // import '../login.dart';
 
 class OTPVerificationScreen extends StatefulWidget {
@@ -40,7 +42,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
         iconTheme: IconThemeData(color:blackColor),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(20.0),
+        padding: EdgeInsets.all(appPadding),
         scrollDirection: Axis.vertical,
         child: Column(
           children: [
@@ -79,10 +81,10 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                           filled: true,
                           fillColor: textFieldColor,
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(borderRadius),
                             borderSide: BorderSide.none,
                           ),
-                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(borderRadius)),
                         ),
                         onChanged: (value) {
                           if (value.isEmpty) {
@@ -114,7 +116,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.all(15),
+                            padding: EdgeInsets.all(buttonPadding),
                             textStyle: TextStyle(fontSize: 25),
                             shape: StadiumBorder(),
                           ),

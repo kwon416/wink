@@ -26,11 +26,11 @@ ElevatedButtonThemeData elevatedButtonTheme = ElevatedButtonThemeData(
     //눌렀을 때 퍼지는 스플래시 효과
     splashFactory: NoSplash.splashFactory,
     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-      EdgeInsets.symmetric(horizontal: 20, vertical: 20)
+      EdgeInsets.symmetric(horizontal: buttonPadding, vertical: buttonPadding)
     ),
     shape: MaterialStateProperty.all<OutlinedBorder>(
       RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(borderRadius),
       ),
     ),
     textStyle: MaterialStateProperty.all<TextStyle>(

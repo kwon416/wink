@@ -146,6 +146,7 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: Colors.transparent,
             body: _pageItem[_selected],
             bottomNavigationBar: BottomNavigationBar(
+
               type: BottomNavigationBarType.fixed,
               selectedIconTheme: IconThemeData(size: 30, opacity: 1, color: colorScheme.onPrimaryContainer,),
               unselectedIconTheme: IconThemeData(size: 28, opacity: 0.5, color: colorScheme.primary,),
@@ -174,7 +175,7 @@ class _HomePageState extends State<HomePage> {
                 BottomNavigationBarItem(
                     icon: Icon(Icons.person_outline),
                     activeIcon: Icon(Icons.person_rounded),
-                    label: "마이페이지",
+                    label: "프로필",
                     backgroundColor: Colors.transparent),
               ],
             ),

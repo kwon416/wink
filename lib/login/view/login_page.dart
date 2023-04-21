@@ -2,6 +2,7 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wink/login/login.dart';
+import 'package:wink/utils/constant.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -42,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
             //   title: Text('Login', style: textTheme.titleLarge,),
             // ),
             body: SingleChildScrollView(
-              padding: EdgeInsets.all(20.0),
+              padding: EdgeInsets.all(appPadding),
               child: BlocProvider(
                 create: (context) {
                   return LoginBloc(
