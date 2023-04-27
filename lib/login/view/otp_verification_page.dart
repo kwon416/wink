@@ -36,8 +36,6 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        elevation: 0,
         backgroundColor: Colors.transparent,
         iconTheme: IconThemeData(color:blackColor),
       ),

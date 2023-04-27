@@ -23,10 +23,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        elevation: 0,
         backgroundColor: colorScheme.primaryContainer,
-        // iconTheme: IconThemeData(color: Get.isDarkMode ? Colors.white : Colors.black),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
@@ -42,7 +39,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         itemCount: 20,
         itemBuilder: (context, index) {
           return Padding(
-            padding: EdgeInsets.symmetric(vertical: 4),
+            padding: EdgeInsets.symmetric(vertical: buttonMargin),
             child: ElevatedButton(
               onPressed: () {},
               child: Row(

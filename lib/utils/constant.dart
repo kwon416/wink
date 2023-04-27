@@ -1,9 +1,17 @@
 const String appName = 'WINK';
 
 double mainTitleTextSize = 32;
+
+const small = 4.0;
+const medium = 8.0;
+const large = 16.0;
+const xLarge = 24.0;
+
 const appPadding = 24.0;
-const buttonPadding = 16.0;
+const buttonPadding = large;
+const buttonMargin = medium;
 const borderRadius = 10.0;
+const circularRadius = 40.0;
 
 /* font sizes*/
 const textSizeSmall = 12.0;

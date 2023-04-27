@@ -43,6 +43,7 @@ class LoginController extends GetxController {
   Future<void> loginUser(PhoneAuthCredential credential) async {
     String? error = await AuthenticationRepository.instance.signInWithCredential(credential);
     if(error != null) {
+      // Get.snackbar('title', 'message',snackPosition: SnackPosition.BOTTOM);
       Get.showSnackbar(GetSnackBar(message: error.toString(), duration: Duration(seconds: 2),));
     }
   }

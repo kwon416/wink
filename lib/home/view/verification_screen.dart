@@ -93,8 +93,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
           Scaffold(
             backgroundColor: Colors.transparent,
             appBar: AppBar(
-              centerTitle: true,
-              elevation: 0,
+
               title: SizedBox(child: Image.asset(splashLogo,fit: BoxFit.cover,height: AppBar().preferredSize.height )),
               backgroundColor: Colors.transparent,
               iconTheme: IconThemeData(color: Get.isDarkMode ? Colors.white : Colors.black),

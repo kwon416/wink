@@ -54,8 +54,8 @@ class _HomeFragmentState extends State<HomeFragment> {
           child: Scaffold(
             appBar: AppBar(
               backgroundColor: colorScheme.primaryContainer,
-              elevation: 0.3,
-              title: Text('WINK 보내기',style: textTheme.titleLarge,),
+
+              title: Text('WINK 보내기'),
               leading: IconButton(onPressed: () => Get.changeTheme(Get.isDarkMode? lightTheme : darkTheme), icon: Icon(Icons.change_circle_rounded)),
               actions: [
                 // if (controller.userData?.isVerified?? false)
@@ -162,7 +162,6 @@ class _HomeFragmentState extends State<HomeFragment> {
                     Text('내가 wink 보낸 상대 : ${controller.userData?.wink['winkTo']}'),
                     Space(20),
                     Text('result'),
-                    Text('null'),
                     ElevatedButton(
                       onPressed: () {
                         controller.updateUser(controller.userData.uid, winkTo: '');
@@ -172,7 +171,7 @@ class _HomeFragmentState extends State<HomeFragment> {
                     ),
                     Space(12),
                     SDButton(
-                        textContent: 'local noti',
+                        textContent: 'status',
                         onPressed: () {
                           toast('tost');
                           // FlutterLocalNotificationsPlugin().show(0, 'title', 'body', NotificationDetails());

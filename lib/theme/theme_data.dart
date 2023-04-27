@@ -44,7 +44,7 @@ AppBarTheme appBarTheme = AppBarTheme(
   centerTitle: true,
   // titleTextStyle: TextStyle(fontSize: textSizeNormal),
   // backgroundColor: Colors.transparent,
-  elevation: 0.3,
+  elevation: 0,
 );
 
 IconThemeData iconThemeData = IconThemeData(
@@ -64,7 +64,7 @@ ThemeData lightTheme = ThemeData(
   highlightColor: transparent,
   appBarTheme: appBarTheme.copyWith(
       iconTheme: iconThemeData.copyWith(color: black),
-      titleTextStyle: TextStyle(color: black, fontSize: textSizeNormal),
+      titleTextStyle: TextStyle(color: black, fontSize: textSizeNormal,fontWeight: fontWeightBoldGlobal),
   ),
   scaffoldBackgroundColor: scaffoldBackgroundColor,
   brightness: Brightness.light,

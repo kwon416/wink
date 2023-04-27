@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 // import 'package:home_hub/models/last_bookings_model.dart';
 // import 'package:home_hub/screens/dashboard_screen.dart';
@@ -6,14 +7,16 @@ import 'package:wink/utils/colors.dart';
 
 import 'constant.dart';
 //텍스트 입력 폼
-InputDecoration commonInputDecoration({String? hintText, Widget? prefixIcon, Widget? suffixIcon}) {
+InputDecoration commonInputDecoration({String? labelText, String? hintText, Widget? prefixIcon, Widget? suffixIcon}) {
   return InputDecoration(
     filled: true,
     fillColor: textFieldColor,
     hintText: hintText,
+    labelText: labelText,
     prefixIcon: prefixIcon,
     suffixIcon: suffixIcon,
     hintStyle: TextStyle(color: hintTextColor, fontSize: textSizeMedium),
+    labelStyle: TextStyle(color: hintTextColor, fontSize: textSizeMedium),
     contentPadding: EdgeInsets.all(buttonPadding),
     border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(borderRadius),
@@ -88,16 +91,72 @@ class SDButtonState extends State<SDButton> {
   }
 }
 
+// ignore: must_be_immutable
+class BottomElevatedButton extends StatefulWidget {
+  var textContent;
+  VoidCallback onPressed;
+
+  BottomElevatedButton({super.key, required this.textContent, required this.onPressed});
+
+  @override
+  State<BottomElevatedButton> createState() => _BottomElevatedButtonState();
+}
+
+class _BottomElevatedButtonState extends State<BottomElevatedButton> {
+  @override
+  Widget build(BuildContext context) {
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
+    TextTheme textTheme = Theme.of(context).textTheme.apply(
+      bodyColor: colorScheme.onPrimary,
+      displayColor: colorScheme.onPrimary,
+    );
+    return ElevatedButton(
+        onPressed: widget.onPressed,
+        style: ButtonStyle(
+          shape: MaterialStateProperty.all<OutlinedBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(circularRadius),
+            ),
+          ),
+        ),
+        child: Text(
+          widget.textContent,
+          textAlign: TextAlign.center,
+          // style: boldTextStyle(size: 16, color: colorScheme.onPrimary, letterSpacing: 2),
+          style: textTheme.labelMedium?.copyWith(fontSize: textSizeMedium),
+        ),
+    );
+  }
+}
+
+
 settIngContainer({String? title, IconData? icon, Function? onTap, Color? textColor, Color? boxColor}) {
   return Container(
     padding: EdgeInsets.all(buttonPadding),
-    margin: EdgeInsets.only(top: 8, bottom: 8),
+    margin: EdgeInsets.only(top: buttonMargin, bottom: buttonMargin),
     decoration: BoxDecoration(borderRadius: BorderRadius.circular(borderRadius), color: boxColor),
     child: Row(
       children: [Icon(icon), 16.width, Text(title!, style: TextStyle(color: textColor),)],
     ),
   ).onTap(onTap);
 }
+
+Switch customAdaptiveSwitch(
+    {required bool value, required Function(bool newValue) onChanged, Color? activeColor, Color? activeTrackColor}) {
+  return Switch.adaptive(
+    value: value,
+    onChanged: onChanged,
+    activeColor: activeColor ?? Colors.white,
+    activeTrackColor: activeTrackColor ?? Colors.red,
+  );
+}
+
+void showAppDialog(String title,){
+  Get.defaultDialog(
+    title: title,
+  );
+}
+
 
 //
 // Widget homeTitleWidget({

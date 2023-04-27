@@ -1,8 +1,13 @@
 import 'dart:async';
 
+import 'package:firebase_core_platform_interface/firebase_core_platform_interface.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wink/login/models/user_data.dart';
+
+final navigatorKey = GlobalKey<NavigatorState>();
+
 
 class DatabaseRepository extends GetxService {
   static DatabaseRepository get instance => Get.find();
@@ -34,13 +39,29 @@ class DatabaseRepository extends GetxService {
   }
   
    Future<UserData> readUser(String uid) async {
-     final snapshot = await _ref.child(uid).get();
-     if (snapshot.exists) {
-       return UserData.fromJson(snapshot.value as Map<Object?, Object?>);
-     } else {
-       print('no data available');
-       throw Exception('no data available');
+     try {
+       final snapshot = await _ref.child(uid).get();
+       if (snapshot.exists) {
+         return UserData.fromJson(snapshot.value as Map<Object?, Object?>);
+       } else {
+         print('no data available');
+         throw Exception('no data available');
+       }
+     } on FirebaseException catch (error) {
+       print(error.code);
+       switch (error.code) {
+         case "permission-denied":
+         ///todo firebase_database/permission-denied error 핸들링
+         break;
+         default:
+           break;
+
+       }
+
+       throw Exception(Error);
      }
+
+
   }
 
   Future<void> updateUser(String uid, Map<String, dynamic> data) async {

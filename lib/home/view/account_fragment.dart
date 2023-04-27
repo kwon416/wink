@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:wink/controller/login_controller.dart';
 import 'package:wink/controller/membership_controller.dart';
+import 'package:wink/home/view/editProfile_screen.dart';
+import 'package:wink/home/view/setting_screen.dart';
 import 'package:wink/theme/theme.dart';
 import 'package:wink/utils/colors.dart';
 import 'package:wink/utils/images.dart';
@@ -33,7 +35,10 @@ class AccountFragment extends StatelessWidget {
             backgroundColor: colorScheme.primaryContainer,
             title: Text('프로필',),
             actions: [
-              IconButton(onPressed: () => Get.changeTheme(Get.isDarkMode? lightTheme : darkTheme), icon: Icon(Icons.change_circle_rounded))
+              IconButton(
+                  onPressed: () => Get.to(() => SettingScreen()),
+                  icon: Icon(Icons.settings)
+              ),
             ],
           ),
           body: Center(
@@ -94,11 +99,11 @@ class AccountFragment extends StatelessWidget {
                           children: [
                             settIngContainer(
                               icon: Icons.edit,
-                              title: 'Edit Profile',
+                              title: '프로필 수정',
                               boxColor: colorScheme.primaryContainer,
                               textColor: colorScheme.onPrimaryContainer,
                               onTap: () {
-                                Get.to(() => Other());
+                                Get.to(() => (EditProfileScreen()));
                                 // SHEditProfileScreen().launch(
                                 //   context,
                                 //   pageRouteAnimation: PageRouteAnimation.SlideBottomTop,
@@ -115,8 +120,17 @@ class AccountFragment extends StatelessWidget {
                                 // SHMemberScreen().launch(context, pageRouteAnimation: PageRouteAnimation.SlideBottomTop);
                               },
                             ),
-                            settIngContainer(icon: Icons.settings, title: 'Setting', boxColor: colorScheme.primaryContainer,
-                                textColor: colorScheme.onPrimaryContainer),
+                            settIngContainer(
+                              icon: Icons.settings,
+                              title: '설정',
+                              boxColor: colorScheme.primaryContainer,
+                              textColor: colorScheme.onPrimaryContainer,
+                              onTap: () {
+                                // Get.to(() => Other());
+                                Get.to(() => SettingScreen());
+
+                              },
+                            ),
                             16.height,
                             settIngContainer(icon: Icons.chat, title: 'Terms of use', boxColor: colorScheme.primaryContainer,
                                 textColor: colorScheme.onPrimaryContainer),
@@ -161,8 +175,6 @@ class Other extends GetView<MembershipController> {
     LoginController l = Get.find();
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        elevation: 0,
         backgroundColor: colorScheme.primaryContainer,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
