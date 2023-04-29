@@ -5,6 +5,7 @@ import 'package:wink/controller/login_controller.dart';
 import 'package:wink/controller/membership_controller.dart';
 import 'package:wink/home/home.dart';
 import 'package:wink/main.dart';
+import 'package:wink/utils/constant.dart';
 
 
 
@@ -146,12 +147,12 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: Colors.transparent,
             body: _pageItem[_selected],
             bottomNavigationBar: BottomNavigationBar(
-
               type: BottomNavigationBarType.fixed,
+              selectedItemColor: colorScheme.onPrimaryContainer,
               selectedIconTheme: IconThemeData(size: 30, opacity: 1, color: colorScheme.onPrimaryContainer,),
               unselectedIconTheme: IconThemeData(size: 28, opacity: 0.5, color: colorScheme.primary,),
-              selectedLabelStyle: TextStyle(fontSize: 14),
-              unselectedLabelStyle: TextStyle(fontSize: 14),
+              selectedLabelStyle: TextStyle(fontSize: textSizeSMedium),
+              unselectedLabelStyle: TextStyle(fontSize: textSizeSMedium),
               currentIndex: _selected,
               showUnselectedLabels: true,
               onTap: (selected) {

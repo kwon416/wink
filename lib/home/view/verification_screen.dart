@@ -36,7 +36,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
   final signUpController = Get.put(SignUpController());
   final loginController = Get.put(LoginController());
 
-  late Timer _timer;
+  Timer? _timer;
   int _start = 60;
   bool _isActive = false;
   void startTimer() {
@@ -62,7 +62,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
       _isActive = false;
       _start = 60;
     });
-    _timer.cancel();
+    _timer?.cancel();
     startTimer();
   }
 
@@ -73,7 +73,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
   @override
   void dispose() {
-    _timer.cancel();
+    _timer?.cancel();
     super.dispose();
   }
 
@@ -113,7 +113,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     children: [
                       Text('서비스 이용을 위해서 본인 확인을 진행합니다.'),
                       Text('휴대폰 번호를 입력해주세요.'),
-                      Space(12),
+                      Space(buttonMargin),
                       Form(
                         key: _phoneNoInputKey,
                         child: Row(
@@ -142,7 +142,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                 decoration: commonInputDecoration(hintText: "전화번호", prefixIcon: Icon(Icons.numbers_outlined)),
                               ),
                             ),
-                            Space(5),
+                            Space(buttonMargin),
                             ElevatedButton(
                               onPressed: isProcessing ? (){} : () async {
                                 if (_phoneNoInputKey.currentState!.validate()) {
@@ -226,11 +226,11 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                   ),
                                 ),
                               ),
-                              Space(10),
+                              Space(buttonMargin),
                               Text('$_start', style: boldTextStyle(color: redColor,decoration: TextDecoration.underline),),
                             ],
                           ),
-                          Space(20),
+                          Space(buttonMargin),
                           SizedBox(
                             width: Get.width,
                             child: ElevatedButton(

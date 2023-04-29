@@ -102,7 +102,7 @@ class _HomeFragmentState extends State<HomeFragment> {
                           ]
                       ),
                     ),
-                    Space(12),
+                    Space(buttonMargin),
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -114,9 +114,11 @@ class _HomeFragmentState extends State<HomeFragment> {
                         Text(' : ${controller.userData?.coin}개')
                       ],
                     ),
+                    Space(buttonMargin),
                     Text('코인이 50개 필요합니다'),
+                    Space(buttonMargin),
                     Text('윙크를 보낼 전화번호를 입력하세요'),
-                    Space(12),
+                    Space(buttonMargin),
                     SizedBox(
                       child: Form(
                         key: _sendWinkKey,
@@ -135,7 +137,7 @@ class _HomeFragmentState extends State<HomeFragment> {
                         ),
                       ),
                     ),
-                    Space(12),
+                    Space(buttonMargin),
                     ElevatedButton(
                       onPressed: () async {
                         if (_sendWinkKey.currentState!.validate()) {
@@ -147,8 +149,6 @@ class _HomeFragmentState extends State<HomeFragment> {
                       },
                       child: Text('보내기'),
                     ),
-                    Space(12),
-
                   ],
                 ),
               ),
@@ -160,8 +160,9 @@ class _HomeFragmentState extends State<HomeFragment> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text('내가 wink 보낸 상대 : ${controller.userData?.wink['winkTo']}'),
-                    Space(20),
+                    Space(buttonMargin),
                     Text('result'),
+                    Space(buttonMargin),
                     ElevatedButton(
                       onPressed: () {
                         controller.updateUser(controller.userData.uid, winkTo: '');
@@ -169,7 +170,7 @@ class _HomeFragmentState extends State<HomeFragment> {
                       },
                       child: Text('wink 초기화'),
                     ),
-                    Space(12),
+                    Space(buttonMargin),
                     SDButton(
                         textContent: 'status',
                         onPressed: () {
@@ -198,7 +199,7 @@ class NotVerifiedScreen extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text('wink서비스를 이용하기 위해서 핸드폰 인증을 해주세요'),
-          Space(12),
+          Space(buttonMargin),
           ElevatedButton(
             onPressed: () {
               showToast('인증 화면으로 이동', context);

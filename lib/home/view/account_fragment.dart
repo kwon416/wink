@@ -185,6 +185,7 @@ class Other extends GetView<MembershipController> {
       backgroundColor: colorScheme.primaryContainer,
       body: Center(
         child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: appPadding),
             child: Column(

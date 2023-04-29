@@ -28,116 +28,113 @@ class _LoginFormState extends State<LoginForm> {
       displayColor: colorScheme.onPrimaryContainer,
     );
 
-    return Align(
-      alignment: const Alignment(0, -1/3),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+    return Form(
+      key: _formKey,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Space(60),
+              Text("WINK", style: textTheme.displaySmall,),
+              Space(buttonMargin),
+              Text("Please Login to your account", style: textTheme.bodyLarge,),
+              Space(buttonMargin),
+              Image.asset(splashLogo, width: Get.height*0.3, fit: BoxFit.cover),
+            ],
+          ),
+          Space(70),
+          // TextFormField(
+          //   controller: controller.email,
+          //   keyboardType: TextInputType.emailAddress,
+          //   textInputAction: TextInputAction.next,
+          //   style: TextStyle(fontSize: 20),
+          //   validator: (text) {
+          //     if (text == null || text.isEmpty) {
+          //       return '이메일을 입력해주세요';
+          //     }
+          //     return null;
+          //   },
+          //   decoration: commonInputDecoration(hintText: "이메일", prefixIcon: Icon(Icons.email_outlined)),
+          // ),
+          // const Padding(padding: EdgeInsets.all(12)),
+          // TextFormField(
+          //   controller: controller.password,
+          //   textInputAction: TextInputAction.done,
+          //   keyboardType: TextInputType.visiblePassword,
+          //   obscureText: _securePassword,
+          //   style: TextStyle(fontSize: 20),
+          //   validator: (text) {
+          //     if (text == null || text.isEmpty) {
+          //       return '패스워드를 입력해주세요';
+          //     }
+          //     return null;
+          //   },
+          //   decoration: commonInputDecoration(
+          //     hintText: "패스워드",
+          //     prefixIcon: Icon(Icons.lock_outline_rounded),
+          //     suffixIcon: Padding(
+          //       padding: EdgeInsets.only(right: 5.0),
+          //       child: IconButton(
+          //         icon: Icon(_securePassword ? Icons.visibility_off : Icons.visibility, size: 18),
+          //         onPressed: () {
+          //           _securePassword = !_securePassword;
+          //           setState(() {});
+          //         },
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          // const Padding(padding: EdgeInsets.all(12)),
+
+          ElevatedButton(
+            //key: const Key('loginForm_continue_raisedButton'),
+            onPressed: () {
+              // print("email : ${controller.email.text}, password : ${controller.password.text}");
+              // if (_formKey.currentState!.validate()) {
+              //   controller.loginUser(controller.email.text, controller.password.text);
+              //   return;
+              // }
+              // print('로그인 실패');
+              Get.to(() => VerificationScreen(), arguments: 'logIn');
+            },
+            child: Text('기존 회원 로그인',),
+          ),
+          // const Padding(padding: EdgeInsets.all(12)),
+          // ElevatedButton(
+          //
+          //   onPressed: () {
+          //     controller.signInWithGoogle();
+          //   },
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: [
+          //       GoogleLogoWidget(),
+          //       Space(12),
+          //       Text('구글 로그인',),
+          //     ],
+          //   ),
+          // ),
+          Space(appPadding),
+          _LoginButton(),
+          Space(appPadding),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpPage()));
+            },
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Space(60),
-                Text("WINK", style: textTheme.displaySmall,),
-                Space(8),
-                Text("Please Login to your account", style: textTheme.bodyLarge,),
-                Space(16),
-                Image.asset(splashLogo, width: Get.height*0.3, fit: BoxFit.cover),
+                Text("Don't have account?", style: TextStyle(fontSize: 16)),
+                Space(4),
+                Text('회원가입', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
               ],
             ),
-            Space(70),
-            // TextFormField(
-            //   controller: controller.email,
-            //   keyboardType: TextInputType.emailAddress,
-            //   textInputAction: TextInputAction.next,
-            //   style: TextStyle(fontSize: 20),
-            //   validator: (text) {
-            //     if (text == null || text.isEmpty) {
-            //       return '이메일을 입력해주세요';
-            //     }
-            //     return null;
-            //   },
-            //   decoration: commonInputDecoration(hintText: "이메일", prefixIcon: Icon(Icons.email_outlined)),
-            // ),
-            // const Padding(padding: EdgeInsets.all(12)),
-            // TextFormField(
-            //   controller: controller.password,
-            //   textInputAction: TextInputAction.done,
-            //   keyboardType: TextInputType.visiblePassword,
-            //   obscureText: _securePassword,
-            //   style: TextStyle(fontSize: 20),
-            //   validator: (text) {
-            //     if (text == null || text.isEmpty) {
-            //       return '패스워드를 입력해주세요';
-            //     }
-            //     return null;
-            //   },
-            //   decoration: commonInputDecoration(
-            //     hintText: "패스워드",
-            //     prefixIcon: Icon(Icons.lock_outline_rounded),
-            //     suffixIcon: Padding(
-            //       padding: EdgeInsets.only(right: 5.0),
-            //       child: IconButton(
-            //         icon: Icon(_securePassword ? Icons.visibility_off : Icons.visibility, size: 18),
-            //         onPressed: () {
-            //           _securePassword = !_securePassword;
-            //           setState(() {});
-            //         },
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            // const Padding(padding: EdgeInsets.all(12)),
-
-            ElevatedButton(
-              //key: const Key('loginForm_continue_raisedButton'),
-              onPressed: () {
-                // print("email : ${controller.email.text}, password : ${controller.password.text}");
-                // if (_formKey.currentState!.validate()) {
-                //   controller.loginUser(controller.email.text, controller.password.text);
-                //   return;
-                // }
-                // print('로그인 실패');
-                Get.to(() => VerificationScreen(), arguments: 'logIn');
-              },
-              child: Text('기존 회원 로그인',),
-            ),
-            // const Padding(padding: EdgeInsets.all(12)),
-            // ElevatedButton(
-            //
-            //   onPressed: () {
-            //     controller.signInWithGoogle();
-            //   },
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: [
-            //       GoogleLogoWidget(),
-            //       Space(12),
-            //       Text('구글 로그인',),
-            //     ],
-            //   ),
-            // ),
-            Space(appPadding),
-            _LoginButton(),
-            Space(appPadding),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpPage()));
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Don't have account?", style: TextStyle(fontSize: 16)),
-                  Space(4),
-                  Text('회원가입', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

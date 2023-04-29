@@ -43,15 +43,9 @@ class _LoginPageState extends State<LoginPage> {
             //   title: Text('Login', style: textTheme.titleLarge,),
             // ),
             body: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
               padding: EdgeInsets.all(appPadding),
-              child: BlocProvider(
-                create: (context) {
-                  return LoginBloc(
-                    authenticationRepository: RepositoryProvider.of<AuthenticationRepository>(context),
-                  );
-                },
-                child: LoginForm(),
-              ),
+              child: LoginForm(),
             ),
           ),
         ],

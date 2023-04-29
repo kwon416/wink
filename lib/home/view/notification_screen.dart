@@ -45,12 +45,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
               child: Row(
                 children: [
                   Icon(Icons.ac_unit_sharp, size: 20),
-                  Space(16),
+                  Space(buttonMargin),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("알림 제목", style: TextStyle(fontWeight: FontWeight.bold)),
-                      Space(8),
+                      Space(buttonMargin),
                       Text(
                         "Thank you for order service using this app",
                         style: TextStyle(

@@ -4,6 +4,7 @@ import 'package:wink/controller/signup_controller.dart';
 // import 'package:wink/screens/otp_verification_screen.dart';
 import 'package:wink/login/view/login_page.dart';
 import 'package:wink/toast/flutter_toast.dart';
+import 'package:wink/utils/colors.dart';
 import 'package:wink/utils/constant.dart';
 import 'package:wink/utils/images.dart';
 import 'package:wink/utils/widgets.dart';
@@ -13,11 +14,7 @@ import 'package:wink/custom_widget/space.dart';
 import '../../home/home.dart';
 import '../../theme/theme.dart';
 
-const List<Widget> gender = <Widget>[
-  Text('남자'),
-  Text('여자'),
-  Text('미공개'),
-];
+const List<String> gender = ['남자', '여자', '미공개'];
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -40,7 +37,8 @@ class _SignUpPageState extends State<SignUpPage> {
   double screenHeight = 0.0;
   double screenWidth = 0.0;
 
-  final List<bool> _selectedMenu = <bool>[false, false, false];
+  // final List<bool> _selectedMenu = <bool>[false, false, false, false];
+  final List<bool> _selectedMenu = List<bool>.filled(gender.length, false);
 
   bool? checkBoxValue = false;
 
@@ -75,6 +73,23 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
+  Widget toggleContainer(String value, ColorScheme colorScheme, bool isSelected) {
+    return Container(
+      constraints: BoxConstraints(
+          minWidth: Get.width / (gender.length * 2),
+      ),
+      padding: EdgeInsets.all(1),
+      margin: EdgeInsets.all(2),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(circularRadius),
+        color: isSelected ? colorScheme.primary : transparent
+      ),
+      child: Center(
+        child: Text(value),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
@@ -102,7 +117,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   children: [
                     Space(AppBar().preferredSize.height),
                     Image.asset(splashLogo,height: Get.statusBarHeight,),
-                    Space(42),
+                    Space(buttonMargin*4),
                     Center(
                       child: Text(
                         "WINK 회원가입",
@@ -112,7 +127,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     IconButton(onPressed: () => Get.changeTheme(Get.isDarkMode? lightTheme : darkTheme), icon: Icon(Icons.change_circle_rounded)),
                     Space(60),
                     Center(child: Text('이름을 입력해주세요')),
-                    Space(12),
+                    Space(buttonMargin),
                     Form(
                       key: _signUpFormKey,
                       child: Column(
@@ -131,35 +146,54 @@ class _SignUpPageState extends State<SignUpPage> {
                             },
                             decoration: commonInputDecoration(hintText: "이름",prefixIcon: Icon(Icons.person_outline_rounded)),
                           ),
-                          Space(12),
+                          Space(buttonMargin),
                           Text('성별을 선택해주세요'),
-                          Space(12),
-                          ToggleButtons(
-                            onPressed: (index){
-                              setState(() {
-                                for (int i = 0; i < _selectedMenu.length; i++) {
-                                  _selectedMenu[i] = i == index;
-                                }
-                                if(index == 0){
-                                  controller.gender = '남자'.obs;
-                                } else if(index == 1){
-                                  controller.gender = '여자'.obs;
-                                } else{
-                                  controller.gender = '미공개'.obs;
-                                }
-                              });
-                            },
-                            borderRadius: const BorderRadius.all(Radius.circular(borderRadius)),
-                            selectedBorderColor: colorScheme.secondary,
-                            selectedColor: colorScheme.primaryContainer,
-                            fillColor: colorScheme.primary,
-                            color: colorScheme.onPrimaryContainer,
-                            constraints: const BoxConstraints(
-                              minHeight: 40.0,
-                              minWidth: 80.0,
+                          Space(buttonMargin),
+                          Container(
+                            padding: EdgeInsets.zero,
+                            decoration: BoxDecoration(
+                              color: colorScheme.secondaryContainer,
+                              border: Border.all(color: colorScheme.secondaryContainer),
+                              borderRadius: BorderRadius.all(Radius.circular(circularRadius)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.1),
+                                  spreadRadius: 1,
+                                  blurRadius: 1,
+                                  offset: Offset(0, 2), // changes position of shadow
+                                ),
+                              ],
                             ),
-                            isSelected: _selectedMenu,
-                            children: gender,
+                            child: ToggleButtons(
+                              onPressed: (index){
+                                setState(() {
+                                  for (int i = 0; i < _selectedMenu.length; i++) {
+                                    _selectedMenu[i] = i == index;
+                                  }
+                                  if(index == 0){
+                                    controller.gender = gender[0].obs;
+                                  } else if(index == 1){
+                                    controller.gender = gender[1].obs;
+                                  } else{
+                                    controller.gender = gender[2].obs;
+                                  }
+                                });
+                              },
+                              borderColor: transparent,
+                              selectedBorderColor: transparent,
+                              selectedColor: colorScheme.onPrimary,
+                              fillColor: transparent,
+                              color: colorScheme.onPrimaryContainer,
+                              constraints: const BoxConstraints(
+                                // minHeight: 40.0,
+                                // minWidth: 80.0,
+                              ),
+                              isSelected: _selectedMenu,
+                              children: [
+                                for(int i = 0; i < gender.length; i++)
+                                  toggleContainer(gender[i], colorScheme, _selectedMenu[i]),
+                              ],
+                            ),
                           ),
                           // Space(16),
                           // TextFormField(
@@ -253,26 +287,23 @@ class _SignUpPageState extends State<SignUpPage> {
                           //     ),
                           //   ),
                           // ),
-                          Space(16),
-                          Theme(
-                            data: ThemeData(unselectedWidgetColor: colorScheme.primary),
-                            child: CheckboxListTile(
-                              contentPadding: EdgeInsets.all(0),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius)),
-                              checkColor: colorScheme.onPrimary,
-                              activeColor: colorScheme.primary,
-                              title: Text("이용약관 동의", style: textTheme.bodySmall),
-                              value: checkBoxValue,
-                              dense: true,
-                              onChanged: (newValue) {
-                                setState(() {
-                                  checkBoxValue = newValue;
-                                });
-                              },
-                              controlAffinity: ListTileControlAffinity.leading,
-                            ),
+                          Space(buttonMargin),
+                          CheckboxListTile(
+                            contentPadding: EdgeInsets.all(0),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius)),
+                            checkColor: colorScheme.onPrimary,
+                            activeColor: colorScheme.primary,
+                            title: Text("이용약관 동의", style: textTheme.bodyLarge),
+                            value: checkBoxValue,
+                            dense: true,
+                            onChanged: (newValue) {
+                              setState(() {
+                                checkBoxValue = newValue;
+                              });
+                            },
+                            controlAffinity: ListTileControlAffinity.leading,
                           ),
-                          Space(16),
+                          Space(buttonMargin),
                           SizedBox(
                             width: MediaQuery.of(context).size.width,
                             child: ElevatedButton(
@@ -312,7 +343,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               child: Text("전화번호 인증하기",),
                             ),
                           ),
-                          Space(20),
+                          Space(buttonMargin*2),
                           GestureDetector(
                             onTap: () {
                               Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));

@@ -10,8 +10,11 @@ const xLarge = 24.0;
 const appPadding = 24.0;
 const buttonPadding = large;
 const buttonMargin = medium;
+
 const borderRadius = 10.0;
 const circularRadius = 40.0;
+
+const togglePadding = 1;
 
 /* font sizes*/
 const textSizeSmall = 12.0;

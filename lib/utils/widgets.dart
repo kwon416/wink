@@ -4,7 +4,9 @@ import 'package:nb_utils/nb_utils.dart';
 // import 'package:home_hub/models/last_bookings_model.dart';
 // import 'package:home_hub/screens/dashboard_screen.dart';
 import 'package:wink/utils/colors.dart';
+import 'package:wink/utils/images.dart';
 
+import '../custom_widget/space.dart';
 import 'constant.dart';
 //텍스트 입력 폼
 InputDecoration commonInputDecoration({String? labelText, String? hintText, Widget? prefixIcon, Widget? suffixIcon}) {
@@ -147,13 +149,41 @@ Switch customAdaptiveSwitch(
     value: value,
     onChanged: onChanged,
     activeColor: activeColor ?? Colors.white,
-    activeTrackColor: activeTrackColor ?? Colors.red,
+    // activeColor: activeColor,
+    // inactiveTrackColor: Colors.grey,
+    activeTrackColor: activeTrackColor ?? Colors.grey,
+    // activeTrackColor: activeTrackColor,
   );
 }
 
 void showAppDialog(String title,){
   Get.defaultDialog(
     title: title,
+  );
+}
+
+Widget appEmptyWidget(String image, String title, String text) {
+  return LayoutBuilder(
+      builder: (context, constraints) {
+        return SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
+          child: SizedBox(
+            height: constraints.maxHeight,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(image, width: 200,),
+                  Space(buttonMargin),
+                  Text(title, style: TextStyle(fontSize: textSizeLarge, fontWeight: FontWeight.bold),),
+                  Space(buttonMargin),
+                  Text(text,style: TextStyle(fontSize: textSizeMedium)),
+                ],
+              ),
+            ),
+          ),
+        );
+      }
   );
 }
 
