@@ -73,22 +73,7 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  Widget toggleContainer(String value, ColorScheme colorScheme, bool isSelected) {
-    return Container(
-      constraints: BoxConstraints(
-          minWidth: Get.width / (gender.length * 2),
-      ),
-      padding: EdgeInsets.all(1),
-      margin: EdgeInsets.all(2),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(circularRadius),
-        color: isSelected ? colorScheme.primary : transparent
-      ),
-      child: Center(
-        child: Text(value),
-      ),
-    );
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -152,12 +137,12 @@ class _SignUpPageState extends State<SignUpPage> {
                           Container(
                             padding: EdgeInsets.zero,
                             decoration: BoxDecoration(
-                              color: colorScheme.secondaryContainer,
+                              color: Colors.grey,
                               border: Border.all(color: colorScheme.secondaryContainer),
                               borderRadius: BorderRadius.all(Radius.circular(circularRadius)),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.grey.withOpacity(0.1),
+                                  color: Colors.grey.withOpacity(0),
                                   spreadRadius: 1,
                                   blurRadius: 1,
                                   offset: Offset(0, 2), // changes position of shadow
@@ -184,10 +169,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               selectedColor: colorScheme.onPrimary,
                               fillColor: transparent,
                               color: colorScheme.onPrimaryContainer,
-                              constraints: const BoxConstraints(
-                                // minHeight: 40.0,
-                                // minWidth: 80.0,
-                              ),
+
                               isSelected: _selectedMenu,
                               children: [
                                 for(int i = 0; i < gender.length; i++)

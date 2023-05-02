@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:wink/controller/login_controller.dart';
 import 'package:wink/controller/membership_controller.dart';
 import 'package:wink/home/home.dart';
@@ -146,39 +147,49 @@ class _HomePageState extends State<HomePage> {
           Scaffold(
             backgroundColor: Colors.transparent,
             body: _pageItem[_selected],
-            bottomNavigationBar: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              selectedItemColor: colorScheme.onPrimaryContainer,
-              selectedIconTheme: IconThemeData(size: 30, opacity: 1, color: colorScheme.onPrimaryContainer,),
-              unselectedIconTheme: IconThemeData(size: 28, opacity: 0.5, color: colorScheme.primary,),
-              selectedLabelStyle: TextStyle(fontSize: textSizeSMedium),
-              unselectedLabelStyle: TextStyle(fontSize: textSizeSMedium),
-              currentIndex: _selected,
-              showUnselectedLabels: true,
-              onTap: (selected) {
-                setState(() {
-                  _selected = selected;
-                });
-              },
-              elevation: 0,
-              backgroundColor: Colors.transparent,
-              items: const [
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.send_outlined),
-                    activeIcon: Icon(Icons.send_rounded),
-                    label: "wink 보내기",
-                    backgroundColor: Colors.transparent),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.call_received_outlined),
-                    activeIcon: Icon(Icons.call_received_rounded),
-                    label: "받은 wink",
-                    backgroundColor: Colors.transparent),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.person_outline),
-                    activeIcon: Icon(Icons.person_rounded),
-                    label: "프로필",
-                    backgroundColor: Colors.transparent),
-              ],
+            bottomNavigationBar: Container(
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: colorScheme.onPrimaryContainer,
+                    width: 0.5
+                  )
+                ),
+              ),
+              child: BottomNavigationBar(
+                type: BottomNavigationBarType.fixed,
+                selectedItemColor: colorScheme.onPrimaryContainer,
+                selectedIconTheme: IconThemeData(size: 30, opacity: 1, color: colorScheme.onPrimaryContainer,),
+                unselectedIconTheme: IconThemeData(size: 28, opacity: 0.5, color: colorScheme.primary,),
+                selectedLabelStyle: TextStyle(fontSize: textSizeSMedium),
+                unselectedLabelStyle: TextStyle(fontSize: textSizeSMedium),
+                currentIndex: _selected,
+                showUnselectedLabels: true,
+                onTap: (selected) {
+                  setState(() {
+                    _selected = selected;
+                  });
+                },
+                elevation: 0,
+                backgroundColor: Colors.transparent,
+                items: const [
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.send_outlined),
+                      activeIcon: Icon(Icons.send_rounded),
+                      label: "wink 보내기",
+                      backgroundColor: Colors.transparent),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.call_received_outlined),
+                      activeIcon: Icon(Icons.call_received_rounded),
+                      label: "받은 wink",
+                      backgroundColor: Colors.transparent),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.person_outline),
+                      activeIcon: Icon(Icons.person_rounded),
+                      label: "프로필",
+                      backgroundColor: Colors.transparent),
+                ],
+              ),
             ),
           ),
         ],

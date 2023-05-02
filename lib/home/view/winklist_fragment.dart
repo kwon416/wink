@@ -4,7 +4,6 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:wink/utils/images.dart';
 import 'package:wink/utils/widgets.dart';
 
-import '../../custom_widget/space.dart';
 import '../../utils/constant.dart';
 
 
@@ -63,7 +62,7 @@ class _WinkListFragmentState extends State<WinkListFragment> {
                   height: 45,
                   width: 45,
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(40),
+                    borderRadius: BorderRadius.circular(circularRadius),
                     child: FadeInImage(
                       fit: BoxFit.cover,
                       placeholder: AssetImage(loading),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:wink/utils/colors.dart';
 import 'package:wink/utils/constant.dart';
 import 'package:wink/utils/images.dart';
 
@@ -79,7 +78,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
       body: Form(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(
-            vertical: 16,
+            vertical: appPadding,
             horizontal: appPadding,
           ),
           child: Column(
@@ -100,11 +99,11 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                   Positioned(
                     bottom: 10,
-                    left: 70,
+                    right: 10,
                     child: Container(
                       height: 40,
                       width: 40,
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: colorScheme.primary),
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(circularRadius), color: colorScheme.primary),
                       child: IconButton(
                         onPressed: () {},
                         icon: Icon(Icons.camera_alt_outlined, color: white),
@@ -142,11 +141,11 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                   labelText: 'Last Name',
                   labelStyle: secondaryTextStyle(color: white),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16.0),
+                    borderRadius: BorderRadius.circular(borderRadius),
                     borderSide: BorderSide(color: grey, width: 0.5),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16.0),
+                    borderRadius: BorderRadius.circular(borderRadius),
                     borderSide: BorderSide(color: grey, width: 0.5),
                   ),
                 ),
@@ -162,11 +161,11 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                   labelText: 'Phone Number',
                   labelStyle: secondaryTextStyle(),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16.0),
+                    borderRadius: BorderRadius.circular(borderRadius),
                     borderSide: BorderSide(color: grey, width: 0.5),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16.0),
+                    borderRadius: BorderRadius.circular(borderRadius),
                     borderSide: BorderSide(color: grey, width: 0.5),
                   ),
                 ),

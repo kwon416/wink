@@ -4,7 +4,6 @@ import 'package:nb_utils/nb_utils.dart';
 // import 'package:home_hub/models/last_bookings_model.dart';
 // import 'package:home_hub/screens/dashboard_screen.dart';
 import 'package:wink/utils/colors.dart';
-import 'package:wink/utils/images.dart';
 
 import '../custom_widget/space.dart';
 import 'constant.dart';
@@ -138,9 +137,26 @@ settIngContainer({String? title, IconData? icon, Function? onTap, Color? textCol
     margin: EdgeInsets.only(top: buttonMargin, bottom: buttonMargin),
     decoration: BoxDecoration(borderRadius: BorderRadius.circular(borderRadius), color: boxColor),
     child: Row(
-      children: [Icon(icon), 16.width, Text(title!, style: TextStyle(color: textColor),)],
+      children: [Icon(icon, color: textColor,), 16.width, Text(title!, style: TextStyle(color: textColor),)],
     ),
   ).onTap(onTap);
+}
+
+Widget toggleContainer(String value, ColorScheme colorScheme, bool isSelected) {
+  return Container(
+    constraints: BoxConstraints(
+      minWidth: Get.width / 5,
+    ),
+    padding: EdgeInsets.all(1),
+    margin: EdgeInsets.all(2),
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(circularRadius),
+        color: isSelected ? colorScheme.primary : transparent
+    ),
+    child: Center(
+      child: Text(value),
+    ),
+  );
 }
 
 Switch customAdaptiveSwitch(
@@ -149,10 +165,8 @@ Switch customAdaptiveSwitch(
     value: value,
     onChanged: onChanged,
     activeColor: activeColor ?? Colors.white,
-    // activeColor: activeColor,
-    // inactiveTrackColor: Colors.grey,
-    activeTrackColor: activeTrackColor ?? Colors.grey,
-    // activeTrackColor: activeTrackColor,
+    inactiveTrackColor: Colors.grey,
+    // activeTrackColor: activeTrackColor ?? Colors.grey,
   );
 }
 

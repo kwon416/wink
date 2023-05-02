@@ -5,13 +5,14 @@ import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:wink/controller/login_controller.dart';
 import 'package:wink/controller/membership_controller.dart';
-import 'package:wink/home/view/editProfile_screen.dart';
+import 'package:wink/home/view/editprofile_screen.dart';
+import 'package:wink/home/view/invite_screen.dart';
 import 'package:wink/home/view/setting_screen.dart';
-import 'package:wink/theme/theme.dart';
 import 'package:wink/utils/colors.dart';
 import 'package:wink/utils/images.dart';
 
 import '../../custom_widget/space.dart';
+import '../../toast/flutter_toast.dart';
 import '../../utils/constant.dart';
 import '../../utils/widgets.dart';
 
@@ -26,7 +27,7 @@ class AccountFragment extends StatelessWidget {
       // displayColor: colorScheme.onPrimaryContainer,
     );
 
-    final LoginController l = Get.put(LoginController());
+    // final LoginController l = Get.put(LoginController());
     return GetBuilder<MembershipController>(
       builder: (controller) {
         return Scaffold(
@@ -70,27 +71,25 @@ class AccountFragment extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             CircleAvatar(backgroundImage: AssetImage(splashLogo), radius: 70,backgroundColor: colorScheme.primary),
-                            10.width,
+                            Space(buttonMargin),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                5.height,
                                 Text(controller.userData?.userName, style: boldTextStyle(color: colorScheme.onPrimaryContainer)),
-                                5.height,
+                                Space(buttonMargin),
                                 Text(controller.userData?.phoneNo, style: primaryTextStyle(color: colorScheme.onPrimaryContainer)),
-                                5.height,
-                                Text(controller.userData?.uid, style: secondaryTextStyle(color: colorScheme.secondary)),
+                                Space(buttonMargin),
+                                Text(controller.userData?.uid, style: secondaryTextStyle(color: colorScheme.onPrimaryContainer)),
                               ],
                             ).expand()
                           ],
                         ),
                       ),
-
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(topLeft: Radius.circular(borderRadius), topRight: Radius.circular(borderRadius)),
-                          color: colorScheme.primary,
+                          color: colorScheme.primaryContainer,
                         ),
                         padding: EdgeInsets.symmetric(vertical: appPadding, horizontal: appPadding),
                         width: Get.width,
@@ -100,8 +99,8 @@ class AccountFragment extends StatelessWidget {
                             settIngContainer(
                               icon: Icons.edit,
                               title: '프로필 수정',
-                              boxColor: colorScheme.primaryContainer,
-                              textColor: colorScheme.onPrimaryContainer,
+                              boxColor: colorScheme.primary,
+                              textColor: colorScheme.onPrimary,
                               onTap: () {
                                 Get.to(() => (EditProfileScreen()));
                                 // SHEditProfileScreen().launch(
@@ -112,41 +111,55 @@ class AccountFragment extends StatelessWidget {
                             ),
                             settIngContainer(
                               icon: Icons.person,
-                              title: 'Member',
-                              boxColor: colorScheme.primaryContainer,
-                              textColor: colorScheme.onPrimaryContainer,
+                              title: '친구 초대',
+                              boxColor: colorScheme.primary,
+                              textColor: colorScheme.onPrimary,
                               onTap: () {
-                                controller.getCurrentUser(l.getUser().value.uid);
-                                // SHMemberScreen().launch(context, pageRouteAnimation: PageRouteAnimation.SlideBottomTop);
+                                // controller.getCurrentUser(l.getUser().value.uid);
+                                Get.to(() => InviteScreen());
                               },
                             ),
                             settIngContainer(
                               icon: Icons.settings,
                               title: '설정',
-                              boxColor: colorScheme.primaryContainer,
-                              textColor: colorScheme.onPrimaryContainer,
+                              boxColor: colorScheme.primary,
+                              textColor: colorScheme.onPrimary,
                               onTap: () {
-                                // Get.to(() => Other());
+
                                 Get.to(() => SettingScreen());
 
                               },
                             ),
-                            16.height,
-                            settIngContainer(icon: Icons.chat, title: 'Terms of use', boxColor: colorScheme.primaryContainer,
-                                textColor: colorScheme.onPrimaryContainer),
-                            settIngContainer(icon: Icons.send, title: 'Contact', boxColor: colorScheme.primaryContainer,
-                                textColor: colorScheme.onPrimaryContainer),
-                            16.height,
+                            Space(buttonMargin*2),
+                            settIngContainer(
+                              icon: Icons.chat,
+                              title: 'Terms of use',
+                              boxColor: colorScheme.primary,
+                              textColor: colorScheme.onPrimary,
+                              onTap: () {
+                                showToast('Terms of use', context);
+                              }
+                            ),
+                            settIngContainer(
+                              icon: Icons.send,
+                              title: 'Contact',
+                              boxColor: colorScheme.primary,
+                              textColor: colorScheme.onPrimary,
+                              onTap: () {
+                                Get.to(() => Other());
+                              }
+                            ),
+                            Space(buttonMargin*2),
                             settIngContainer(
                               icon: Icons.logout,
                               title: '로그아웃',
-                              boxColor: colorScheme.primaryContainer,
+                              boxColor: colorScheme.primary,
                               textColor: Colors.deepOrange,
                               onTap: () {
                                   LoginController().logOutUser();
                               },
                             ),
-                            Row(children: [Text('v', style: primaryTextStyle(color: colorScheme.primaryContainer),), VersionInfoWidget(textStyle: primaryTextStyle(color: colorScheme.primaryContainer)),],).paddingLeft(16),
+                            Row(children: [Text('v', style: primaryTextStyle(color: colorScheme.onPrimaryContainer),), VersionInfoWidget(textStyle: primaryTextStyle(color: colorScheme.onPrimaryContainer)),],).paddingLeft(16),
                           ],
                         ),
                       ),
@@ -191,10 +204,10 @@ class Other extends GetView<MembershipController> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('auth user instance', style: boldTextStyle(),),
+                Text('auth user instance', style: TextStyle(fontWeight: FontWeight.bold),),
                         Text(l.getUser().toString()),
                         Space(20),
-                        Text('User Data From Realtime DB From firebase', style: boldTextStyle(),),
+                        Text('User Data From Realtime DB From firebase', style: TextStyle(fontWeight: FontWeight.bold),),
                         Text('get userName : ${controller.userData?.userName}'),
                         Text('get uid : ${controller.userData?.uid}'),
                         Text('get fcmToken : ${controller.userData?.fcmToken}'),
@@ -203,7 +216,14 @@ class Other extends GetView<MembershipController> {
                         Text('get coin : ${controller.userData?.coin}'),
                         Text('get winkData : ${controller.userData?.wink}'),
 
-                Space(12),
+                Space(buttonMargin),
+                SDButton(
+                  textContent: '새로고침',
+                  onPressed: () {
+                    controller.getCurrentUser(controller.uid);
+                  },
+                ),
+                Space(buttonMargin),
                 SDButton(
                   textContent: '강제종료',
                   onPressed: () {

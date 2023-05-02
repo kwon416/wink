@@ -6,8 +6,8 @@ import 'package:wink/utils/colors.dart';
 import '../utils/constant.dart';
 
 // const seedColor = Color(0xff0099ff);
-// const seedColor = Color(0xffff99ff);
-const seedColor = Colors.white;
+const seedColor = Color(0xffff99ff);
+// const seedColor = Colors.white;
 
 IconButtonThemeData iconButtonTheme = IconButtonThemeData(
   style: ButtonStyle(
@@ -44,8 +44,9 @@ ElevatedButtonThemeData elevatedButtonTheme = ElevatedButtonThemeData(
 AppBarTheme appBarTheme = AppBarTheme(
   // centerTitle: true,
   // titleTextStyle: TextStyle(fontSize: textSizeNormal),
-  // backgroundColor: Colors.transparent,
+  backgroundColor: Colors.transparent,
   elevation: 0,
+
 );
 
 IconThemeData iconThemeData = IconThemeData(
@@ -73,7 +74,7 @@ ToggleButtonsThemeData toggleButtonsTheme = ToggleButtonsThemeData(
 
 const scaffoldBackgroundColor = Colors.transparent;
 
-
+///white theme
 ColorScheme whiteColorScheme = ColorScheme(
     brightness: Brightness.light,
     primary: black,
@@ -88,6 +89,7 @@ ColorScheme whiteColorScheme = ColorScheme(
     onBackground: white,
     surface: black,
     onSurface: white);
+///black theme
 ColorScheme blackColorScheme = ColorScheme(
     brightness: Brightness.dark,
     primary: white,
@@ -110,13 +112,14 @@ ThemeData lightTheme = ThemeData(
   shadowColor: transparent,
   highlightColor: transparent,
   appBarTheme: appBarTheme.copyWith(
+
       iconTheme: iconThemeData.copyWith(color: black),
       titleTextStyle: TextStyle(color: black, fontSize: textSizeNormal,fontWeight: fontWeightBoldGlobal),
   ),
   scaffoldBackgroundColor: scaffoldBackgroundColor,
   brightness: Brightness.light,
-  colorScheme: ColorScheme.fromSeed(seedColor: seedColor, brightness: Brightness.light,),
-  // colorScheme: whiteColorScheme,
+  // colorScheme: ColorScheme.fromSeed(seedColor: seedColor, brightness: Brightness.light,),
+  colorScheme: whiteColorScheme,
   elevatedButtonTheme: elevatedButtonTheme,
   iconButtonTheme: iconButtonTheme,
   iconTheme: IconThemeData(
@@ -146,8 +149,8 @@ ThemeData darkTheme = ThemeData(
   ),
   scaffoldBackgroundColor: scaffoldBackgroundColor,
   brightness: Brightness.dark,
-  colorScheme: ColorScheme.fromSeed(seedColor: seedColor, brightness: Brightness.dark,),
-  // colorScheme: blackColorScheme,
+  // colorScheme: ColorScheme.fromSeed(seedColor: seedColor, brightness: Brightness.dark,),
+  colorScheme: blackColorScheme,
   elevatedButtonTheme: elevatedButtonTheme,
   iconButtonTheme: iconButtonTheme,
   visualDensity: VisualDensity.adaptivePlatformDensity,

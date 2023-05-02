@@ -27,7 +27,7 @@ class SettingScreenState extends State<SettingScreen> {
     Icons.notifications,
     Icons.change_circle_rounded
   ];
-  List<String> cacheList = ['Enable cache', 'Clear cache'];
+  List<String> cacheList = ['Enable cache', '캐시 데이터 삭제하기'];
   List<IconData> leadingcatchIconList = [Icons.square_rounded, Icons.cleaning_services_rounded];
   List<String> otherSetings = ['Privacy Policy', 'Security Notifications'];
   List<IconData> otherSetingsLeadingIcon = [
@@ -217,41 +217,48 @@ class SettingScreenState extends State<SettingScreen> {
   }
 
   cacheSettings(int index) {
-    return Container(
-        width: MediaQuery.of(context).size.width - appPadding*2,
-        padding: EdgeInsets.all(buttonPadding),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
-          borderRadius: BorderRadius.circular(borderRadius),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Icon(
-              leadingcatchIconList[index],
-              color: Get.isDarkMode?black:white,
-            ),
-            SizedBox(width: buttonPadding),
-            Expanded(
-              child: Text(
-                cacheList[index],
-                style: primaryTextStyle(color: Theme.of(context).colorScheme.onPrimary),
+    return GestureDetector(
+      onTap: () {
+        if (index == 1) {
+          Get.snackbar("캐시 데이터가 삭제됨", "",snackPosition: SnackPosition.BOTTOM);
+        }
+      },
+      child: Container(
+          width: MediaQuery.of(context).size.width - appPadding*2,
+          padding: EdgeInsets.all(buttonPadding),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.primary,
+            borderRadius: BorderRadius.circular(borderRadius),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Icon(
+                leadingcatchIconList[index],
+                color: Get.isDarkMode?black:white,
               ),
-            ),
-            index == 0
-                ? SizedBox(height: 24,
-                  child: Switch(
-                  value: enableCache,
-                  activeTrackColor: Colors.red,
-                  activeColor: Colors.white,
-                  onChanged: (newvalue) {
-                    enableCache = !enableCache;
-                    setState(() {});
-                  }),
-                )
-                : Offstage(),
-          ],
-        ));
+              SizedBox(width: buttonPadding),
+              Expanded(
+                child: Text(
+                  cacheList[index],
+                  style: primaryTextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                ),
+              ),
+              index == 0
+                  ? SizedBox(height: 24,
+                    child: Switch(
+                    value: enableCache,
+                    activeTrackColor: Colors.red,
+                    activeColor: Colors.white,
+                    onChanged: (newvalue) {
+                      enableCache = !enableCache;
+                      setState(() {});
+                    }),
+                  )
+                  : Offstage(),
+            ],
+          )),
+    );
   }
 
   otherSettings(int index) {
