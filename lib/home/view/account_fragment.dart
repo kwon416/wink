@@ -186,7 +186,7 @@ class Other extends GetView<MembershipController> {
       bodyColor: colorScheme.onPrimaryContainer,
       displayColor: colorScheme.onPrimaryContainer,
     );
-    LoginController l = Get.find();
+    LoginController l = Get.put(LoginController());
 
     BannerAd bannerAd = BannerAd(
         size: AdSize.banner,

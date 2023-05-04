@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 // import 'package:home_hub/models/last_bookings_model.dart';
 // import 'package:home_hub/screens/dashboard_screen.dart';
 import 'package:wink/utils/colors.dart';
+import 'package:wink/utils/images.dart';
 
 import '../custom_widget/space.dart';
 import 'constant.dart';
@@ -176,7 +178,8 @@ void showAppDialog(String title,){
   );
 }
 
-Widget appEmptyWidget(String image, String title, String text) {
+///안드로이드에서 사용
+Widget appEmptyWidget(String image, String? title, String? text) {
   return LayoutBuilder(
       builder: (context, constraints) {
         return SingleChildScrollView(
@@ -189,9 +192,9 @@ Widget appEmptyWidget(String image, String title, String text) {
                 children: [
                   Image.asset(image, width: 200,),
                   Space(buttonMargin),
-                  Text(title, style: TextStyle(fontSize: textSizeLarge, fontWeight: FontWeight.bold),),
+                  Text(title??'', style: TextStyle(fontSize: textSizeLarge, fontWeight: FontWeight.bold),),
                   Space(buttonMargin),
-                  Text(text,style: TextStyle(fontSize: textSizeMedium)),
+                  Text(text??'',style: TextStyle(fontSize: textSizeMedium)),
                 ],
               ),
             ),
@@ -201,7 +204,78 @@ Widget appEmptyWidget(String image, String title, String text) {
   );
 }
 
+///플랫폼 별 refresh Indicator
+class CustomRefreshIndicator extends StatelessWidget {
+  CustomRefreshIndicator({
+    super.key,
+    required this.itemCount,
+    required this.onRefresh,
+    required this.builder,
+    this.emptyMessageTitle,
+    this.emptyMessageBody,
+});
 
+  final int itemCount;
+  final Future<void> Function() onRefresh;
+  final Widget Function(BuildContext context, int index) builder;
+  final String? emptyMessageTitle;
+  final String? emptyMessageBody;
+
+  @override
+  Widget build(BuildContext context) {
+    if (GetPlatform.isIOS) {
+      return CustomScrollView(
+        physics: AlwaysScrollableScrollPhysics(
+          parent: BouncingScrollPhysics(),
+        ),
+        slivers: [
+          CupertinoSliverRefreshControl(
+            refreshTriggerPullDistance: 100.0,
+            refreshIndicatorExtent: 3.0,
+            onRefresh: onRefresh,
+          ),
+          itemCount == 0
+          ?SliverFillRemaining(
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(splashLogo, width: 200,),
+                  Space(buttonMargin),
+                  Text(emptyMessageTitle??"", style: TextStyle(fontSize: textSizeLarge, fontWeight: FontWeight.bold),),
+                  Space(buttonMargin),
+                  Text(emptyMessageBody??"",style: TextStyle(fontSize: textSizeMedium)),
+                ],
+              ),
+            ),
+          )
+          :SliverList(
+            delegate: SliverChildBuilderDelegate(
+              builder,
+              childCount: itemCount,
+            ),
+          ),
+
+        ],
+      );
+    } else {
+      return RefreshIndicator(
+        onRefresh: onRefresh,
+        child: itemCount != 0
+            ?ListView.builder(
+          itemCount: itemCount,
+          physics: AlwaysScrollableScrollPhysics(
+            parent: BouncingScrollPhysics()
+          ),
+          itemBuilder: builder,
+        )
+        :appEmptyWidget(splashLogo, emptyMessageTitle, emptyMessageBody),
+      );
+    }
+  }
+
+}
 //
 // Widget homeTitleWidget({
 //   String? titleText,

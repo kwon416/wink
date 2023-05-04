@@ -218,7 +218,9 @@ class SettingScreenState extends State<SettingScreen> {
 
   cacheSettings(int index) {
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
+        if (index == 0){
+        }
         if (index == 1) {
           Get.snackbar("캐시 데이터가 삭제됨", "",snackPosition: SnackPosition.BOTTOM);
         }
@@ -246,10 +248,8 @@ class SettingScreenState extends State<SettingScreen> {
               ),
               index == 0
                   ? SizedBox(height: 24,
-                    child: Switch(
+                    child: customAdaptiveSwitch(
                     value: enableCache,
-                    activeTrackColor: Colors.red,
-                    activeColor: Colors.white,
                     onChanged: (newvalue) {
                       enableCache = !enableCache;
                       setState(() {});

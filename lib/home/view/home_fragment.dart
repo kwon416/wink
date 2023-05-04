@@ -59,29 +59,29 @@ class _HomeFragmentState extends State<HomeFragment> {
               leading: IconButton(onPressed: () => Get.changeTheme(Get.isDarkMode? lightTheme : darkTheme), icon: Icon(Icons.change_circle_rounded)),
               actions: [
                 // if (controller.userData?.isVerified?? false)
-                Stack(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(left: 10),
-                      padding: EdgeInsets.only(left: 10, top: 10, right: 15),
-                      child: InkWell(
-                        onTap: () {
-                          Get.to(() => NotificationScreen());
-                        },
+                InkWell(
+                  onTap: () {
+                    Get.to(() => NotificationScreen());
+                  },
+                  child: Stack(
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(left: 10),
+                        padding: EdgeInsets.only(left: 10, top: 10, right: 15),
                         child: Icon(Icons.notifications_none),
                       ),
-                    ),
-                    //배지 개수 표시
-                    Positioned(
-                      right: 9,
-                      top: 4,
-                      child: CircleAvatar(
-                        radius: 10,
-                        backgroundColor: Colors.red,
-                        child: Text('3', style: secondaryTextStyle(color: Colors.white)),
-                      ),
-                    )
-                  ],
+                      //배지 개수 표시
+                      Positioned(
+                        right: 9,
+                        top: 4,
+                        child: CircleAvatar(
+                          radius: 10,
+                          backgroundColor: Colors.red,
+                          child: Text('3', style: secondaryTextStyle(color: Colors.white)),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),

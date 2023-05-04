@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
   ];
 
   final MembershipController m = Get.put(MembershipController());
-  final LoginController l = Get.put(LoginController());
+  // final LoginController l = Get.put(LoginController());
 
   ///파이어베이스 알림 권한 요청 + fcmToken 관리
   void initializeNotification() async {
@@ -54,13 +54,15 @@ class _HomePageState extends State<HomePage> {
     FirebaseMessaging.instance.getToken().then((token){
       print("get FCM token : ${token ?? 'token NULL!'}");
       // FCM 토큰을 서버에 저장 👈👈👈👈👈👈👈👈👈👈👈
-      if(token != null) m.updateFcmToken(l.getUser().value.uid, token);
+      // if(token != null) m.updateFcmToken(l.getUser().value.uid, token);
+      if(token != null) m.updateFcmToken(m.uid, token);
       // client.post(Uri.parse(Constants.API + 'booster/v1/fcm-token'), body: jsonEncode({ 'fcmToken': "$token" }));
     });
 
     FirebaseMessaging.instance.onTokenRefresh.listen((token) {
       print("on refresh FCM token : $token");
-      m.updateFcmToken(l.getUser().value.uid, token);
+      // m.updateFcmToken(l.getUser().value.uid, token);
+      m.updateFcmToken(m.uid, token);
       // FCM 토큰을 서버에 저장 👈👈👈👈👈👈👈👈👈👈👈
       // client.post(Uri.parse(Constants.API + 'booster/v1/fcm-token'), body: jsonEncode({ 'fcmToken': "$token" }));
     });
