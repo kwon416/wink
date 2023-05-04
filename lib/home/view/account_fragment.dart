@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:wink/controller/login_controller.dart';
 import 'package:wink/controller/membership_controller.dart';
@@ -186,6 +187,17 @@ class Other extends GetView<MembershipController> {
       displayColor: colorScheme.onPrimaryContainer,
     );
     LoginController l = Get.find();
+
+    BannerAd bannerAd = BannerAd(
+        size: AdSize.banner,
+        adUnitId: GetPlatform.isIOS ? iosTestBannerAdId : androidTestBannerAdId,
+        listener: BannerAdListener(
+          onAdFailedToLoad: (Ad ad, LoadAdError error) {},
+          onAdLoaded: (_) {},
+        ),
+        request: AdRequest(),
+    )..load();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorScheme.primaryContainer,
@@ -196,25 +208,32 @@ class Other extends GetView<MembershipController> {
           },
         ),),
       backgroundColor: colorScheme.primaryContainer,
-      body: Center(
-        child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: appPadding),
+      body: SingleChildScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: appPadding),
+          child: Center(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
+                SizedBox(
+                  // height: (Get.width-(appPadding*2)) * 0.15625,
+                  width: 320,
+                  height: 50,
+                  child: AdWidget(ad: bannerAd)
+                ),
                 Text('auth user instance', style: TextStyle(fontWeight: FontWeight.bold),),
-                        Text(l.getUser().toString()),
-                        Space(20),
-                        Text('User Data From Realtime DB From firebase', style: TextStyle(fontWeight: FontWeight.bold),),
-                        Text('get userName : ${controller.userData?.userName}'),
-                        Text('get uid : ${controller.userData?.uid}'),
-                        Text('get fcmToken : ${controller.userData?.fcmToken}'),
-                        Text('get phoneNo : ${controller.userData?.phoneNo}'),
-                        Text('get gender : ${controller.userData?.gender}'),
-                        Text('get coin : ${controller.userData?.coin}'),
-                        Text('get winkData : ${controller.userData?.wink}'),
+                Text(l.getUser().toString()),
+                Space(20),
+                Text('User Data From Realtime DB From firebase', style: TextStyle(fontWeight: FontWeight.bold),),
+                Text('get userName : ${controller.userData?.userName}'),
+                Text('get uid : ${controller.userData?.uid}'),
+                Text('get fcmToken : ${controller.userData?.fcmToken}'),
+                Text('get phoneNo : ${controller.userData?.phoneNo}'),
+                Text('get gender : ${controller.userData?.gender}'),
+                Text('get coin : ${controller.userData?.coin}'),
+                Text('get winkData : ${controller.userData?.wink}'),
 
                 Space(buttonMargin),
                 SDButton(

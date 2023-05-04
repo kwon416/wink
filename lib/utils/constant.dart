@@ -30,3 +30,7 @@ const textSizeXXLarge = 35.0;
 const iconSizeSmall = 24.0;
 const iconSizeMedium = 28.0;
 const iconSizeLarge = 32.0;
+
+/* google_adMob id*/
+const String androidTestBannerAdId = "ca-app-pub-3940256099942544/6300978111";
+const String iosTestBannerAdId = "ca-app-pub-3940256099942544/2934735716";
