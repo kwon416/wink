@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:wink/custom_widget/space.dart';
+import 'package:wink/home/view/notification_screen.dart';
+import 'package:wink/home/view/verification_screen.dart';
+import 'package:wink/utils/space.dart';
 import 'package:wink/toast/flutter_toast.dart';
 
 
@@ -140,6 +142,7 @@ class _HomeFragmentState extends State<HomeFragment> {
                     Space(buttonMargin),
                     ElevatedButton(
                       onPressed: () async {
+                        showAppSnackBar('보내기', '내용');
                         if (_sendWinkKey.currentState!.validate()) {
                           showToast('wink to ${controller.winkToInput.value.text}', context);
                           await controller.updateUser(controller.userData.uid, winkTo: controller.winkToInput.value.text.trim());

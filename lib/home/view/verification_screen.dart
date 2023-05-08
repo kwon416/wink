@@ -8,7 +8,7 @@ import 'package:nb_utils/nb_utils.dart';
 // import 'package:quiver/async.dart';
 import 'package:wink/controller/login_controller.dart';
 import 'package:wink/controller/membership_controller.dart';
-import 'package:wink/custom_widget/space.dart';
+import 'package:wink/utils/space.dart';
 import 'package:wink/utils/constant.dart';
 import 'package:wink/utils/images.dart';
 import 'package:wink/utils/widgets.dart';
@@ -94,7 +94,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
             backgroundColor: Colors.transparent,
             appBar: AppBar(
 
-              title: SizedBox(child: Image.asset(splashLogo,fit: BoxFit.cover,height: AppBar().preferredSize.height )),
+              // title: SizedBox(child: Image.asset(splashLogo,fit: BoxFit.cover,height: AppBar().preferredSize.height )),
               backgroundColor: Colors.transparent,
               iconTheme: IconThemeData(color: Get.isDarkMode ? Colors.white : Colors.black),
               leading: IconButton(

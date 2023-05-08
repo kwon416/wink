@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wink/controller/login_controller.dart';
-import 'package:wink/custom_widget/space.dart';
+import 'package:wink/utils/space.dart';
 import 'package:wink/home/home.dart';
 import 'package:wink/login/login.dart';
 import 'package:wink/utils/images.dart';
 
+import '../../home/view/verification_screen.dart';
 import '../../utils/constant.dart';
 
 class LoginForm extends StatefulWidget {

@@ -7,9 +7,10 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:wink/utils/colors.dart';
 import 'package:wink/utils/images.dart';
 
-import '../custom_widget/space.dart';
+import 'space.dart';
 import 'constant.dart';
-//텍스트 입력 폼
+
+///공통 텍스트 입력 폼
 InputDecoration commonInputDecoration({String? labelText, String? hintText, Widget? prefixIcon, Widget? suffixIcon}) {
   return InputDecoration(
     filled: true,
@@ -54,6 +55,7 @@ BoxDecoration boxDecoration(
   );
 }
 
+///ElevatedButton 대체 버튼
 // ignore: must_be_immutable
 class SDButton extends StatefulWidget {
   static String tag = '/T4Button';
@@ -67,7 +69,6 @@ class SDButton extends StatefulWidget {
   @override
   SDButtonState createState() => SDButtonState();
 }
-
 class SDButtonState extends State<SDButton> {
   @override
   Widget build(BuildContext context) {
@@ -94,6 +95,7 @@ class SDButtonState extends State<SDButton> {
   }
 }
 
+///바텀 바 위치에 넣는 버튼
 // ignore: must_be_immutable
 class BottomElevatedButton extends StatefulWidget {
   var textContent;
@@ -132,7 +134,7 @@ class _BottomElevatedButtonState extends State<BottomElevatedButton> {
   }
 }
 
-
+///프로필 스크린 컨테이너
 settIngContainer({String? title, IconData? icon, Function? onTap, Color? textColor, Color? boxColor}) {
   return Container(
     padding: EdgeInsets.all(buttonPadding),
@@ -144,6 +146,7 @@ settIngContainer({String? title, IconData? icon, Function? onTap, Color? textCol
   ).onTap(onTap);
 }
 
+///토글 버튼에 사용하는 디자인 컨테이너
 Widget toggleContainer(String value, ColorScheme colorScheme, bool isSelected) {
   return Container(
     constraints: BoxConstraints(
@@ -161,24 +164,45 @@ Widget toggleContainer(String value, ColorScheme colorScheme, bool isSelected) {
   );
 }
 
+///OS별 스위치 버튼 디자인
 Switch customAdaptiveSwitch(
     {required bool value, required Function(bool newValue) onChanged, Color? activeColor, Color? activeTrackColor}) {
   return Switch.adaptive(
     value: value,
     onChanged: onChanged,
     activeColor: activeColor ?? Colors.white,
+    activeTrackColor: activeColor ?? Colors.white,
     inactiveTrackColor: Colors.grey,
     // activeTrackColor: activeTrackColor ?? Colors.grey,
   );
 }
 
-void showAppDialog(String title,){
+///앱 테마 다이얼로그
+void showAppDialog(String title, String middleText) {
   Get.defaultDialog(
     title: title,
+    middleText: middleText,
+    radius: borderRadius,
+
   );
 }
 
-///안드로이드에서 사용
+///앱 테마 스낵바
+void showAppSnackBar(String title, String message) {
+  Get.snackbar(
+    title,
+    message,
+    backgroundColor: white,
+    snackPosition: SnackPosition.BOTTOM,
+    margin: EdgeInsets.all(appPadding),
+    padding: EdgeInsets.all(buttonPadding),
+    borderRadius: borderRadius,
+    // leftBarIndicatorColor: Colors.black,
+    // icon: Icon(Icons.abc)
+  );
+}
+
+///안드로이드에서 사용하는 빈 화면
 Widget appEmptyWidget(String image, String? title, String? text) {
   return LayoutBuilder(
       builder: (context, constraints) {
@@ -266,7 +290,7 @@ class CustomRefreshIndicator extends StatelessWidget {
             ?ListView.builder(
           itemCount: itemCount,
           physics: AlwaysScrollableScrollPhysics(
-            parent: BouncingScrollPhysics()
+            // parent: BouncingScrollPhysics()
           ),
           itemBuilder: builder,
         )

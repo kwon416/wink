@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wink/custom_widget/space.dart';
+import 'package:wink/utils/space.dart';
 import 'package:wink/home/home.dart';
 // import 'package:home_hub/main.dart';
 // import 'package:home_hub/screens/dashboard_screen.dart';

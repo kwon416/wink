@@ -9,9 +9,9 @@ import 'package:wink/utils/constant.dart';
 import 'package:wink/utils/images.dart';
 import 'package:wink/utils/widgets.dart';
 
-import 'package:wink/custom_widget/space.dart';
+import 'package:wink/utils/space.dart';
 
-import '../../home/home.dart';
+import '../../home/view/verification_screen.dart';
 import '../../theme/theme.dart';
 
 const List<String> gender = ['남자', '여자', '미공개'];
@@ -62,7 +62,7 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           actions: [
             TextButton(
-              child: Text('Ok'),
+              child: Text('OK'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -137,7 +137,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           Container(
                             padding: EdgeInsets.zero,
                             decoration: BoxDecoration(
-                              color: Colors.grey,
+                              color: colorScheme.secondaryContainer,
                               border: Border.all(color: colorScheme.secondaryContainer),
                               borderRadius: BorderRadius.all(Radius.circular(circularRadius)),
                               boxShadow: [

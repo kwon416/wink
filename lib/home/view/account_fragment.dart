@@ -12,7 +12,7 @@ import 'package:wink/home/view/setting_screen.dart';
 import 'package:wink/utils/colors.dart';
 import 'package:wink/utils/images.dart';
 
-import '../../custom_widget/space.dart';
+import '../../utils/space.dart';
 import '../../toast/flutter_toast.dart';
 import '../../utils/constant.dart';
 import '../../utils/widgets.dart';
@@ -138,7 +138,9 @@ class AccountFragment extends StatelessWidget {
                               boxColor: colorScheme.primary,
                               textColor: colorScheme.onPrimary,
                               onTap: () {
-                                showToast('Terms of use', context);
+                                // showToast('Terms of use', context);
+                                // showAppDialog('123', 'middleText');
+
                               }
                             ),
                             settIngContainer(

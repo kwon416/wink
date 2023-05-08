@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:wink/custom_widget/space.dart';
+import 'package:wink/utils/space.dart';
 import 'package:wink/utils/widgets.dart';
 
 import '../../utils/constant.dart';

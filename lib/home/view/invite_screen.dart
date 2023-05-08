@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:wink/utils/constant.dart';
 import 'package:wink/utils/images.dart';
 
-import '../../custom_widget/space.dart';
+import '../../utils/space.dart';
 import '../../utils/colors.dart';
 
 class InviteScreen extends StatefulWidget {
@@ -37,7 +38,8 @@ class _InviteScreenState extends State<InviteScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          // icon: Icon(Icons.arrow_back),
+          icon: FaIcon(FontAwesomeIcons.arrowLeft),
           onPressed: () {
             Get.back();
           },
@@ -45,37 +47,39 @@ class _InviteScreenState extends State<InviteScreen> {
         title: Text("친구 초대"),
       ),
       backgroundColor: colorScheme.primaryContainer,
-      body: Padding(
-        padding: EdgeInsets.all(appPadding),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "친구를 초대해보세요!",
-                style: TextStyle(
-                  fontSize: textSizeLarge,
-                  fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(appPadding),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "친구를 초대해보세요!",
+                  style: TextStyle(
+                    fontSize: textSizeLarge,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              Space(buttonMargin),
-              Image.asset(
-                splashLogo,
-                width: Get.width,
-              ),
-              Space(buttonMargin),
-              Text("초대한 사람 수: $invitedCount",),
-              Space(buttonMargin),
-              ElevatedButton(
-                onPressed: copyLink,
-                child: Text("링크 복사하기",),
-              ),
-              Space(buttonMargin),
-              ElevatedButton(
-                onPressed: inviteFriends,
-                child: Text("친구 초대하기",),
-              ),
-            ],
+                Space(buttonMargin),
+                Image.asset(
+                  splashLogo,
+                  width: Get.width/2,
+                ),
+                Space(buttonMargin),
+                Text("초대한 사람 수: $invitedCount",),
+                Space(buttonMargin),
+                ElevatedButton(
+                  onPressed: copyLink,
+                  child: Text("링크 복사하기",),
+                ),
+                Space(buttonMargin),
+                ElevatedButton(
+                  onPressed: inviteFriends,
+                  child: Text("친구 초대하기",),
+                ),
+              ],
+            ),
           ),
         ),
       ),

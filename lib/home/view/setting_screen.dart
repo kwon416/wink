@@ -222,7 +222,8 @@ class SettingScreenState extends State<SettingScreen> {
         if (index == 0){
         }
         if (index == 1) {
-          Get.snackbar("캐시 데이터가 삭제됨", "",snackPosition: SnackPosition.BOTTOM);
+          showAppSnackBar("캐시 데이터가 삭제됨", "123");
+          // Get.snackbar("캐시 데이터가 삭제됨", "123",snackPosition: SnackPosition.BOTTOM);
         }
       },
       child: Container(

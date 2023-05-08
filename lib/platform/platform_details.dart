@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 
+///getx 패키지로 대체(미사용)
 class PlatformDetails {
   static final PlatformDetails _singleton = PlatformDetails._internal();
 

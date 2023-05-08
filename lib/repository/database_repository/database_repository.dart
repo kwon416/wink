@@ -55,13 +55,9 @@ class DatabaseRepository extends GetxService {
          break;
          default:
            break;
-
        }
-
        throw Exception(Error);
      }
-
-
   }
 
   Future<void> updateUser(String uid, Map<String, dynamic> data) async {
