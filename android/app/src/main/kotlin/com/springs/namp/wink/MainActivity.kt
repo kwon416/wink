@@ -1,4 +1,4 @@
-package com.springs.namp.wink.wink
+package com.springs.namp.wink
 
 import io.flutter.embedding.android.FlutterActivity
 

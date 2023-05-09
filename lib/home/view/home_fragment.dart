@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:wink/home/view/invite_screen.dart';
 import 'package:wink/home/view/notification_screen.dart';
 import 'package:wink/home/view/verification_screen.dart';
 import 'package:wink/utils/space.dart';
@@ -174,10 +175,12 @@ class _HomeFragmentState extends State<HomeFragment> {
                       child: Text('wink 초기화'),
                     ),
                     Space(buttonMargin),
+                    Text('더 많은 친구들을 초대해보세요'),
+                    Space(buttonMargin),
                     SDButton(
-                        textContent: 'status',
+                        textContent: '친구 초대하기',
                         onPressed: () {
-                          toast('tost');
+                          Get.to(() => InviteScreen());
                           // FlutterLocalNotificationsPlugin().show(0, 'title', 'body', NotificationDetails());
                         }
                     ),

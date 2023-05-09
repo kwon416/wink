@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:wink/utils/constant.dart';
 import 'package:wink/utils/images.dart';
 
+import '../../provider/dynamic_links.dart';
 import '../../utils/space.dart';
 import '../../utils/colors.dart';
+import '../../utils/widgets.dart';
 
 class InviteScreen extends StatefulWidget {
   const InviteScreen({Key? key}) : super(key: key);
@@ -17,15 +20,43 @@ class InviteScreen extends StatefulWidget {
 class _InviteScreenState extends State<InviteScreen> {
   // 변수 초기화
   int invitedCount = 0;
+  bool isProcessing = false;
 
   // 초대장 링크를 복사하는 함수
-  void copyLink() {
-    // TODO: 초대장 링크 복사 기능 구현
+  void copyLink() async {
+    setState(() {
+      isProcessing = true;
+    });
+    String inviteLink = await DynamicLinks().getShortLink('invite','id');
+    Clipboard.setData(ClipboardData(text: inviteLink))
+    .then((value) => showAppSnackBar('링크가 복사되었습니다.', inviteLink))
+    .then((value) => print(inviteLink));
+    await Future.delayed(Duration(seconds: buttonWaitDuration));
+    setState(() {
+      isProcessing = false;
+    });
   }
 
   // 친구 초대 함수
-  void inviteFriends() {
-    // TODO: 친구 초대 기능 구현
+  void inviteFriends(BuildContext context) async {
+    final box = context.findRenderObject() as RenderBox?;
+    setState(() {
+      isProcessing = true;
+    });
+    String inviteLink = await DynamicLinks().getShortLink('invite','id');
+    print(inviteLink);
+    if(GetPlatform.isIOS){
+      //pad에서 포지션 잡아줘야함
+
+      await Share.share(inviteLink, subject: "Wink\n$inviteLink",
+          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
+    }else{
+      await Share.share(inviteLink, subject: "Wink\n$inviteLink");
+    }
+    await Future.delayed(Duration(seconds: buttonWaitDuration));
+    setState(() {
+      isProcessing = false;
+    });
   }
 
   @override
@@ -35,11 +66,12 @@ class _InviteScreenState extends State<InviteScreen> {
     // bodyColor: colorScheme.onPrimaryContainer,
     // displayColor: colorScheme.onPrimaryContainer,
     );
+    final box = context.findRenderObject() as RenderBox?;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          // icon: Icon(Icons.arrow_back),
-          icon: FaIcon(FontAwesomeIcons.arrowLeft),
+          icon: Icon(Icons.arrow_back),
+          // icon: FaIcon(FontAwesomeIcons.arrowLeft),
           onPressed: () {
             Get.back();
           },
@@ -70,12 +102,12 @@ class _InviteScreenState extends State<InviteScreen> {
                 Text("초대한 사람 수: $invitedCount",),
                 Space(buttonMargin),
                 ElevatedButton(
-                  onPressed: copyLink,
+                  onPressed: isProcessing ? (){} : copyLink,
                   child: Text("링크 복사하기",),
                 ),
                 Space(buttonMargin),
                 ElevatedButton(
-                  onPressed: inviteFriends,
+                  onPressed: isProcessing ? (){} : (){inviteFriends(context);},
                   child: Text("친구 초대하기",),
                 ),
               ],

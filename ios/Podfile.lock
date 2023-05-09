@@ -16,6 +16,9 @@ PODS:
   - Firebase/Database (10.7.0):
     - Firebase/CoreOnly
     - FirebaseDatabase (~> 10.7.0)
+  - Firebase/DynamicLinks (10.7.0):
+    - Firebase/CoreOnly
+    - FirebaseDynamicLinks (~> 10.7.0)
   - Firebase/Messaging (10.7.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 10.7.0)
@@ -23,11 +26,15 @@ PODS:
     - Firebase/Auth (= 10.7.0)
     - firebase_core
     - Flutter
-  - firebase_core (2.9.0):
+  - firebase_core (2.11.0):
     - Firebase/CoreOnly (= 10.7.0)
     - Flutter
   - firebase_database (10.0.16):
     - Firebase/Database (= 10.7.0)
+    - firebase_core
+    - Flutter
+  - firebase_dynamic_links (5.2.0):
+    - Firebase/DynamicLinks (= 10.7.0)
     - firebase_core
     - Flutter
   - firebase_messaging (14.4.0):
@@ -48,6 +55,8 @@ PODS:
   - FirebaseDatabase (10.7.0):
     - FirebaseCore (~> 10.0)
     - leveldb-library (~> 1.22)
+  - FirebaseDynamicLinks (10.7.0):
+    - FirebaseCore (~> 10.0)
   - FirebaseInstallations (10.8.0):
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
@@ -143,10 +152,16 @@ PODS:
     - FlutterMacOS
   - PromisesObjC (2.2.0)
   - ReachabilitySwift (5.0.0)
+  - share_plus (0.0.1):
+    - Flutter
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
   - Toast (4.0.0)
+  - uni_links (0.0.1):
+    - Flutter
+  - url_launcher_ios (0.0.1):
+    - Flutter
   - webview_flutter_wkwebview (0.0.1):
     - Flutter
 
@@ -155,6 +170,7 @@ DEPENDENCIES:
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_database (from `.symlinks/plugins/firebase_database/ios`)
+  - firebase_dynamic_links (from `.symlinks/plugins/firebase_dynamic_links/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - Flutter (from `Flutter`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
@@ -163,7 +179,10 @@ DEPENDENCIES:
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/ios`)
   - nb_utils (from `.symlinks/plugins/nb_utils/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
+  - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/ios`)
+  - uni_links (from `.symlinks/plugins/uni_links/ios`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
 
 SPEC REPOS:
@@ -174,6 +193,7 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseCoreInternal
     - FirebaseDatabase
+    - FirebaseDynamicLinks
     - FirebaseInstallations
     - FirebaseMessaging
     - Google-Mobile-Ads-SDK
@@ -199,6 +219,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_core/ios"
   firebase_database:
     :path: ".symlinks/plugins/firebase_database/ios"
+  firebase_dynamic_links:
+    :path: ".symlinks/plugins/firebase_dynamic_links/ios"
   firebase_messaging:
     :path: ".symlinks/plugins/firebase_messaging/ios"
   Flutter:
@@ -215,8 +237,14 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/nb_utils/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/ios"
+  share_plus:
+    :path: ".symlinks/plugins/share_plus/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/ios"
+  uni_links:
+    :path: ".symlinks/plugins/uni_links/ios"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
   webview_flutter_wkwebview:
     :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
 
@@ -225,13 +253,15 @@ SPEC CHECKSUMS:
   connectivity_plus: 413a8857dd5d9f1c399a39130850d02fe0feaf7e
   Firebase: 0219acf760880eeec8ce479895bd7767466d9f81
   firebase_auth: 66041d972b0c93a4f146573e5c6c9a030d92e2e1
-  firebase_core: d85432877e814811e040e7659f9c82faeab66e04
+  firebase_core: dee76ded6c693fdb38b8ea39aef7129e32e587a3
   firebase_database: 1de3ad901f64a46d8e07f5d52ed50d61ae13b921
+  firebase_dynamic_links: 0c675fe7fc8e242572941e409bd6039166e846f2
   firebase_messaging: 45c0514ca78426630338a42fb7b55af962c7ccd2
   FirebaseAuth: dd64c01631df724b09f33e584625775c52f7d71f
   FirebaseCore: e317665b9d744727a97e623edbbed009320afdd7
   FirebaseCoreInternal: fa2899eb1f340054858d289e5a0fb935a0a74e52
   FirebaseDatabase: 06195bac336b5e4c893ec04a111631a4cdb00178
+  FirebaseDynamicLinks: 16a8fae3697fba66fed7a1d646fe59f30d42aa31
   FirebaseInstallations: b2a05a3fe707df764345d68685534d07d0664af3
   FirebaseMessaging: ac9062bcc35ed56e15a0241d8fd317022499baf8
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
@@ -253,8 +283,11 @@ SPEC CHECKSUMS:
   path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
+  share_plus: 056a1e8ac890df3e33cb503afffaf1e9b4fbae68
   shared_preferences_foundation: 986fc17f3d3251412d18b0265f9c64113a8c2472
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
+  uni_links: d97da20c7701486ba192624d99bffaaffcfc298a
+  url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
   webview_flutter_wkwebview: 2e2d318f21a5e036e2c3f26171342e95908bd60a
 
 PODFILE CHECKSUM: 348b72d6b79c9eddc9cd14661f4957380af53408

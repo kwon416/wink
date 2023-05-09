@@ -18,6 +18,8 @@ const circularRadius = 40.0;
 
 const togglePadding = 1;
 
+const int buttonWaitDuration = 3;
+
 /* font sizes*/
 const textSizeSmall = 12.0;
 const textSizeSMedium = 14.0;
@@ -36,3 +38,7 @@ const iconSizeLarge = 32.0;
 /* google_adMob id*/
 const String androidTestBannerAdId = "ca-app-pub-3940256099942544/6300978111";
 const String iosTestBannerAdId = "ca-app-pub-3940256099942544/2934735716";
+
+/* dynamic link */
+const String packageName = 'com.springs.namp.wink';
+const String dynamicLinkPrefix = 'https://springs.page.link';

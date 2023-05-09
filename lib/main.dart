@@ -6,6 +6,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:wink/app.dart';
+import 'package:wink/provider/dynamic_links.dart';
 import 'package:wink/repository/database_repository/database_repository.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -231,6 +232,7 @@ Future<void> initServices() async {
   /// 또는 연결 고정 또는 비동기적인 무엇이든 하세요.
   await Get.putAsync(() => DbService().init());
   MobileAds.instance.initialize();
+  DynamicLinks().setup();
   print('All services started...');
 }
 

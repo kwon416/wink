@@ -1,5 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:wink/controller/login_controller.dart';
@@ -120,7 +121,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     TextTheme textTheme = Theme.of(context).textTheme.apply(
       bodyColor: colorScheme.onPrimaryContainer,
@@ -176,18 +176,24 @@ class _HomePageState extends State<HomePage> {
                 backgroundColor: Colors.transparent,
                 items: const [
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.send_outlined),
-                      activeIcon: Icon(Icons.send_rounded),
+                      // icon: Icon(Icons.send_outlined),
+                      icon: FaIcon(FontAwesomeIcons.paperPlane),
+                      // activeIcon: Icon(Icons.send_rounded),
+                      activeIcon: FaIcon(FontAwesomeIcons.paperPlane),
                       label: "wink 보내기",
                       backgroundColor: Colors.transparent),
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.call_received_outlined),
-                      activeIcon: Icon(Icons.call_received_rounded),
+                      // icon: Icon(Icons.call_received_outlined),
+                      icon: FaIcon(FontAwesomeIcons.box),
+                      // activeIcon: Icon(Icons.call_received_rounded),
+                      activeIcon: FaIcon(FontAwesomeIcons.box),
                       label: "받은 wink",
                       backgroundColor: Colors.transparent),
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.person_outline),
-                      activeIcon: Icon(Icons.person_rounded),
+                      // icon: Icon(Icons.person_outline),
+                      icon: FaIcon(FontAwesomeIcons.user),
+                      // activeIcon: Icon(Icons.person_rounded),
+                      activeIcon: FaIcon(FontAwesomeIcons.user),
                       label: "프로필",
                       backgroundColor: Colors.transparent),
                 ],

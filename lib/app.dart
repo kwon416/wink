@@ -95,6 +95,7 @@ class _AppViewState extends State<AppView> {
           theme: lightTheme,
           darkTheme: darkTheme,
           themeMode: themeMode,
+          locale: Get.deviceLocale,
           home: SplashPage(),
           onGenerateRoute: (_) => SplashPage.route(),
           getPages: [
