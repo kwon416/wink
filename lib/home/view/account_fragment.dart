@@ -35,7 +35,7 @@ class AccountFragment extends StatelessWidget {
           appBar: AppBar(
             // iconTheme: IconThemeData(color: Get.isDarkMode ? Colors.white : Colors.black),
             backgroundColor: colorScheme.primaryContainer,
-            title: Text('프로필',),
+            title: Text('Profile'.tr),
             actions: [
               IconButton(
                   onPressed: () => Get.to(() => SettingScreen()),
@@ -122,7 +122,7 @@ class AccountFragment extends StatelessWidget {
                             ),
                             settIngContainer(
                               icon: Icons.settings,
-                              title: '설정',
+                              title: 'Settings'.tr,
                               boxColor: colorScheme.primary,
                               textColor: colorScheme.onPrimary,
                               onTap: () {

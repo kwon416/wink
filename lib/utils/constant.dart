@@ -23,15 +23,15 @@ const int buttonWaitDuration = 3;
 /* font sizes*/
 const textSizeSmall = 12.0;
 const textSizeSMedium = 14.0;
-const textSizeMedium = 16.0;
+const textSizeMedium = 16.0; //기본 텍스트 크기
 const textSizeLargeMedium = 18.0;
-const textSizeNormal = 20.0;
+const textSizeNormal = 20.0; //타이틀 텍스트 크기
 const textSizeLarge = 24.0;
 const textSizeXLarge = 30.0;
 const textSizeXXLarge = 35.0;
 
 /* icon sizes */
-const iconSizeSmall = 24.0;
+const iconSizeSmall = 24.0; //default icon size
 const iconSizeMedium = 28.0;
 const iconSizeLarge = 32.0;
 

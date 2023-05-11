@@ -53,7 +53,7 @@ class _InviteScreenState extends State<InviteScreen> {
     }else{
       await Share.share(inviteLink, subject: "Wink\n$inviteLink");
     }
-    await Future.delayed(Duration(seconds: buttonWaitDuration));
+    await Future.delayed(Duration(seconds: 2));
     setState(() {
       isProcessing = false;
     });

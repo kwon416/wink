@@ -138,10 +138,13 @@ class _BottomElevatedButtonState extends State<BottomElevatedButton> {
 settIngContainer({String? title, IconData? icon, Function? onTap, Color? textColor, Color? boxColor}) {
   return Container(
     padding: EdgeInsets.all(buttonPadding),
-    margin: EdgeInsets.only(top: buttonMargin, bottom: buttonMargin),
+    margin: EdgeInsets.symmetric(vertical: buttonMargin),
     decoration: BoxDecoration(borderRadius: BorderRadius.circular(borderRadius), color: boxColor),
     child: Row(
-      children: [Icon(icon, color: textColor,), 16.width, Text(title!, style: TextStyle(color: textColor),)],
+      children: [
+        Icon(icon, color: textColor,),
+        Space(buttonPadding),
+        Text(title!, style: TextStyle(color: textColor),)],
     ),
   ).onTap(onTap);
 }

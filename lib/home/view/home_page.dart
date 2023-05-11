@@ -174,27 +174,27 @@ class _HomePageState extends State<HomePage> {
                 },
                 elevation: 0,
                 backgroundColor: Colors.transparent,
-                items: const [
+                items: [
                   BottomNavigationBarItem(
                       // icon: Icon(Icons.send_outlined),
                       icon: FaIcon(FontAwesomeIcons.paperPlane),
                       // activeIcon: Icon(Icons.send_rounded),
                       activeIcon: FaIcon(FontAwesomeIcons.paperPlane),
-                      label: "wink 보내기",
+                      label: "Send WINK".tr,
                       backgroundColor: Colors.transparent),
                   BottomNavigationBarItem(
                       // icon: Icon(Icons.call_received_outlined),
                       icon: FaIcon(FontAwesomeIcons.box),
                       // activeIcon: Icon(Icons.call_received_rounded),
                       activeIcon: FaIcon(FontAwesomeIcons.box),
-                      label: "받은 wink",
+                      label: "WINK Box".tr,
                       backgroundColor: Colors.transparent),
                   BottomNavigationBarItem(
                       // icon: Icon(Icons.person_outline),
                       icon: FaIcon(FontAwesomeIcons.user),
                       // activeIcon: Icon(Icons.person_rounded),
                       activeIcon: FaIcon(FontAwesomeIcons.user),
-                      label: "프로필",
+                      label: "Profile".tr,
                       backgroundColor: Colors.transparent),
                 ],
               ),

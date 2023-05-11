@@ -34,7 +34,7 @@ class _WinkListFragmentState extends State<WinkListFragment> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorScheme.primaryContainer,
-        title: Text('받은 WINK'),
+        title: Text('WINK Box'.tr),
       ),
       backgroundColor: Colors.transparent,
       body: Padding(

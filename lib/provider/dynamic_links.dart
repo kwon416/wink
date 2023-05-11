@@ -85,10 +85,12 @@ class DynamicLinks {
       androidParameters: const AndroidParameters(
         packageName: packageName,
         minimumVersion: 0,
+
       ),
       iosParameters: const IOSParameters(
         bundleId: packageName,
         minimumVersion: '0',
+
       ),
     );
     final dynamicLink =

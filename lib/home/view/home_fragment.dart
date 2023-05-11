@@ -58,7 +58,7 @@ class _HomeFragmentState extends State<HomeFragment> {
             appBar: AppBar(
               backgroundColor: colorScheme.primaryContainer,
 
-              title: Text('WINK 보내기'),
+              title: Text('Send WINK'.tr),
               leading: IconButton(onPressed: () => Get.changeTheme(Get.isDarkMode? lightTheme : darkTheme), icon: Icon(Icons.change_circle_rounded)),
               actions: [
                 // if (controller.userData?.isVerified?? false)

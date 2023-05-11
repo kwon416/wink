@@ -12,6 +12,7 @@ import 'package:wink/theme/theme.dart';
 // import 'package:wink/home/home.dart';
 // import 'package:wink/login/login.dart';
 import 'package:wink/splash/splash.dart';
+import 'package:wink/utils/languages.dart';
 
 
 
@@ -95,7 +96,9 @@ class _AppViewState extends State<AppView> {
           theme: lightTheme,
           darkTheme: darkTheme,
           themeMode: themeMode,
+          translations: Languages(),
           locale: Get.deviceLocale,
+          fallbackLocale: const Locale('ko', 'KR'),
           home: SplashPage(),
           onGenerateRoute: (_) => SplashPage.route(),
           getPages: [

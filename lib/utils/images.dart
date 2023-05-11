@@ -3,6 +3,8 @@ const String icGoogle = "assets/icons/ic_google.png";
 const String icHeart = "assets/icons/ic_heart.png";
 const String icInstagram = "assets/icons/ic_instagram.png";
 
+const String kr = "assets/icons/kr.svg";
+
 //Images
 const String banner = "assets/images/banner.jpg";
 const String banner1 = "assets/images/banner1.jpg";
