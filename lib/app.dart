@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:wink/authentication/authentication.dart';
-import 'package:wink/home/home.dart';
 import 'package:wink/home/view/notification_screen.dart';
 import 'package:wink/theme/theme.dart';
 // import 'package:wink/home/home.dart';

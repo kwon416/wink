@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_material_symbols/flutter_material_symbols.dart';
+
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:wink/theme/theme_data.dart';
 import 'package:wink/utils/constant.dart';
 import 'package:wink/utils/widgets.dart';
 
-import '../../utils/images.dart';
 import '../home.dart';
 // import 'package:prokit_flutter/fullApps/flixv2/model/setting_model.dart';
 // import 'package:prokit_flutter/fullApps/flixv2/utils/common_widgets.dart';
@@ -14,12 +13,13 @@ import '../home.dart';
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
 
+  @override
   State<SettingScreen> createState() => SettingScreenState();
 }
 
 class SettingScreenState extends State<SettingScreen> {
   List<String> title = ['General'.tr, 'Cache'.tr, 'Others'.tr];
-  List<String> generalSettings = ['Language settings'.tr, 'Stream Quality', 'Notification settings'.tr, 'Dark mode'.tr];
+  List<String> generalSettings = ['Language Settings'.tr, 'Stream Quality', 'Notification Settings'.tr, 'Dark Mode'.tr];
 
   bool mode = true;
   bool notifications = true;
@@ -31,9 +31,9 @@ class SettingScreenState extends State<SettingScreen> {
     Icons.notifications,
     Icons.change_circle_rounded
   ];
-  List<String> cacheList = ['Enable cache'.tr, 'Delete cache'.tr];
+  List<String> cacheList = ['Enable Cache'.tr, 'Delete Cache'.tr];
   List<IconData> leadingcatchIconList = [Icons.square_rounded, Icons.cleaning_services_rounded];
-  List<String> otherSetings = ['Privacy Policy'.tr, 'Terms of use'.tr, 'Contact us'.tr];
+  List<String> otherSetings = ['Privacy Policy'.tr, 'Terms of Use'.tr, 'Contact Us'.tr];
   List<IconData> otherSetingsLeadingIcon = [
     Icons.privacy_tip,
     // Icons.notifications,
@@ -303,7 +303,7 @@ class _LanguageSettingScreenState extends State<LanguageSettingScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorScheme.primaryContainer,
-        title: Text("Language settings".tr),
+        title: Text("Language Settings".tr),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {

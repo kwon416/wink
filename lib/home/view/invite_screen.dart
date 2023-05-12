@@ -7,7 +7,7 @@ import 'package:wink/utils/images.dart';
 
 import '../../provider/dynamic_links.dart';
 import '../../utils/space.dart';
-import '../../utils/colors.dart';
+
 import '../../utils/widgets.dart';
 
 class InviteScreen extends StatefulWidget {
@@ -66,7 +66,6 @@ class _InviteScreenState extends State<InviteScreen> {
     // bodyColor: colorScheme.onPrimaryContainer,
     // displayColor: colorScheme.onPrimaryContainer,
     );
-    final box = context.findRenderObject() as RenderBox?;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(

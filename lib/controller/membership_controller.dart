@@ -27,8 +27,12 @@ class MembershipController extends GetxController {
     update();
   }
 
-  ///winkTo 등록
+  ///입력 컨트롤
   final winkToInput =TextEditingController();
+  final userNameController =TextEditingController();
+
+
+
 
   void createEmailUser(Rx<User?> rxUser, String email, String password, String userName, String phoneNumber) {
     // final user = UserData(

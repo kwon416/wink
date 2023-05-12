@@ -191,12 +191,14 @@ void showAppDialog(String title, String middleText) {
 }
 
 ///앱 테마 스낵바
-void showAppSnackBar(String title, String message) {
+///awesome_snackbar 고려
+void showAppSnackBar(String title, String message, {SnackPosition? snackPosition}) {
+  Get.closeCurrentSnackbar();
   Get.snackbar(
     title,
     message,
     backgroundColor: white,
-    snackPosition: SnackPosition.BOTTOM,
+    snackPosition: snackPosition ?? SnackPosition.BOTTOM,
     margin: EdgeInsets.all(appPadding),
     padding: EdgeInsets.all(buttonPadding),
     borderRadius: borderRadius,

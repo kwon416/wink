@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:wink/controller/signup_controller.dart';
 // import 'package:wink/screens/otp_verification_screen.dart';
 import 'package:wink/login/view/login_page.dart';
@@ -111,70 +113,74 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     IconButton(onPressed: () => Get.changeTheme(Get.isDarkMode? lightTheme : darkTheme), icon: Icon(Icons.change_circle_rounded)),
                     Space(60),
-                    Center(child: Text('이름을 입력해주세요')),
-                    Space(buttonMargin),
+
                     Form(
                       key: _signUpFormKey,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          Text('닉네임을 입력해주세요'),
+                          Space(buttonMargin),
                           TextFormField(
                             controller: controller.userName,
                             keyboardType: TextInputType.name,
                             textInputAction: TextInputAction.done,
+                            inputFormatters: [LengthLimitingTextInputFormatter(15)],
                             style: TextStyle(fontSize: 20),
                             validator: (text) {
                               if (text == null || text.isEmpty) {
-                                return '이름을 입력해주세요';
+                                return '닉네임을 입력해주세요';
                               }
                               return null;
                             },
-                            decoration: commonInputDecoration(hintText: "이름",prefixIcon: Icon(Icons.person_outline_rounded)),
+                            decoration: commonInputDecoration(hintText: "닉네임",prefixIcon: Icon(Icons.person_outline_rounded)),
                           ),
                           Space(buttonMargin),
                           Text('성별을 선택해주세요'),
                           Space(buttonMargin),
-                          Container(
-                            padding: EdgeInsets.zero,
-                            decoration: BoxDecoration(
-                              color: colorScheme.secondaryContainer,
-                              border: Border.all(color: colorScheme.secondaryContainer),
-                              borderRadius: BorderRadius.all(Radius.circular(circularRadius)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0),
-                                  spreadRadius: 1,
-                                  blurRadius: 1,
-                                  offset: Offset(0, 2), // changes position of shadow
-                                ),
-                              ],
-                            ),
-                            child: ToggleButtons(
-                              onPressed: (index){
-                                setState(() {
-                                  for (int i = 0; i < _selectedMenu.length; i++) {
-                                    _selectedMenu[i] = i == index;
-                                  }
-                                  if(index == 0){
-                                    controller.gender = gender[0].obs;
-                                  } else if(index == 1){
-                                    controller.gender = gender[1].obs;
-                                  } else{
-                                    controller.gender = gender[2].obs;
-                                  }
-                                });
-                              },
-                              borderColor: transparent,
-                              selectedBorderColor: transparent,
-                              selectedColor: colorScheme.onPrimary,
-                              fillColor: transparent,
-                              color: colorScheme.onPrimaryContainer,
+                          Center(
+                            child: Container(
+                              padding: EdgeInsets.zero,
+                              decoration: BoxDecoration(
+                                color: colorScheme.secondaryContainer,
+                                border: Border.all(color: colorScheme.secondaryContainer),
+                                borderRadius: BorderRadius.all(Radius.circular(circularRadius)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0),
+                                    spreadRadius: 1,
+                                    blurRadius: 1,
+                                    offset: Offset(0, 2), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                              child: ToggleButtons(
+                                onPressed: (index){
+                                  setState(() {
+                                    for (int i = 0; i < _selectedMenu.length; i++) {
+                                      _selectedMenu[i] = i == index;
+                                    }
+                                    if(index == 0){
+                                      controller.gender = gender[0].obs;
+                                    } else if(index == 1){
+                                      controller.gender = gender[1].obs;
+                                    } else{
+                                      controller.gender = gender[2].obs;
+                                    }
+                                  });
+                                },
+                                borderColor: transparent,
+                                selectedBorderColor: transparent,
+                                selectedColor: colorScheme.onPrimary,
+                                fillColor: transparent,
+                                color: colorScheme.onPrimaryContainer,
 
-                              isSelected: _selectedMenu,
-                              children: [
-                                for(int i = 0; i < gender.length; i++)
-                                  toggleContainer(gender[i], colorScheme, _selectedMenu[i]),
-                              ],
+                                isSelected: _selectedMenu,
+                                children: [
+                                  for(int i = 0; i < gender.length; i++)
+                                    toggleContainer(gender[i], colorScheme, _selectedMenu[i]),
+                                ],
+                              ),
                             ),
                           ),
                           // Space(16),

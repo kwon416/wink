@@ -14,7 +14,6 @@ import 'package:wink/utils/widgets.dart';
 import '../../controller/membership_controller.dart';
 import '../../theme/theme.dart';
 import '../../utils/constant.dart';
-import '../home.dart';
 
 class HomeFragment extends StatefulWidget {
   const HomeFragment({Key? key}) : super(key: key);
@@ -143,13 +142,12 @@ class _HomeFragmentState extends State<HomeFragment> {
                     Space(buttonMargin),
                     ElevatedButton(
                       onPressed: () async {
-                        showAppSnackBar('보내기', '내용');
                         if (_sendWinkKey.currentState!.validate()) {
-                          showToast('wink to ${controller.winkToInput.value.text}', context);
+                          // showToast('wink to ${controller.winkToInput.value.text}', context);
                           await controller.updateUser(controller.userData.uid, winkTo: controller.winkToInput.value.text.trim());
                           controller.winkToInput.clear();
+                          showAppSnackBar('보내기', '내용');
                         }
-
                       },
                       child: Text('보내기'),
                     ),

@@ -2,8 +2,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:nb_utils/nb_utils.dart';
-import 'package:wink/controller/login_controller.dart';
 import 'package:wink/controller/membership_controller.dart';
 import 'package:wink/home/home.dart';
 import 'package:wink/main.dart';
@@ -30,7 +28,7 @@ class _HomePageState extends State<HomePage> {
 
   final _pageItem = [
     HomeFragment(),
-    WinkListFragment(),
+    WinkBoxFragment(),
     AccountFragment(),
   ];
 

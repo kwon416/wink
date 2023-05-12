@@ -5,12 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
-// import 'package:quiver/async.dart';
 import 'package:wink/controller/login_controller.dart';
 import 'package:wink/controller/membership_controller.dart';
 import 'package:wink/utils/space.dart';
 import 'package:wink/utils/constant.dart';
-import 'package:wink/utils/images.dart';
 import 'package:wink/utils/widgets.dart';
 
 import '../../controller/signup_controller.dart';
