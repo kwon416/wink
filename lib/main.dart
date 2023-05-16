@@ -238,10 +238,10 @@ Future<void> initServices() async {
 
 class DbService extends GetxService {
   Future<DbService> init() async {
-    print('$runtimeType delays 2 sec');
+    print('$runtimeType DB init start...');
     Get.put(AuthenticationRepository());
     Get.put(DatabaseRepository());
-    await 2.delay();
+    await 0.delay();
     print('$runtimeType ready!');
     return this;
   }

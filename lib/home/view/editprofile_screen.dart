@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,6 +13,7 @@ import 'package:wink/utils/constant.dart';
 import 'package:wink/utils/images.dart';
 import 'package:wink/utils/space.dart';
 
+import '../../utils/colors.dart';
 import '../../utils/widgets.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -129,11 +131,10 @@ class EditProfileScreenState extends State<EditProfileScreen> {
         openAppSettings();
       }
     }
-
-
-
-
   }
+  int? _sliding = 0;
+  List<String> gender = ['남자', '여자', '미공개'];
+  final List<bool> _selectedMenu = <bool>[false, false, false];
 
   @override
   Widget build(BuildContext context) {
@@ -236,6 +237,72 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                     decoration: commonInputDecoration(
                       prefixIcon: Icon(Icons.person_outline_rounded),
                       hintText: '닉네임을 입력해주세요',
+                    ),
+                  ),
+                  Space(buttonMargin),
+                  CupertinoSlidingSegmentedControl(
+                      children: {
+                        0: Container(
+                            padding: EdgeInsets.all(8),
+                            child: Text(
+                              '남자',
+                              style: primaryTextStyle(color: _sliding == 0 ? Colors.black : grey),
+                            )),
+                        1: Container(padding: EdgeInsets.all(8), child: Text('여자', style: primaryTextStyle(color: _sliding == 1 ? Colors.black : grey))),
+                        2: Container(padding: EdgeInsets.all(8), child: Text('미공개', style: primaryTextStyle(color: _sliding == 2 ? Colors.black : grey))),
+                      },
+                      groupValue: _sliding,
+                      onValueChanged: (dynamic newValue) {
+                        setState(() {
+                          print(newValue);
+                          _sliding = newValue;
+                        });
+                      },
+                  ),
+                  Space(buttonMargin),
+                  Center(
+                    child: Container(
+                      padding: EdgeInsets.zero,
+                      decoration: BoxDecoration(
+                        color: colorScheme.secondaryContainer,
+                        border: Border.all(color: colorScheme.secondaryContainer),
+                        borderRadius: BorderRadius.all(Radius.circular(circularRadius)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0),
+                            spreadRadius: 1,
+                            blurRadius: 1,
+                            offset: Offset(0, 2), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: ToggleButtons(
+                        onPressed: (index){
+                          setState(() {
+                            for (int i = 0; i < _selectedMenu.length; i++) {
+                              _selectedMenu[i] = i == index;
+                            }
+                            // if(index == 0){
+                            //   controller.gender = gender[0].obs;
+                            // } else if(index == 1){
+                            //   controller.gender = gender[1].obs;
+                            // } else{
+                            //   controller.gender = gender[2].obs;
+                            // }
+                          });
+                        },
+                        borderColor: transparent,
+                        selectedBorderColor: transparent,
+                        selectedColor: colorScheme.onPrimary,
+                        fillColor: transparent,
+                        color: colorScheme.onPrimaryContainer,
+
+                        isSelected: _selectedMenu,
+                        children: [
+                          for(int i = 0; i < gender.length; i++)
+                            toggleContainer(gender[i], colorScheme, _selectedMenu[i]),
+                        ],
+                      ),
                     ),
                   ),
                   Space(buttonMargin),

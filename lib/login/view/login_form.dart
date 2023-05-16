@@ -40,9 +40,9 @@ class _LoginFormState extends State<LoginForm> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Space(60),
-              Text("WINK", style: textTheme.displaySmall,),
+              Text("WINK", style: textTheme.displayMedium,),
               Space(buttonMargin),
-              Text("Please Login to your account", style: textTheme.bodyLarge,),
+              // Text("Please Login to your account", style: textTheme.bodyLarge,),
               Space(buttonMargin),
               Image.asset(splashLogo, width: Get.height*0.3, fit: BoxFit.cover),
             ],
@@ -122,6 +122,8 @@ class _LoginFormState extends State<LoginForm> {
           Space(appPadding),
           _LoginButton(),
           Space(appPadding),
+          Divider(thickness: 1,),
+          Space(appPadding),
           GestureDetector(
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpPage()));
@@ -129,7 +131,7 @@ class _LoginFormState extends State<LoginForm> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Don't have account?", style: TextStyle(fontSize: 16)),
+                Text("계정이 아직 없으신가요?", style: TextStyle(fontSize: 16)),
                 Space(4),
                 Text('회원가입', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
               ],

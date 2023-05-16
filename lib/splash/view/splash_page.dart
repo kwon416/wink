@@ -1,4 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../utils/images.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -12,7 +16,9 @@ class SplashPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: Image.asset('assets/images/splash_logo.png'),
+        child: GetPlatform.isAndroid
+        ? CircularProgressIndicator()
+        : CupertinoActivityIndicator(radius: 15),
       ),
     );
   }

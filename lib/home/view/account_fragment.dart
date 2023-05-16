@@ -36,9 +36,17 @@ class AccountFragment extends StatelessWidget {
             backgroundColor: colorScheme.primaryContainer,
             title: Text('Profile'.tr),
             actions: [
-              IconButton(
-                  onPressed: () => Get.to(() => SettingScreen()),
-                  icon: Icon(Icons.settings)
+              GestureDetector(
+                onTap: () {
+                  purchaseBottomSheet(context);
+                },
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset(icHeart, height: iconSizeLarge),
+                    Text(' ${controller.userData?.coin}  ', style: boldTextStyle(color: colorScheme.onPrimaryContainer)),
+                  ],
+                ),
               ),
             ],
           ),
@@ -46,13 +54,11 @@ class AccountFragment extends StatelessWidget {
             child: Stack(
               children: [
                 Container(width: Get.width, color: Colors.black12,),
-
                 Container(
                   alignment: Alignment.topRight,
                   margin: EdgeInsets.only(top: 40, right: 16),
                   child: IconButton(
-                    onPressed: () {
-                    },
+                    onPressed: () {},
                     icon: Icon(Icons.close, color: white, size: 30),
                   ),
                 ),

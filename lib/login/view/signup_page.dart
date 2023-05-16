@@ -39,7 +39,7 @@ class _SignUpPageState extends State<SignUpPage> {
   double screenHeight = 0.0;
   double screenWidth = 0.0;
 
-  // final List<bool> _selectedMenu = <bool>[false, false, false, false];
+  // final List<bool> _selectedMenu = <bool>[true, false, false];
   final List<bool> _selectedMenu = List<bool>.filled(gender.length, false);
 
   bool? checkBoxValue = false;
@@ -133,7 +133,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               }
                               return null;
                             },
-                            decoration: commonInputDecoration(hintText: "닉네임",prefixIcon: Icon(Icons.person_outline_rounded)),
+                            decoration: commonInputDecoration(hintText: "15자 이내로 입력해주세요",prefixIcon: Icon(Icons.person_outline_rounded)),
                           ),
                           Space(buttonMargin),
                           Text('성별을 선택해주세요'),

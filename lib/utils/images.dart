@@ -1,8 +1,8 @@
 //Icons
 const String icGoogle = "assets/icons/ic_google.png";
-const String icHeart = "assets/icons/ic_heart.png";
 const String icInstagram = "assets/icons/ic_instagram.png";
-
+const String icHeart = "assets/icons/heart.png";
+const String launcherIcon = "assets/icons/launcher_icon.png";
 const String kr = "assets/icons/kr.svg";
 
 //Images
