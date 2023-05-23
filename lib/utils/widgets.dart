@@ -1,12 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:wink/controller/membership_controller.dart';
-// import 'package:home_hub/models/last_bookings_model.dart';
-// import 'package:home_hub/screens/dashboard_screen.dart';
 import 'package:wink/utils/colors.dart';
 import 'package:wink/utils/images.dart';
 
@@ -184,12 +179,55 @@ Switch customAdaptiveSwitch(
 }
 
 ///앱 테마 다이얼로그
-void showAppDialog(String title, String middleText) {
+void showAppDialog(String title, String middleText, {bool confirm=true}) {
   Get.defaultDialog(
     title: title,
     middleText: middleText,
     radius: borderRadius,
+    titlePadding: EdgeInsets.only(top: buttonPadding, left: buttonPadding, right: buttonPadding),
+    contentPadding: EdgeInsets.only(top: buttonPadding, left: buttonPadding, right: buttonPadding),
+    confirm: confirm
+        ? Column(
+          mainAxisSize: MainAxisSize.min,
 
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TextButton(
+                onPressed: () => Get.back(),
+                child: Text('확인', style: TextStyle(fontWeight: FontWeight.bold, fontSize: textSizeMedium),)
+              ),
+          ],
+        )
+        : null,
+  );
+}
+
+
+///pending 다이얼로그
+void showPendingDialog() {
+
+  Get.dialog(
+    barrierDismissible: false,
+    Center(
+      child: SizedBox(
+        width: 100,
+        child: AlertDialog(
+          backgroundColor: transparent,
+          titlePadding: EdgeInsets.symmetric(vertical: buttonPadding),
+          contentPadding: EdgeInsets.symmetric(vertical: buttonPadding),
+          insetPadding: EdgeInsets.zero,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius)),
+          title: GetPlatform.isIOS ? CupertinoActivityIndicator(color: white,radius: 20,) : Center(child: CircularProgressIndicator()),
+          // content: Column(
+          //   mainAxisSize: MainAxisSize.min,
+          //   crossAxisAlignment: CrossAxisAlignment.center,
+          //   children: const [
+          //     Text('잠시만 기다려 주세요', style: TextStyle(color: white),),
+          //   ],
+          // ),
+        ),
+      ),
+    )
   );
 }
 
@@ -310,129 +348,18 @@ class CustomRefreshIndicator extends StatelessWidget {
 }
 
 ///인앱결제 바텀 모달 시트
-void purchaseBottomSheet(BuildContext context) {
-  const double price = 1000;
-  var priceFormat = NumberFormat.currency(locale: Get.locale.toString(), symbol: '₩');
-
-  showModalBottomSheet(
-    shape: RoundedRectangleBorder(borderRadius: radiusOnly(topLeft: borderRadius, topRight: borderRadius)),
-    context: context,
+void purchaseBottomSheet(BuildContext context, Widget widget) {
+  Get.bottomSheet(
+    SizedBox(
+      height: Get.height * 0.8,
+      child: widget,
+    ),
     isScrollControlled: true,
-    builder: (builder) {
-      ColorScheme colorScheme = Theme.of(context).colorScheme;
-      return GetBuilder<MembershipController>(
-        builder: (controller) {
-          return SizedBox(
-            height: Get.height *0.8,
-            child: Scaffold(
-              appBar: AppBar(
-                centerTitle: true,
-                leading: GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: Icon(Icons.close, size: 30)
-                ),
-                title: Text('코인'),
-                actions: [
-                  TextButton(
-                    onPressed: () {},
-                    child: Text('사용 내역')
-                  ),
-                ],
-              ),
-              body: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Space(buttonMargin),
-                    Image.asset(icHeart, height: iconSizeXLarge,),
-                    Space(buttonMargin),
-                    Text('${controller.userData?.coin} ${'코인'.tr}', style: TextStyle(fontSize: textSizeNormal, fontWeight: FontWeight.bold),),
-                    Space(buttonMargin),
-                    Text(
-                      '현재 보유 코인',
-                      style: secondaryTextStyle(),
-                    ),
-                    Space(buttonMargin),
-                    Divider(thickness: 1),
-                    Padding(
-                      padding: EdgeInsets.all(appPadding),
-                      child: Column(
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {
-                              // 결제 로직을 구현하세요.
-                              // 사용자가 버튼을 눌렀을 때 호출되는 함수입니다.
-                              // 여기에 결제 처리 코드를 작성하세요.
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    Image.asset(icHeart, height: 24,),
-                                    Space(buttonPadding),
-                                    Text('무료 코인'),
-                                  ],
-                                ),
-                                FaIcon(FontAwesomeIcons.rectangleAd),
-                              ],
-                            ),
-                          ),
-                          Space(buttonMargin),
-                          ElevatedButton(
-                            onPressed: () {
-                              // 결제 로직을 구현하세요.
-                              // 사용자가 버튼을 눌렀을 때 호출되는 함수입니다.
-                              // 여기에 결제 처리 코드를 작성하세요.
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    Image.asset(icHeart, height: 24,),
-                                    Space(buttonPadding),
-                                    Text('10 코인'),
-                                  ],
-                                ),
-                                Text(priceFormat.format(1100)),
-                              ],
-                            ),
-                          ),
-                          Space(buttonMargin),
-                          ElevatedButton(
-                            onPressed: () {
-                              // 결제 로직을 구현하세요.
-                              // 사용자가 버튼을 눌렀을 때 호출되는 함수입니다.
-                              // 여기에 결제 처리 코드를 작성하세요.
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    Image.asset(icHeart, height: 24,),
-                                    Space(buttonPadding),
-                                    Text('30 코인'),
-                                  ],
-                                ),
-                                Text(priceFormat.format(2200)),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        }
-      );
-    },
+    shape: RoundedRectangleBorder(borderRadius: radiusOnly(topLeft: borderRadius, topRight: borderRadius)),
+    backgroundColor: Get.isDarkMode ? Color.fromARGB(255, 48, 48, 48) :Colors.white
   );
 }
+
 
 
 

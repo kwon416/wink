@@ -15,51 +15,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "887191585385-jp5ai5ht3g9rothmbm0nima26aulo362.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyC1pjI0D7wMX1NM21pFXePEt3nNVSBt6D4"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "887191585385-jp5ai5ht3g9rothmbm0nima26aulo362.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "887191585385-3fh8icng8vo68nqcoejcpgm4ihualjfs.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.springs.namp.wink.wink"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:887191585385:android:adae5178b1a0662c27d8f8",
-        "android_client_info": {
-          "package_name": "com.springs.namp.wink.wink"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "887191585385-a5ps7t6k1rvn8usmqe06shqn27hkbkqt.apps.googleusercontent.com",
+          "client_id": "887191585385-u9qhjbtubb8arrpm23j234td39e4odks.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.springs.namp.wink.wink",
+            "package_name": "com.springs.namp.wink",
             "certificate_hash": "98667bab93b0a73b4ea243daea24de8897a5b82c"
           }
         },
         {
-          "client_id": "887191585385-jp5ai5ht3g9rothmbm0nima26aulo362.apps.googleusercontent.com",
+          "client_id": "887191585385-q8snihatb8ph36h1bi4sv838as56tdh8.apps.googleusercontent.com",
           "client_type": 3
         }
       ],

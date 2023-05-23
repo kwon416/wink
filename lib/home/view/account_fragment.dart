@@ -8,6 +8,7 @@ import 'package:wink/controller/login_controller.dart';
 import 'package:wink/controller/membership_controller.dart';
 import 'package:wink/home/view/editprofile_screen.dart';
 import 'package:wink/home/view/invite_screen.dart';
+import 'package:wink/home/view/purchase_screen.dart';
 import 'package:wink/home/view/setting_screen.dart';
 import 'package:wink/utils/colors.dart';
 import 'package:wink/utils/images.dart';
@@ -38,7 +39,7 @@ class AccountFragment extends StatelessWidget {
             actions: [
               GestureDetector(
                 onTap: () {
-                  purchaseBottomSheet(context);
+                  purchaseBottomSheet(context, PurchaseScreen());
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.min,

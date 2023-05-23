@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const backGroundDark = Color.fromARGB(255, 48, 48, 48);
+
 const primaryColor = Colors.black;
 const blackColor = Colors.black;
 const viewAllColor = Colors.orange;

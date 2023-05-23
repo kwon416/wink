@@ -1,3 +1,6 @@
+
+
+
 const String appName = 'WINK';
 
 double mainTitleTextSize = 32;
@@ -39,7 +42,13 @@ const iconSizeXLarge = 40.0;
 /* google_adMob id*/
 const String androidTestBannerAdId = "ca-app-pub-3940256099942544/6300978111";
 const String iosTestBannerAdId = "ca-app-pub-3940256099942544/2934735716";
+const String androidTestRewardedAdId = "ca-app-pub-3940256099942544/5224354917";
+const String iosTestRewardedAdId = "ca-app-pub-3940256099942544/1712485313";
+const String androidTestInterstitialAdId = "ca-app-pub-3940256099942544/1033173712";
+const String iosTestInterstitialAdId = "ca-app-pub-3940256099942544/4411468910";
 
 /* dynamic link */
 const String packageName = 'com.springs.namp.wink';
 const String dynamicLinkPrefix = 'https://springs.page.link';
+
+

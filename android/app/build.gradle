@@ -97,5 +97,7 @@ dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
     implementation 'androidx.window:window:1.0.0'
     implementation 'androidx.window:window-java:1.0.0'
+//    충돌날 수도 있어서 여기다 적지말라함
+//    implementation "com.android.billingclient:billing:6.0.0"
 }
 apply plugin: 'com.google.gms.google-services'

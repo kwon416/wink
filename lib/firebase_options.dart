@@ -52,25 +52,29 @@ class DefaultFirebaseOptions {
     messagingSenderId: '887191585385',
     projectId: 'wink-32bef',
     authDomain: 'wink-32bef.firebaseapp.com',
+    databaseURL: 'https://wink-32bef-default-rtdb.firebaseio.com',
     storageBucket: 'wink-32bef.appspot.com',
     measurementId: 'G-T3W3E80XBK',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyC1pjI0D7wMX1NM21pFXePEt3nNVSBt6D4',
-    appId: '1:887191585385:android:adae5178b1a0662c27d8f8',
+    appId: '1:887191585385:android:a2d7f94599ecde2c27d8f8',
     messagingSenderId: '887191585385',
     projectId: 'wink-32bef',
+    databaseURL: 'https://wink-32bef-default-rtdb.firebaseio.com',
     storageBucket: 'wink-32bef.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCSZsZNnwKHGmBeyn38KLzG7gdtMFOcITg',
-    appId: '1:887191585385:ios:f4fe355afe09166827d8f8',
+    appId: '1:887191585385:ios:051ff61cc864c9e727d8f8',
     messagingSenderId: '887191585385',
     projectId: 'wink-32bef',
+    databaseURL: 'https://wink-32bef-default-rtdb.firebaseio.com',
     storageBucket: 'wink-32bef.appspot.com',
-    iosClientId: '887191585385-3fh8icng8vo68nqcoejcpgm4ihualjfs.apps.googleusercontent.com',
-    iosBundleId: 'com.springs.namp.wink.wink',
+    androidClientId: '887191585385-a5ps7t6k1rvn8usmqe06shqn27hkbkqt.apps.googleusercontent.com',
+    iosClientId: '887191585385-ns0vark2ashm4tbs6m87i2d3ldhvpkpp.apps.googleusercontent.com',
+    iosBundleId: 'com.springs.namp.wink',
   );
 }
