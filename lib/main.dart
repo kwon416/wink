@@ -206,6 +206,7 @@ void main() async {
   //runApp()전에 위젯 바인딩 -> 이후에 main()에서 비동기 메소드 사용 가능
   //WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   WidgetsFlutterBinding.ensureInitialized();
+  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
