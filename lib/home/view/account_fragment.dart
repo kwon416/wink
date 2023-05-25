@@ -13,6 +13,7 @@ import 'package:wink/home/view/setting_screen.dart';
 import 'package:wink/utils/colors.dart';
 import 'package:wink/utils/images.dart';
 
+import '../../utils/ad_helper.dart';
 import '../../utils/space.dart';
 import '../../utils/constant.dart';
 import '../../utils/widgets.dart';
@@ -198,7 +199,7 @@ class Other extends GetView<MembershipController> {
 
     BannerAd bannerAd = BannerAd(
         size: AdSize.banner,
-        adUnitId: GetPlatform.isIOS ? iosTestBannerAdId : androidTestBannerAdId,
+        adUnitId: AdHelper.bannerAdUnitId,
         listener: BannerAdListener(
           onAdFailedToLoad: (Ad ad, LoadAdError error) {},
           onAdLoaded: (_) {},

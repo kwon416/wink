@@ -6,9 +6,15 @@ import 'package:wink/provider/sample_provider.dart';
 
 import 'package:wink/repository/database_repository/database_repository.dart';
 
+import '../provider/wink_list_provider.dart';
+import '../provider/wink_provider.dart';
+
 
 class MembershipController extends GetxController {
   static MembershipController get instance => Get.find();
+  final WinkProvider winkProvider = Get.find();
+  final WinkListProvider winkListProvider = Get.find();
+
 
 
   ///유저 데이터
@@ -32,6 +38,16 @@ class MembershipController extends GetxController {
   final userNameController =TextEditingController();
 
 
+  void generateAccessToken() {
+    winkProvider.getAuthToken().then((result) {
+      var data = result.body;
+      print(data.toString());
+    });
+  }
+  void saveUser() {
+    Map<String, dynamic> body = {"key": "value"};
+    winkProvider.postUserSave(body).then((value) => print(value.body));
+  }
 
 
   void createEmailUser(Rx<User?> rxUser, String email, String password, String userName, String phoneNumber) {

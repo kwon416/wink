@@ -7,6 +7,8 @@ import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:wink/app.dart';
 import 'package:wink/provider/dynamic_links.dart';
+import 'package:wink/provider/wink_list_provider.dart';
+import 'package:wink/provider/wink_provider.dart';
 import 'package:wink/repository/database_repository/database_repository.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -239,8 +241,11 @@ Future<void> initServices() async {
 class DbService extends GetxService {
   Future<DbService> init() async {
     print('$runtimeType DB init start...');
-    Get.put(AuthenticationRepository());
-    Get.put(DatabaseRepository());
+    Get.put(AuthenticationRepository(), permanent: true);
+    Get.put(DatabaseRepository(), permanent: true);
+    Get.put(WinkProvider(), permanent: true);
+    Get.put(WinkListProvider(), permanent: true);
+    // Get.lazyPut<WinkProvider>(() => WinkProvider());
     await 0.delay();
     print('$runtimeType ready!');
     return this;

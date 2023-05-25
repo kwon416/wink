@@ -51,4 +51,10 @@ const String iosTestInterstitialAdId = "ca-app-pub-3940256099942544/4411468910";
 const String packageName = 'com.springs.namp.wink';
 const String dynamicLinkPrefix = 'https://springs.page.link';
 
+/* API */
+// const String baseUrl = "https://api.wink.namp.kr";
+const String apiBaseUrl = "http://localhost:8080";
+const String apiVersion = "/api/v1";
+const String contentTypeJson = "application/json";
+
 

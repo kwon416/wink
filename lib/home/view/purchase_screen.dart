@@ -1,25 +1,74 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:wink/utils/widgets.dart';
 
 import '../../controller/membership_controller.dart';
 import '../../controller/purchase_controller.dart';
+import '../../utils/ad_helper.dart';
 import '../../utils/constant.dart';
 import '../../utils/images.dart';
 import '../../utils/space.dart';
 
-class PurchaseScreen extends StatelessWidget {
+class PurchaseScreen extends StatefulWidget {
   const PurchaseScreen({Key? key}) : super(key: key);
 
   @override
+  State<PurchaseScreen> createState() => _PurchaseScreenState();
+}
+
+class _PurchaseScreenState extends State<PurchaseScreen> {
+
+  RewardedAd? _rewardedAd;
+
+  void _loadRewardedAd() {
+    RewardedAd.load(
+      adUnitId: AdHelper.rewardedAdUnitId,
+      request: AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (ad) {
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (ad) {
+              setState(() {
+                ad.dispose();
+                _rewardedAd = null;
+              });
+              _loadRewardedAd();
+            },
+          );
+
+          setState(() {
+            _rewardedAd = ad;
+          });
+        },
+        onAdFailedToLoad: (err) {
+          print('Failed to load a rewarded ad: ${err.message}');
+        },
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadRewardedAd();
+  }
+  @override
+  void dispose() {
+    _rewardedAd?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+
     ColorScheme colorScheme = Theme.of(context).colorScheme;
-    const double price = 1000;
     var priceFormat = NumberFormat.currency(locale: Get.locale.toString(), symbol: '₩');
     PurchaseController controller = Get.put(PurchaseController());
+
     return  Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -62,9 +111,11 @@ class PurchaseScreen extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      // 결제 로직을 구현하세요.
-                      // 사용자가 버튼을 눌렀을 때 호출되는 함수입니다.
-                      // 여기에 결제 처리 코드를 작성하세요.
+                      _rewardedAd?.show(
+                          onUserEarnedReward: (_, reward) {
+                            print('광고 시청 완료');
+                          }
+                      );
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

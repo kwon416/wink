@@ -171,6 +171,14 @@ class _HomeFragmentState extends State<HomeFragment> {
                         showToast('reset wink', context);
                       },
                       child: Text('wink 초기화'),
+                    ),ElevatedButton(
+                      onPressed: () {
+                        // controller.generateAccessToken();
+                        controller.saveUser();
+                        // controller.updateUser(controller.userData.uid, winkTo: '');
+                        // showToast('reset wink', context);
+                      },
+                      child: Text('api test'),
                     ),
                     Space(buttonMargin),
                     Text('더 많은 친구들을 초대해보세요'),

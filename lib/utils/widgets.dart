@@ -354,16 +354,12 @@ void purchaseBottomSheet(BuildContext context, Widget widget) {
       height: Get.height * 0.8,
       child: widget,
     ),
+    isDismissible: false,
     isScrollControlled: true,
     shape: RoundedRectangleBorder(borderRadius: radiusOnly(topLeft: borderRadius, topRight: borderRadius)),
     backgroundColor: Get.isDarkMode ? Color.fromARGB(255, 48, 48, 48) :Colors.white
   );
 }
-
-
-
-
-
 
 //
 // Widget homeTitleWidget({
