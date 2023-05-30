@@ -21,20 +21,15 @@ class WinkProvider extends GetConnect {
     httpClient.maxAuthRetries = 3;
 
     httpClient.addRequestModifier<dynamic>((request) {
-      // request.headers['Content-Type'] = 'application/json';
+      request.headers['Accept'] = 'application/json';
       return request;
     });
     _prefs = await SharedPreferences.getInstance();
     super.onInit();
   }
 
-///인증 - 엑세스 토큰 발급
+///인증 - 엑세스 토큰 발급 -> 로그인 시
   Future<Response<WinkApiModel>> getAuthToken() async {
-    httpClient.addRequestModifier<dynamic>((request) {
-      request.headers.remove("Authorization");
-      // print(request.headers);
-      return request;
-    });
     var response = await get<WinkApiModel>('/auth/token');
     //todo 컨트롤러로 이동?
     _prefs.setString('accessToken', response.body?.result['accessToken']??'');
@@ -50,7 +45,7 @@ class WinkProvider extends GetConnect {
     _prefs.setString('accessToken', response.body?.result['accessToken']);
     return response;
   }
-///인증 - 엑세스 토큰 만료
+///인증 - 엑세스 토큰 만료 -> 재발급
   Future<Response<WinkApiModel>> postAuthLogout(Map body) => post('/auth/logout', body);
 ///회원 - 회원정보 저장
   Future<Response<WinkApiModel>> postUserSave(Map body) {

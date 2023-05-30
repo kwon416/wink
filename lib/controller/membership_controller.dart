@@ -90,6 +90,12 @@ class MembershipController extends GetxController {
     await getCurrentUser(uid);
   }
 
+  Future<void> addCoinByAd() async {
+    final int coin = userData.coin;
+    await DatabaseRepository.instance.updateUser(uid, {'coin': coin + 1});
+    await getCurrentUser(uid);
+  }
+
   ///유저 전화번호 인증 완료 db 저장 미사용
   // Future<void> verifyUser(String uid, String phoneNumber) async {
   //   final Map<String, dynamic> data = {};

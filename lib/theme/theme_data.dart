@@ -5,8 +5,8 @@ import 'package:wink/utils/colors.dart';
 
 import '../utils/constant.dart';
 
-// const seedColor = Color(0xff0099ff);
-const seedColor = Color(0xffff99ff);
+const seedColor = Color(0xff0099ff);
+// const seedColor = Color(0xffff99ff);
 // const seedColor = Colors.white;
 
 IconButtonThemeData iconButtonTheme = IconButtonThemeData(

@@ -151,7 +151,7 @@ settIngContainer({String? title, IconData? icon, Function? onTap, Color? textCol
 Widget toggleContainer(String value, ColorScheme colorScheme, bool isSelected) {
   return Container(
     constraints: BoxConstraints(
-      minWidth: Get.width / 5,
+      minWidth: (Get.width - appPadding*3) / 3 ,
     ),
     padding: EdgeInsets.all(1),
     margin: EdgeInsets.all(2),

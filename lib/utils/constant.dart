@@ -52,8 +52,8 @@ const String packageName = 'com.springs.namp.wink';
 const String dynamicLinkPrefix = 'https://springs.page.link';
 
 /* API */
-// const String baseUrl = "https://api.wink.namp.kr";
-const String apiBaseUrl = "http://localhost:8080";
+const String apiBaseUrl = "https://api.wink.namp.kr";
+// const String apiBaseUrl = "http://localhost:8080";
 const String apiVersion = "/api/v1";
 const String contentTypeJson = "application/json";
 

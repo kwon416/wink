@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:wink/controller/signup_controller.dart';
 // import 'package:wink/screens/otp_verification_screen.dart';
 import 'package:wink/login/view/login_page.dart';
-import 'package:wink/toast/flutter_toast.dart';
+import 'package:wink/utils/flutter_toast.dart';
 import 'package:wink/utils/colors.dart';
 import 'package:wink/utils/constant.dart';
 import 'package:wink/utils/images.dart';

@@ -13,7 +13,6 @@ import 'package:wink/utils/constant.dart';
 import 'package:wink/utils/images.dart';
 import 'package:wink/utils/space.dart';
 
-import '../../utils/colors.dart';
 import '../../utils/widgets.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -30,14 +29,13 @@ class EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController fNameController = TextEditingController();
   TextEditingController lNameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
   File? imageFile;
   // String email = 'camreronedwards@gmail.com';
   // String fName = 'camreron';
   // String lName = 'Edwards';
   // String phone = '8998898';
   RxString userName = ''.obs;
-
+  int? _sliding = 0;
   @override
   void initState() {
     super.initState();
@@ -47,6 +45,14 @@ class EditProfileScreenState extends State<EditProfileScreen> {
   void init() async {
     membershipController.userNameController.text = membershipController.userData?.userName;
     userName.value = membershipController.userData?.userName;
+    if (membershipController.userData?.gender == '남자') {
+      _sliding = 0;
+    } else if (membershipController.userData?.gender == '여자') {
+      _sliding = 1;
+    } else {
+      _sliding = 2;
+    }
+
   }
 
   @override
@@ -62,7 +68,9 @@ class EditProfileScreenState extends State<EditProfileScreen> {
 
   void profileUpdate() {
     if (editFormKey.currentState!.validate()) {
-
+      Get.back();
+      membershipController.getCurrentUser(membershipController.uid);
+      showAppSnackBar('프로필 수정 완료', '프로필이 업데이트 되었습니다');
     }
     // userNameController.text = email;
     // fNameController.text = fName;
@@ -132,9 +140,9 @@ class EditProfileScreenState extends State<EditProfileScreen> {
       }
     }
   }
-  int? _sliding = 0;
-  List<String> gender = ['남자', '여자', '미공개'];
-  final List<bool> _selectedMenu = <bool>[false, false, false];
+
+  // List<String> gender = ['남자', '여자', '비공개'];
+  // final List<bool> _selectedMenu = <bool>[false, false, false];
 
   @override
   Widget build(BuildContext context) {
@@ -240,121 +248,84 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                     ),
                   ),
                   Space(buttonMargin),
-                  CupertinoSlidingSegmentedControl(
-                      children: {
-                        0: Container(
-                            padding: EdgeInsets.all(8),
-                            child: Text(
-                              '남자',
-                              style: primaryTextStyle(color: _sliding == 0 ? Colors.black : grey),
-                            )),
-                        1: Container(padding: EdgeInsets.all(8), child: Text('여자', style: primaryTextStyle(color: _sliding == 1 ? Colors.black : grey))),
-                        2: Container(padding: EdgeInsets.all(8), child: Text('미공개', style: primaryTextStyle(color: _sliding == 2 ? Colors.black : grey))),
-                      },
-                      groupValue: _sliding,
-                      onValueChanged: (dynamic newValue) {
-                        setState(() {
-                          print(newValue);
-                          _sliding = newValue;
-                        });
-                      },
+                  Row(
+                    children: [
+                      Text('성별', style: boldTextStyle(color: colorScheme.onPrimaryContainer)),
+                      // Text('*', style: boldTextStyle(color: Colors.red)),
+                    ],
                   ),
                   Space(buttonMargin),
-                  Center(
-                    child: Container(
-                      padding: EdgeInsets.zero,
-                      decoration: BoxDecoration(
-                        color: colorScheme.secondaryContainer,
-                        border: Border.all(color: colorScheme.secondaryContainer),
-                        borderRadius: BorderRadius.all(Radius.circular(circularRadius)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0),
-                            spreadRadius: 1,
-                            blurRadius: 1,
-                            offset: Offset(0, 2), // changes position of shadow
-                          ),
-                        ],
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CupertinoSlidingSegmentedControl(
+                          thumbColor: colorScheme.primary,
+                            children: {
+                              0: Container(padding: EdgeInsets.all(buttonPadding), child: Text('남자', style: primaryTextStyle(color: _sliding == 0 ? colorScheme.onPrimary : colorScheme.primary),)),
+                              1: Container(padding: EdgeInsets.all(buttonPadding), child: Text('여자', style: primaryTextStyle(color: _sliding == 1 ? colorScheme.onPrimary : colorScheme.primary))),
+                              2: Container(padding: EdgeInsets.all(buttonPadding), child: Text('비공개', style: primaryTextStyle(color: _sliding == 2 ? colorScheme.onPrimary : colorScheme.primary))),
+                            },
+                            groupValue: _sliding,
+                            onValueChanged: (dynamic newValue) {
+                              setState(() {
+                                print(newValue);
+                                _sliding = newValue;
+                              });
+                            },
+                        ),
                       ),
-                      child: ToggleButtons(
-                        onPressed: (index){
-                          setState(() {
-                            for (int i = 0; i < _selectedMenu.length; i++) {
-                              _selectedMenu[i] = i == index;
-                            }
-                            // if(index == 0){
-                            //   controller.gender = gender[0].obs;
-                            // } else if(index == 1){
-                            //   controller.gender = gender[1].obs;
-                            // } else{
-                            //   controller.gender = gender[2].obs;
-                            // }
-                          });
-                        },
-                        borderColor: transparent,
-                        selectedBorderColor: transparent,
-                        selectedColor: colorScheme.onPrimary,
-                        fillColor: transparent,
-                        color: colorScheme.onPrimaryContainer,
-
-                        isSelected: _selectedMenu,
-                        children: [
-                          for(int i = 0; i < gender.length; i++)
-                            toggleContainer(gender[i], colorScheme, _selectedMenu[i]),
-                        ],
-                      ),
-                    ),
+                    ],
                   ),
-                  Space(buttonMargin),
-                  AppTextField(
-                    // textStyle: primaryTextStyle(color: white),
-                    textFieldType: TextFieldType.USERNAME,
-                    controller: fNameController,
-                    decoration: commonInputDecoration(
-                      prefixIcon: Text('userName'),
-                      labelText: 'First Name'
-                    ),
-                  ),
-                  Space(buttonMargin),
-                  AppTextField(
-                    textStyle: primaryTextStyle(color: white),
-                    cursorColor: white,
-                    textFieldType: TextFieldType.NAME,
-                    controller: lNameController,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.only(left: 16),
-                      labelText: 'Last Name',
-                      labelStyle: secondaryTextStyle(color: white),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(borderRadius),
-                        borderSide: BorderSide(color: grey, width: 0.5),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(borderRadius),
-                        borderSide: BorderSide(color: grey, width: 0.5),
-                      ),
-                    ),
-                  ),
-                  Space(buttonMargin),
-                  AppTextField(
-                    textStyle: primaryTextStyle(color: white),
-                    cursorColor: white,
-                    textFieldType: TextFieldType.PHONE,
-                    controller: phoneController,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.only(left: 16),
-                      labelText: 'Phone Number',
-                      labelStyle: secondaryTextStyle(),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(borderRadius),
-                        borderSide: BorderSide(color: grey, width: 0.5),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(borderRadius),
-                        borderSide: BorderSide(color: grey, width: 0.5),
-                      ),
-                    ),
-                  ),
+                  // Space(buttonMargin),
+                  // AppTextField(
+                  //   // textStyle: primaryTextStyle(color: white),
+                  //   textFieldType: TextFieldType.USERNAME,
+                  //   controller: fNameController,
+                  //   decoration: commonInputDecoration(
+                  //     prefixIcon: Text('userName'),
+                  //     labelText: 'First Name'
+                  //   ),
+                  // ),
+                  // Space(buttonMargin),
+                  // AppTextField(
+                  //   textStyle: primaryTextStyle(color: white),
+                  //   cursorColor: white,
+                  //   textFieldType: TextFieldType.NAME,
+                  //   controller: lNameController,
+                  //   decoration: InputDecoration(
+                  //     contentPadding: EdgeInsets.only(left: 16),
+                  //     labelText: 'Last Name',
+                  //     labelStyle: secondaryTextStyle(color: white),
+                  //     focusedBorder: OutlineInputBorder(
+                  //       borderRadius: BorderRadius.circular(borderRadius),
+                  //       borderSide: BorderSide(color: grey, width: 0.5),
+                  //     ),
+                  //     enabledBorder: OutlineInputBorder(
+                  //       borderRadius: BorderRadius.circular(borderRadius),
+                  //       borderSide: BorderSide(color: grey, width: 0.5),
+                  //     ),
+                  //   ),
+                  // ),
+                  // Space(buttonMargin),
+                  // AppTextField(
+                  //   textStyle: primaryTextStyle(color: white),
+                  //   cursorColor: white,
+                  //   textFieldType: TextFieldType.PHONE,
+                  //   controller: phoneController,
+                  //   decoration: InputDecoration(
+                  //     contentPadding: EdgeInsets.only(left: 16),
+                  //     labelText: 'Phone Number',
+                  //     labelStyle: secondaryTextStyle(),
+                  //     focusedBorder: OutlineInputBorder(
+                  //       borderRadius: BorderRadius.circular(borderRadius),
+                  //       borderSide: BorderSide(color: grey, width: 0.5),
+                  //     ),
+                  //     enabledBorder: OutlineInputBorder(
+                  //       borderRadius: BorderRadius.circular(borderRadius),
+                  //       borderSide: BorderSide(color: grey, width: 0.5),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

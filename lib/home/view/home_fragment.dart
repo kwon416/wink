@@ -6,7 +6,7 @@ import 'package:wink/home/view/invite_screen.dart';
 import 'package:wink/home/view/notification_screen.dart';
 import 'package:wink/home/view/verification_screen.dart';
 import 'package:wink/utils/space.dart';
-import 'package:wink/toast/flutter_toast.dart';
+import 'package:wink/utils/flutter_toast.dart';
 
 
 import 'package:wink/utils/widgets.dart';
@@ -117,7 +117,7 @@ class _HomeFragmentState extends State<HomeFragment> {
                       ],
                     ),
                     Space(buttonMargin),
-                    Text('코인이 50개 필요합니다'),
+                    Text('코인이 5개 필요합니다'),
                     Space(buttonMargin),
                     Text('윙크를 보낼 전화번호를 입력하세요'),
                     Space(buttonMargin),
@@ -173,8 +173,8 @@ class _HomeFragmentState extends State<HomeFragment> {
                       child: Text('wink 초기화'),
                     ),ElevatedButton(
                       onPressed: () {
-                        // controller.generateAccessToken();
-                        controller.saveUser();
+                        controller.generateAccessToken();
+                        // controller.saveUser();
                         // controller.updateUser(controller.userData.uid, winkTo: '');
                         // showToast('reset wink', context);
                       },

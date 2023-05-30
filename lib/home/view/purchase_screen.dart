@@ -42,9 +42,11 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
 
           setState(() {
             _rewardedAd = ad;
+            print('광고 로드 완료');
           });
         },
         onAdFailedToLoad: (err) {
+          //TODO 에러 다이얼로그 추가
           print('Failed to load a rewarded ad: ${err.message}');
         },
       ),
@@ -68,6 +70,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     var priceFormat = NumberFormat.currency(locale: Get.locale.toString(), symbol: '₩');
     PurchaseController controller = Get.put(PurchaseController());
+    MembershipController membershipController = Get.find();
 
     return  Scaffold(
       appBar: AppBar(
@@ -110,13 +113,16 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
               child: Column(
                 children: [
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: _rewardedAd != null
+                       ? () {
                       _rewardedAd?.show(
                           onUserEarnedReward: (_, reward) {
                             print('광고 시청 완료');
+                            membershipController.addCoinByAd();
                           }
                       );
-                    },
+                    }
+                    : (){},
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -133,14 +139,16 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
                   ),
                   Space(buttonMargin),
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: controller.loadingComplete.value
+                        ? () {
                       if (controller.products.isEmpty) {
                         showAppDialog('스토어에 연결할 수 없습니다', '잠시 후 다시 시도해주세요');
                       } else {
                         controller.buyProduct(controller.products[0]);
                       }
 
-                    },
+                    }
+                    : (){},
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -157,13 +165,15 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
                   ),
                   Space(buttonMargin),
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: controller.loadingComplete.value
+                       ? () {
                       if (controller.products.isEmpty) {
                         showAppDialog('스토어에 연결할 수 없습니다', '잠시 후 다시 시도해주세요');
                       } else {
                         controller.buyProduct(controller.products[1]);
                       }
-                    },
+                    }
+                    : (){},
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
