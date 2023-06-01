@@ -46,7 +46,7 @@ class _HomeFragmentState extends State<HomeFragment> {
       //displayColor: colorScheme.onPrimaryContainer,
     );
     print('home frag build');
-
+    print(Get.isDarkMode);
 
     //var controller = Get.put(MembershipController());
     return GetBuilder<MembershipController>(
@@ -56,7 +56,6 @@ class _HomeFragmentState extends State<HomeFragment> {
           child: Scaffold(
             appBar: AppBar(
               backgroundColor: colorScheme.primaryContainer,
-
               title: Text('Send WINK'.tr),
               leading: IconButton(onPressed: () => Get.changeTheme(Get.isDarkMode? lightTheme : darkTheme), icon: Icon(Icons.change_circle_rounded)),
               actions: [

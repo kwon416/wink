@@ -7,6 +7,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:wink/app.dart';
+import 'package:wink/controller/purchase_controller.dart';
 import 'package:wink/provider/dynamic_links.dart';
 import 'package:wink/provider/wink_list_provider.dart';
 import 'package:wink/provider/wink_provider.dart';
@@ -41,8 +42,6 @@ void main() async {
     await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
   }
 
-
-
   await initServices(); /// 서비스들 초기화를 기다림.
 
   // runApp(const MyApp());
@@ -70,6 +69,7 @@ class DbService extends GetxService {
     Get.put(DatabaseRepository(), permanent: true);
     Get.put(WinkProvider(), permanent: true);
     Get.put(WinkListProvider(), permanent: true);
+    Get.put(PurchaseController(), permanent: true);
     // Get.lazyPut<WinkProvider>(() => WinkProvider());
     await 0.delay();
     print('$runtimeType ready!');

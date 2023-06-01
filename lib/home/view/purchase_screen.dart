@@ -69,7 +69,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
 
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     var priceFormat = NumberFormat.currency(locale: Get.locale.toString(), symbol: '₩');
-    PurchaseController controller = Get.put(PurchaseController());
+    PurchaseController controller = Get.find();
     MembershipController membershipController = Get.find();
 
     return  Scaffold(
@@ -85,7 +85,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
         actions: [
           TextButton(
               onPressed: () {},
-              child: Text('사용 내역')
+              child: Text('정사용 내역')
           ),
         ],
       ),
@@ -117,9 +117,9 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
                        ? () {
                       _rewardedAd?.show(
                           onUserEarnedReward: (_, reward) {
-                            print('광고 시청 완료');
-                            membershipController.addCoinByAd();
-                          }
+                            membershipController.addCoin();
+                            print('리워드 지급');
+                            }
                       );
                     }
                     : (){},
@@ -141,6 +141,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
                   ElevatedButton(
                     onPressed: controller.loadingComplete.value
                         ? () {
+                      print('10 코인 구매');
                       if (controller.products.isEmpty) {
                         showAppDialog('스토어에 연결할 수 없습니다', '잠시 후 다시 시도해주세요');
                       } else {

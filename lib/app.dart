@@ -95,6 +95,7 @@ class _AppViewState extends State<AppView> {
           theme: lightTheme,
           darkTheme: darkTheme,
           themeMode: themeMode,
+          // themeMode: ThemeMode.system, //기기 테마 따라가게
           translations: Languages(),
           locale: Get.deviceLocale,
           fallbackLocale: const Locale('ko', 'KR'),

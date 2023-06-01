@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+</head>
+<body>
+<h1>JavaScript Handlers (Channels) Local Asset TEST</h1>
+<button id='test' onclick="window.flutter_inappwebview.callHandler('testFunc');">Test</button>
+<button id='testargs' onclick="window.flutter_inappwebview.callHandler('testFuncArgs', 'data from web');">Test with Args</button>
+<button id='testreturn' onclick="window.flutter_inappwebview.callHandler('testFuncReturn').then(function(result) { alert(result);});">Test Return</button>
+<script>
+        const function = () => console.log("hello from JS");
+        window.function = function;
+           window.addEventListener("flutterInAppWebViewPlatformReady", function(event) {
+             window.flutter_inappwebview.callHandler('handlerName', 12, 2, 50).then(function(result) {
+               console.log(result);
+             });
+           });
+        </script>
+</body>
+</html>

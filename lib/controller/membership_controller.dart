@@ -90,9 +90,9 @@ class MembershipController extends GetxController {
     await getCurrentUser(uid);
   }
 
-  Future<void> addCoinByAd() async {
+  Future<void> addCoin({int addCoin = 1}) async {
     final int coin = userData.coin;
-    await DatabaseRepository.instance.updateUser(uid, {'coin': coin + 1});
+    await DatabaseRepository.instance.updateUser(uid, {'coin': coin + addCoin});
     await getCurrentUser(uid);
   }
 
