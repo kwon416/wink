@@ -68,7 +68,7 @@ class DatabaseRepository extends GetxService {
     await _ref.child(uid).update(data);
   }
 
-  void deleteUser(String uid) async {
+  Future<void> deleteUser(String uid) async {
     await _ref.child(uid).remove();
   }
 }

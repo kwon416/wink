@@ -63,4 +63,12 @@ class LoginController extends GetxController {
   Future<void> logOutUser() async {
     await AuthenticationRepository.instance.logout();
   }
+
+  Future<void> deleteUser() async {
+    String uid = membershipController.uid;
+    //db 삭제
+    await DatabaseRepository.instance.deleteUser(uid);
+    // auth 정보 삭제
+    await AuthenticationRepository.instance.deleteUser();
+  }
 }

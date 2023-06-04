@@ -21,7 +21,7 @@ class AuthenticationRepository extends GetxService {
     ever(firebaseUser, _setInitialScreen);
   }
 
-  ///앱 시작 화면 설정
+  ///앱 시작 화면 설정 TODO: 추후 로그인 방법 변경
   _setInitialScreen(User? user) async {
     await Future.delayed(Duration(seconds: 1));
     print('_setInitialScreen => Has user info? : $user');
@@ -33,7 +33,7 @@ class AuthenticationRepository extends GetxService {
       Get.offAll(() => HomePage());
     }
   }
-  ///auth 계정 생성
+  ///auth 이메일 계정 생성
   Future<String?> createUserWithEmailAndPassword(String email, String password) async {
     String errorMessage;
     try {
@@ -173,6 +173,9 @@ class AuthenticationRepository extends GetxService {
               case "quota-exceeded":
                 errorMessage = "인증 할당량이 초과되었습니다";
                 break;
+              case "internal-error":
+                errorMessage = "잘못된 요청입니다";
+                break;
               default:
                 errorMessage = "알 수 없는 오류가 발생했습니다";
               }
@@ -259,4 +262,8 @@ class AuthenticationRepository extends GetxService {
   }
 
   Future<void> logout() async => await _auth.signOut();
+
+  Future<void> deleteUser() async {
+    await _auth.currentUser?.delete();
+  }
 }

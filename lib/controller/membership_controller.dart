@@ -44,6 +44,7 @@ class MembershipController extends GetxController {
       print(data.toString());
     });
   }
+  ///미사용
   void saveUser() {
     Map<String, dynamic> body = {"key": "value"};
     winkProvider.postUserSave(body).then((value) => print(value.body));
@@ -89,7 +90,7 @@ class MembershipController extends GetxController {
     await DatabaseRepository.instance.updateUser(uid, data);
     await getCurrentUser(uid);
   }
-
+  ///코인 추가
   Future<void> addCoin({int addCoin = 1}) async {
     final int coin = userData.coin;
     await DatabaseRepository.instance.updateUser(uid, {'coin': coin + addCoin});
@@ -105,13 +106,9 @@ class MembershipController extends GetxController {
   //   await DatabaseRepository.instance.veryfyUser(uid, data);
   //   await getCurrentUser(uid);
   // }
-
+  ///푸시 알림 보내기 미사용
   SampleProvider sampleProvider = SampleProvider();
   void fcmPushNoti() {
     sampleProvider.postPushNotification();
-  }
-
-  void deleteUser(String uid) {
-    DatabaseRepository.instance.deleteUser(uid);
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:wink/controller/login_controller.dart';
 import 'package:wink/theme/theme_data.dart';
 import 'package:wink/utils/constant.dart';
 import 'package:wink/utils/widgets.dart';
@@ -33,13 +34,15 @@ class SettingScreenState extends State<SettingScreen> {
   ];
   List<String> cacheList = ['Enable Cache'.tr, 'Delete Cache'.tr];
   List<IconData> leadingcatchIconList = [Icons.square_rounded, Icons.cleaning_services_rounded];
-  List<String> otherSetings = ['Privacy Policy'.tr, 'Terms of Use'.tr, 'Contact Us'.tr];
+  List<String> otherSetings = ['Privacy Policy'.tr, 'Terms of Use'.tr, '회원 탈퇴'.tr];
   List<IconData> otherSetingsLeadingIcon = [
     Icons.privacy_tip,
     // Icons.notifications,
     Icons.chat,
     Icons.send,
   ];
+
+  LoginController controller = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -176,6 +179,7 @@ class SettingScreenState extends State<SettingScreen> {
         switch (index) {
           case 0:
             Get.to(() => LanguageSettingScreen());
+            break;
         }
 
       },
@@ -255,43 +259,54 @@ class SettingScreenState extends State<SettingScreen> {
   }
 
   otherSettings(int index) {
-    return Container(
-        width: MediaQuery.of(context).size.width - appPadding*2,
-        padding: EdgeInsets.all(
-          buttonPadding
-        ),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
-          borderRadius: BorderRadius.circular(borderRadius),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Icon(
-              otherSetingsLeadingIcon[index],
-                color: Get.isDarkMode?black:white,
-            ),
-            SizedBox(width: buttonPadding),
-            Expanded(
-              child: Text(
-                otherSetings[index],
-                style: primaryTextStyle(color: Theme.of(context).colorScheme.onPrimary),
+    return GestureDetector(
+      onTap: () {
+        switch (index) {
+          case 2:
+            //회원 탈퇴 액션
+            controller.deleteUser();
+            break;
+
+        }
+      },
+      child: Container(
+          width: MediaQuery.of(context).size.width - appPadding*2,
+          padding: EdgeInsets.all(
+            buttonPadding
+          ),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.primary,
+            borderRadius: BorderRadius.circular(borderRadius),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Icon(
+                otherSetingsLeadingIcon[index],
+                  color: Get.isDarkMode?black:white,
               ),
-            ),
-            Icon(Icons.arrow_forward_ios_rounded, color: Get.isDarkMode?black:white,)
-          ],
-        ));
+              SizedBox(width: buttonPadding),
+              Expanded(
+                child: Text(
+                  otherSetings[index],
+                  style: primaryTextStyle(color: index==2 ? Colors.deepOrange : Theme.of(context).colorScheme.onPrimary),
+                ),
+              ),
+              Icon(Icons.arrow_forward_ios_rounded, color: Get.isDarkMode?black:white,)
+            ],
+          )),
+    );
   }
 }
 
+///언어 설정 화면
 class LanguageSettingScreen extends StatefulWidget {
   const LanguageSettingScreen({Key? key}) : super(key: key);
 
   @override
   State<LanguageSettingScreen> createState() => _LanguageSettingScreenState();
 }
-
 class _LanguageSettingScreenState extends State<LanguageSettingScreen> {
 
   @override
