@@ -264,7 +264,8 @@ class SettingScreenState extends State<SettingScreen> {
         switch (index) {
           case 2:
             //회원 탈퇴 액션
-            controller.deleteUser();
+            // controller.deleteUser();
+            showChoiceDialog("회원 탈퇴", "정말로 회원 탈퇴하시겠습니까?", onConfirm: controller.deleteUser);
             break;
 
         }
@@ -298,6 +299,8 @@ class SettingScreenState extends State<SettingScreen> {
           )),
     );
   }
+
+
 }
 
 ///언어 설정 화면

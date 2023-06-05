@@ -248,6 +248,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
                                     // auth 회원 가입 후 credential로 로그인
                                     await signUpController.loginUser(credential);
+                                    //TODO: 회원가입 완료 팝업 띄우기
                                     // db에 회원 정보 생성
                                     signUpController.createUser(signUpController.userName.text, signUpController.gender.toString(), _phonNoInputController.text.trim());
                                   } else if (Get.arguments == "logIn"){

@@ -85,7 +85,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
         actions: [
           TextButton(
               onPressed: () {},
-              child: Text('정사용 내역')
+              child: Text('사용 내역')
           ),
         ],
       ),

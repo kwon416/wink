@@ -178,8 +178,8 @@ Switch customAdaptiveSwitch(
   );
 }
 
-///앱 테마 다이얼로그
-void showAppDialog(String title, String middleText, {bool confirm=true}) {
+///앱 테마 다이얼로그(확인 버튼만 있을 수도 있고 버튼이 없을 수도 있음)
+void showAppDialog(String title, String middleText, {bool confirm=true, }) {
   Get.defaultDialog(
     title: title,
     middleText: middleText,
@@ -199,9 +199,22 @@ void showAppDialog(String title, String middleText, {bool confirm=true}) {
           ],
         )
         : null,
+
   );
 }
-
+///앱 테마 선택 다이얼로그 (확인과 취소 버튼이 존재)
+void showChoiceDialog(String title, String middleText,{void Function()? onConfirm}) {
+  Get.defaultDialog(
+    title: title,
+    middleText: middleText,
+    radius: borderRadius,
+    titlePadding: EdgeInsets.only(top: buttonPadding, left: buttonPadding, right: buttonPadding),
+    contentPadding: EdgeInsets.only(top: buttonPadding, left: buttonPadding, right: buttonPadding, bottom: buttonPadding),
+    onConfirm: onConfirm,
+    textConfirm: '확인',
+    textCancel: '취소',
+  );
+}
 
 ///pending 다이얼로그
 void showPendingDialog() {
