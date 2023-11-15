@@ -32,8 +32,8 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _confirmPassController = TextEditingController();
 
   bool agreeWithTeams = false;
-  bool _securePassword = true;
-  bool _secureConfirmPassword = true;
+  // bool _securePassword = true;
+  // bool _secureConfirmPassword = true;
 
   double screenHeight = 0.0;
   double screenWidth = 0.0;

@@ -78,10 +78,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
-    TextTheme textTheme = Theme.of(context).textTheme.apply(
-      bodyColor: colorScheme.onPrimaryContainer,
-      displayColor: colorScheme.onPrimaryContainer,
-    );
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       onVerticalDragEnd: (_) => FocusManager.instance.primaryFocus?.unfocus(),

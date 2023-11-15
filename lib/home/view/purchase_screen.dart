@@ -67,7 +67,6 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
   @override
   Widget build(BuildContext context) {
 
-    ColorScheme colorScheme = Theme.of(context).colorScheme;
     var priceFormat = NumberFormat.currency(locale: Get.locale.toString(), symbol: '₩');
     PurchaseController controller = Get.find();
     MembershipController membershipController = Get.find();

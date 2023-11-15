@@ -36,7 +36,7 @@ class RenderSpace extends RenderBox {
   @override
   void performLayout() {
 
-    final AbstractNode flex = parent!;
+    final RenderObject flex = parent!;
 
     if (flex is RenderFlex) {
       if (flex.direction == Axis.horizontal) {

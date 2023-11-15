@@ -147,10 +147,6 @@ class EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
-    TextTheme textTheme = Theme.of(context).textTheme.apply(
-      // bodyColor: colorScheme.onPrimaryContainer,
-      // displayColor: colorScheme.onPrimaryContainer,
-    );
 
 
     return GetBuilder<MembershipController>(

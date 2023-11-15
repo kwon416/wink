@@ -47,10 +47,6 @@ class SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
-    TextTheme textTheme = Theme.of(context).textTheme.apply(
-      // bodyColor: colorScheme.onPrimaryContainer,
-      // displayColor: colorScheme.onPrimaryContainer,
-    );
 
     return Scaffold(
       appBar: AppBar(

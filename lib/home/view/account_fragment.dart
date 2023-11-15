@@ -25,18 +25,14 @@ class AccountFragment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
-    TextTheme textTheme = Theme.of(context).textTheme.apply(
-      // bodyColor: colorScheme.onPrimaryContainer,
-      // displayColor: colorScheme.onPrimaryContainer,
-    );
 
     // final LoginController l = Get.put(LoginController());
     return GetBuilder<MembershipController>(
       builder: (controller) {
         return LayoutBuilder(
           builder: (context, constraints) {
-            final width = constraints.maxWidth;
-            final height = constraints.maxHeight;
+            // final width = constraints.maxWidth;
+            // final height = constraints.maxHeight;
             // final ratio = width / height;
             return Scaffold(
               appBar: AppBar(
@@ -200,10 +196,7 @@ class Other extends GetView<MembershipController> {
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
-    TextTheme textTheme = Theme.of(context).textTheme.apply(
-      bodyColor: colorScheme.onPrimaryContainer,
-      displayColor: colorScheme.onPrimaryContainer,
-    );
+
     LoginController l = Get.put(LoginController());
 
     BannerAd bannerAd = BannerAd(

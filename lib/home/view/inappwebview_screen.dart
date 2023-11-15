@@ -15,7 +15,8 @@ class InAppWebViewScreen extends StatefulWidget {
 class _InAppWebViewScreenState extends State<InAppWebViewScreen> {
   final GlobalKey webViewKey = GlobalKey();
   // Uri myUrl = Uri.parse("https://inappwebview.dev/");
-  Uri myUrl = Uri.parse("http://localhost:8080/test");
+  // Uri myUrl = Uri.parse("http://localhost:8080/test");
+  Uri myUrl = Uri.parse("https://d1jexlmzhrvawc.cloudfront.net/home");
   late final InAppWebViewController webViewController;
   late final PullToRefreshController pullToRefreshController;
   double progress = 0;
@@ -234,9 +235,7 @@ class _InAppWebViewScreenState extends State<InAppWebViewScreen> {
                 },
               ),
               progress < 1
-              ? Container(
-                child: LinearProgressIndicator(value: progress, color: colorScheme.primary,),
-              )
+              ? LinearProgressIndicator(value: progress, color: colorScheme.primary,)
               : SizedBox(),
             ],
           ),

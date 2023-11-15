@@ -23,10 +23,6 @@ class _LoginPageState extends State<LoginPage> {
     screenWidth = MediaQuery.of(context).size.width;
 
     ColorScheme colorScheme = Theme.of(context).colorScheme;
-    TextTheme textTheme = Theme.of(context).textTheme.apply(
-      bodyColor: colorScheme.onPrimaryContainer,
-      displayColor: colorScheme.onPrimaryContainer,
-    );
 
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),

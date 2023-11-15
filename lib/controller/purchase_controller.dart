@@ -4,7 +4,8 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
-import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
+import
+'package:in_app_purchase_storekit/store_kit_wrappers.dart';
 //import for GooglePlayProductDetails
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 //import for SkuDetailsWrapper
@@ -24,7 +25,7 @@ import 'package:wink/utils/widgets.dart';
 ///
 /// 2. product ID
 /// IOS: App Store Connect -> 제품 ID
-/// Androis:
+/// Androis: 플레이 콘솔 -> 인앱상품 -> 제품 ID
 final bool _kAutoConsume = Platform.isIOS || true;
 const String _kConsumableId = 'coin_consumable_10';
 const String _kConsumableId2 = 'coin_consumable_30';
