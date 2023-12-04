@@ -62,7 +62,7 @@ android {
 //        minSdkVersion flutter.minSdkVersion
         minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion
-        versionCode flutterVersionCode.toInteger()
+        versionCode 5
         versionName flutterVersionName
     }
     //buildTypes 위에 존재해야함

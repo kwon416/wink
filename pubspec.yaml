@@ -1,7 +1,7 @@
 name: wink
 description: A new Flutter project.
 publish_to: none
-version: 1.0.0+3
+version: 1.0.0+4 #버전 코드 app/build.gradle & fastfile로 관리
 
 environment:
   sdk: ">=2.19.0 <3.0.0"

@@ -1,0 +1,182 @@
+# frozen_string_literal: true
+
+default_platform(:ios)
+
+platform :ios do
+  def updateVersion(options)
+    if options[:version]
+      version = options[:version]
+    else
+      version = prompt(text: "Enter the version type or specific version\n(major, minor, patch or 1.0.0): ")
+    end
+
+    re = /\d+.\d+.\d+/
+    versionNum = version[re, 0]
+
+    if versionNum
+      increment_version_number(
+        version_number: versionNum
+      )
+    elsif version == 'major' || version == 'minor' || version == 'patch'
+      increment_version_number(
+        bump_type: version
+      )
+    else
+      UI.user_error!('[ERROR] Wrong version!!!!!!')
+    end
+  end
+
+  def certificate(options)
+    if options[:type] == 'github'
+      create_keychain(
+        name: 'ios_app_keychain',
+        password: '****************',
+        timeout: 1800,
+        default_keychain: true,
+        unlock: true,
+        lock_when_sleeps: false
+      )
+      import_certificate(
+        certificate_path: 'distribution.p12',
+        certificate_password: '****************',
+        keychain_name: 'ios_app_keychain',
+        keychain_password: '****************'
+      )
+    end
+    install_provisioning_profile(path: 'wink_provisioning_profile.mobileprovision')
+    update_project_provisioning(
+      xcodeproj: 'Runner.xcodeproj',
+      target_filter: 'github',
+      profile: 'wink_provisioning_profile.mobileprovision',
+      build_configuration: 'Release'
+    )
+    api_key = app_store_connect_api_key(
+      key_id: ENV['APPSTORE_CONNECT_API_KEY_ID'],
+      issuer_id: ENV['APPSTORE_CONNECT_API_KEY_ISSUER_ID'],
+      key_filepath: 'AuthKey_VK42452L89.p8',
+    )
+    api_key
+  end
+
+  # Flutter build ios
+  lane :flutter_build_ios do
+    sh("cd", "..")
+
+    sh("flutter", "clean")
+
+    sh("flutter", "build", "ios", "--no-codesign")
+  end
+
+  # Send slack message
+  lane :send_slack_message do |options|
+    version = get_version_number(xcodeproj: "Runner.xcodeproj")
+    build_number = get_build_number(xcodeproj: "Runner.xcodeproj")
+    slack(
+      message: options[:msg],
+      payload: {
+        "Version" => :version, # 심볼
+        "Build" => build_number,
+        "Environment" => "#{ENV['ENV_EMOJI']} #{ENV['ENV']}"
+      },
+    )
+  end
+
+  lane :install_plugin do
+
+  end
+
+  # Add badge to app icon
+  private_lane :add_badge_to_icon do
+    if ENV["ENV"] == "STAGING"
+      add_badge(alpha: true, dark:true)
+    end
+  end
+  desc 'Update version'
+  lane :version do |options|
+    updateVersion(options)
+    increment_build_number(xcodeproj: 'Runner.xcodeproj')
+  end
+
+  desc 'Running iOS tests'
+    lane :tests do
+      run_tests()
+    end
+
+  desc 'Submit review only'
+  lane :submit_review do |_options|
+    upload_to_app_store(
+      submit_for_review: true,
+      automatic_release: true,
+      force: true,
+      skip_metadata: true,
+      skip_screenshots: true,
+      skip_binary_upload: true
+    )
+  end
+
+  desc 'Push a new beta build to TestFlight'
+  lane :beta do |options|
+    install_plugin
+    # Fetching the latest build number from TestFlight
+    increment_build_number(
+      build_number: latest_testflight_build_number + 1,
+      xcodeproj: "Runner.xcodeproj"
+    )
+
+    # 배포 시작 시 슬랙 메세지 보내기
+    #send_slack_message(msg: "💫 TestFlight 배포를 시작합니다.")
+
+    # 환경 별 빌드
+    flutter_build_ios
+
+    # Add badge to app icon (only testbed)
+    add_badge_to_icon
+
+    api_key = certificate(options)
+
+    build_app(
+      workspace: 'Runner.xcworkspace',
+      scheme: 'Runner',
+    )
+
+    upload_to_testflight(
+    force: true,
+    api_key: api_key # 깃허브 액션 환경에서 필요
+    )
+
+
+    # Send slack message
+#     send_slack_message(msg: "🚀 Successfully distributed a new beta build ✨")
+  end
+
+  desc 'Push a new release build to the App Store'
+  lane :release do |options|
+    api_key = certificate(options)
+    build_app(
+      workspace: 'Runner.xcworkspace',
+      scheme: 'Runner',
+    )
+    upload_to_app_store(
+      force: true, # Fastlane가 생성하는 HTML report를 생성하지 않도록 합니다.
+      reject_if_possible: true, # 심사 대기중인 버전이 있다면 취소합니다
+      skip_metadata: false, # 앱 스토어의 정보를 등록할지 결정합니다. 버전 수정 내용을 작성해야 하므로 스킵하면 안됨.
+      skip_screenshots: true, # 자동 배포 시 이미지 등록 스킵
+      languages: ['en-US', 'ja','ko'], # 앱 지역화
+      release_notes: {        # 작성 필요
+        "default" => "bug fixed",
+        "en-US" => "bug fixed",
+        "ja" => "バグ修正",
+        "ko" => "버그 수정"
+      },
+      submit_for_review: true, # 앱 심사 제출
+      precheck_include_in_app_purchases: false,
+      automatic_release: true, # 심사 후 스토어에 자동 배포
+      submission_information: { # 배포 전 암호화 광고 포함 여부 옵션
+        add_id_info_uses_idfa: false,
+        export_compliance_encryption_updated: false,
+        export_compliance_uses_encryption: false
+      },
+      api_key: api_key
+    )
+  end
+end

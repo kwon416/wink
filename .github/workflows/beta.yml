@@ -1,10 +1,9 @@
-name: Deploy Flutter App
+name: Upload TestFlight And Internal Test
 
 on:
   push:
-    tags:
-      - 'v*' # 버전 태그로 푸시되었을 때 Action 실행
-
+    branches:
+      - beta
 jobs:
   release-ios:
     name: Build and release IOS app
@@ -49,11 +48,11 @@ jobs:
       - uses: ruby/setup-ruby@v1 # fastlane을 실행하기 위해 ruby 설치
         with:
           ruby-version: '3.2'
-      - name: Install Fastlane
+      - name: Install Fastlane # TODO 플러그인?
         run: cd android && bundle install && cd ..
       - name: Install packages
         run: flutter pub get
-      - name: Prebuild
+      - name: Prebuild # TODO github action signing 로직 추가
         run: flutter build appbundle
       - name: Execute Fastlane command
-        run: cd android && fastlane release
+        run: cd android && fastlane beta
