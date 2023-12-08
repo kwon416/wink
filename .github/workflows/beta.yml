@@ -66,6 +66,7 @@ jobs:
       - uses: ruby/setup-ruby@v1 # fastlane을 실행하기 위해 ruby 설치
         with:
           ruby-version: '3.2'
+          bundler-cache: true
 
       - name: Create Fastlane Keyfile
         uses: jsdaniell/create-json@v1.2.2
@@ -74,12 +75,12 @@ jobs:
           json: ${{ secrets.ANDROID_FASTLANE_KEYFILE_JSON}}
           dir: android/fastlane/
 
-      - name: Cache Gem dependencies
-        uses: actions/cache@v3
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: ${{ runner.os }}-gems-
+#      - name: Cache Gem dependencies
+#        uses: actions/cache@v3
+#        with:
+#          path: vendor/bundle
+#          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+#          restore-keys: ${{ runner.os }}-gems-
 
       - name: Install Fastlane
         run: cd android && bundle install && cd ..
