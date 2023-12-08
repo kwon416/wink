@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 
 class SplashPage extends StatelessWidget {
+  // ignore: use_super_parameters
   const SplashPage({Key? key}) : super(key: key);
 
   static Route<void> route() {

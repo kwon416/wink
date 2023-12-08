@@ -11,7 +11,7 @@ import '../../utils/space.dart';
 import '../../utils/widgets.dart';
 
 class InviteScreen extends StatefulWidget {
-  const InviteScreen({Key? key}) : super(key: key);
+  const InviteScreen({super.key});
 
   @override
   State<InviteScreen> createState() => _InviteScreenState();

@@ -18,7 +18,7 @@ import '../../theme/theme.dart';
 const List<String> gender = ['남자', '여자', '미공개'];
 
 class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key? key}) : super(key: key);
+  const SignUpPage({super.key});
 
   @override
   State<SignUpPage> createState() => _SignUpPageState();

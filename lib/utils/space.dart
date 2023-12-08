@@ -1,11 +1,10 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 class Space extends LeafRenderObjectWidget {
   final double mainAxisExtent;
 
-  Space(this.mainAxisExtent, {Key? key}) : assert(mainAxisExtent >= 0 && mainAxisExtent <= double.infinity), super(key: key);
+  Space(this.mainAxisExtent, {super.key}) : assert(mainAxisExtent >= 0 && mainAxisExtent <= double.infinity);
 
   @override
   RenderObject createRenderObject(BuildContext context) {

@@ -63,8 +63,8 @@ class SignUpController extends GetxController {
   }
 
   ///유저 정보 업데이트 - 미사용
-  void updateProfile({String? displayName, String? phoneNumber}) {
-    Future<String?> error = AuthenticationRepository.instance.updateProfile(displayName: displayName, phoneNumber: phoneNumber);
+  void updateProfile({String? displayName, String? phoneNumber}) async {
+    String? error = await AuthenticationRepository.instance.updateProfile(displayName: displayName, phoneNumber: phoneNumber);
     if(error != null) {
       Get.showSnackbar(GetSnackBar(message: error.toString(),));
     }

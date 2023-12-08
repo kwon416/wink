@@ -6,7 +6,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class InAppWebViewScreen extends StatefulWidget {
-  const InAppWebViewScreen({Key? key}) : super(key: key);
+  const InAppWebViewScreen({super.key});
 
   @override
   State<InAppWebViewScreen> createState() => _InAppWebViewScreenState();

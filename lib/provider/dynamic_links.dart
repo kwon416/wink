@@ -42,8 +42,8 @@ class DynamicLinks {
 
   void _redirectScreen(PendingDynamicLinkData dynamicLinkData) {
     if (dynamicLinkData.link.queryParameters.containsKey('id')) {
-      String link = dynamicLinkData.link.path.split('/').last;
-      String id = dynamicLinkData.link.queryParameters['id']!;
+      // String link = dynamicLinkData.link.path.split('/').last;
+      // String id = dynamicLinkData.link.queryParameters['id']!;
 
       // switch (link) {
       //   case exhibition:

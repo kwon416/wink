@@ -14,7 +14,7 @@ import 'package:wink/utils/widgets.dart';
 import '../../controller/signup_controller.dart';
 
 class VerificationScreen extends StatefulWidget {
-  const VerificationScreen({Key? key}) : super(key: key);
+  const VerificationScreen({super.key});
 
   @override
   State<VerificationScreen> createState() => _VerificationScreenState();

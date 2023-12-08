@@ -45,10 +45,10 @@ class PurchaseController extends GetxController {
 
   final InAppPurchase _inAppPurchase = InAppPurchase.instance;
   late StreamSubscription<List<PurchaseDetails>> _subscription;
-  List<String> _notFoundIds = <String>[];
+  // List<String> _notFoundIds = <String>[];
   RxList<ProductDetails> products = <ProductDetails>[].obs;
   RxList<PurchaseDetails> purchases = <PurchaseDetails>[].obs;
-  List<String> _consumables = <String>[];
+  // List<String> _consumables = <String>[];
   bool isAvailable = false;
   RxBool purchasePending = false.obs;
   RxBool loadingComplete = false.obs;
@@ -206,7 +206,7 @@ class PurchaseController extends GetxController {
     print('complete purchase -- ${purchaseDetails.status}');
     _unShownPendingUI();
     if (purchaseDetails.pendingCompletePurchase) {
-      bool result = false;
+      // bool result = false;
       await _inAppPurchase.completePurchase(purchaseDetails);
     }
   }

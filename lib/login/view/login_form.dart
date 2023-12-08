@@ -10,7 +10,7 @@ import '../../home/view/verification_screen.dart';
 import '../../utils/constant.dart';
 
 class LoginForm extends StatefulWidget {
-  LoginForm({Key? key}) : super(key: key);
+  LoginForm({super.key});
 
   @override
   State<LoginForm> createState() => _LoginFormState();
@@ -19,7 +19,7 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final controller = Get.put(LoginController());
   final _formKey = GlobalKey<FormState>();
-  final bool _securePassword = true;
+  // final bool _securePassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -189,7 +189,7 @@ class _LoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ColorScheme colorScheme = Theme.of(context).colorScheme;
+    // ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     return ElevatedButton(
             key: const Key('loginForm_continue_raisedButton'),

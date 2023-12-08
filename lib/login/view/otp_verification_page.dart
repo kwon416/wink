@@ -12,7 +12,7 @@ import '../../utils/constant.dart';
 // import '../login.dart';
 
 class OTPVerificationScreen extends StatefulWidget {
-  const OTPVerificationScreen({Key? key}) : super(key: key);
+  const OTPVerificationScreen({super.key});
 
   @override
   State<OTPVerificationScreen> createState() => _OTPVerificationScreenState();

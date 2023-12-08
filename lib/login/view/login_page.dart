@@ -3,7 +3,7 @@ import 'package:wink/login/login.dart';
 import 'package:wink/utils/constant.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
   
   static Route<void> route() {
     return MaterialPageRoute<void>(builder: (_) => const LoginPage());

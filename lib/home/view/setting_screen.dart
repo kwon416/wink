@@ -301,7 +301,7 @@ class SettingScreenState extends State<SettingScreen> {
 
 ///언어 설정 화면
 class LanguageSettingScreen extends StatefulWidget {
-  const LanguageSettingScreen({Key? key}) : super(key: key);
+  const LanguageSettingScreen({super.key});
 
   @override
   State<LanguageSettingScreen> createState() => _LanguageSettingScreenState();

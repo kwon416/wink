@@ -8,7 +8,7 @@ import '../../utils/constant.dart';
 
 
 class WinkBoxFragment extends StatefulWidget {
-  const WinkBoxFragment({Key? key}) : super(key: key);
+  const WinkBoxFragment({super.key});
 
   @override
   State<WinkBoxFragment> createState() => _WinkBoxFragmentState();

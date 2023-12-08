@@ -16,7 +16,7 @@ import '../../theme/theme.dart';
 import '../../utils/constant.dart';
 
 class HomeFragment extends StatefulWidget {
-  const HomeFragment({Key? key}) : super(key: key);
+  const HomeFragment({super.key});
 
   @override
   State<HomeFragment> createState() => _HomeFragmentState();
@@ -201,7 +201,7 @@ class _HomeFragmentState extends State<HomeFragment> {
 }
 
 class NotVerifiedScreen extends StatelessWidget {
-  const NotVerifiedScreen({Key? key}) : super(key: key);
+  const NotVerifiedScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

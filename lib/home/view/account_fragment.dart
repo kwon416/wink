@@ -20,7 +20,7 @@ import '../../utils/widgets.dart';
 import 'inappwebview_screen.dart';
 
 class AccountFragment extends StatelessWidget {
-  const AccountFragment({Key? key}) : super(key: key);
+  const AccountFragment({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -191,7 +191,7 @@ class AccountFragment extends StatelessWidget {
 }
 
 class Other extends GetView<MembershipController> {
-  Other({Key? key}) : super(key: key);
+  Other({super.key});
 
   @override
   Widget build(BuildContext context) {

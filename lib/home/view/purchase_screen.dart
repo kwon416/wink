@@ -14,7 +14,7 @@ import '../../utils/images.dart';
 import '../../utils/space.dart';
 
 class PurchaseScreen extends StatefulWidget {
-  const PurchaseScreen({Key? key}) : super(key: key);
+  const PurchaseScreen({super.key});
 
   @override
   State<PurchaseScreen> createState() => _PurchaseScreenState();
