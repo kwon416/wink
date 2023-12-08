@@ -93,6 +93,8 @@ platform :android do
     data = YAML.load_file(yaml_file_path)
     version = data["version"]
     puts "current version : #{version}"
+    googleVersionCode = google_play_track_version_codes
+
     version_number = data["version"].split("+")[0]
     new_version_code = data["version"].split("+")[1].to_i + 1
     new_version = "#{version_number}+#{new_version_code}"
@@ -108,7 +110,8 @@ platform :android do
 #     increment_version_code
     # 버전코드 증가 (yaml에서)
     increse_version_code_in_pubspec
-    # 환경 별 빌드
+
+#     환경 별 빌드
     flutter_build_appbundle
 
     # Add badge to app icon (only testbed)
