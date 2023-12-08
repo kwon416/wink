@@ -3,34 +3,49 @@ name: Upload TestFlight And Internal Test
 on:
   push:
     branches:
-      - beta
+      - main
 jobs:
-  upload-ios:
-    name: Build and release IOS app
-    runs-on: macos-latest
-    steps:
-      - uses: maxim-lobanov/setup-xcode@v1 #xcode 설치
-        with:
-          xcode-version: latest-stable
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.13.9'
-          channel: 'stable'
-      - uses: ruby/setup-ruby@v1 # fastlane을 실행하기 위해 ruby 설치
-        with:
-          ruby-version: '3.2'
-      - name: Install Fastlane
-        run: cd ios && bundle install && cd ..
-      - name: Install packages
-        run: flutter pub get
-      - name: Install pods
-        run: cd ios && pod install && cd ..
-      - name: Prebuild
-        run: flutter build ios --release --no-codesign # fastlane 에서 아카이빙할 때 signing 함
-      - name: Execute Fastlane command
-        run: cd ios && fastlane release type:github
-        timeout-minutes: 40
+#  upload-ios:
+#    name: Build and release IOS app
+#    runs-on: macos-latest
+#    steps:
+#      - uses: maxim-lobanov/setup-xcode@v1 #xcode 설치
+#        with:
+#          xcode-version: latest-stable
+#
+#      - uses: actions/checkout@v3
+#
+#      - uses: subosito/flutter-action@v2
+#        with:
+#          flutter-version: '3.13.9'
+#          channel: 'stable'
+#
+#      - uses: ruby/setup-ruby@v1 # fastlane을 실행하기 위해 ruby 설치
+#        with:
+#          ruby-version: '3.2'
+#
+#      - name: Install Fastlane
+#        run: cd ios && bundle install && cd ..
+#
+#      - name: Cache pub dependencies
+#        uses: actions/cache@v3
+#        with:
+#          path: ${{ env.FLUTTER_HOME }}/.pub-cache
+#          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
+#          restore-keys: ${{ runner.os }}-pub-
+#
+#      - name: Install dependencies
+#        run: flutter pub get
+#
+#      - name: Install pods
+#        run: cd ios && pod install && cd ..
+#
+#      - name: Prebuild
+#        run: flutter build ios --release --no-codesign # fastlane 에서 아카이빙할 때 signing 함
+#
+#      - name: Execute Fastlane command
+#        run: cd ios && fastlane beta type:github
+#        timeout-minutes: 40
 
   upload-android:
     name: Build and Upload Android app
@@ -52,7 +67,14 @@ jobs:
         with:
           ruby-version: '3.2'
 
-      - name: Install Fastlane # TODO 플러그인?
+      - name: Create Fastlane Keyfile
+        uses: jsdaniell/create-json@v1.2.2
+        with:
+          name: "wink-fastlane-keyfile.json"
+          json: ${{ secrets.ANDROID_FASTLANE_KEYFILE_JSON}}
+          dir: android/fastlane/
+
+      - name: Install Fastlane
         run: cd android && bundle install && cd ..
 
       - name: Cache pub dependencies

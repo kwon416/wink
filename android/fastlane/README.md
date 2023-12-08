@@ -31,6 +31,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Update version
 
+### android increse_version_code_in_pubspec
+
+```sh
+[bundle exec] fastlane android increse_version_code_in_pubspec
+```
+
+Increase version code from pubspec.yaml
+
 ### android beta
 
 ```sh
