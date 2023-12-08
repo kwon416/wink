@@ -15,3 +15,4 @@ key.properties
 # fastlane
 
 /fastlane/*.json
+/fastlane/.env*

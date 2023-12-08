@@ -29,8 +29,8 @@ platform :ios do
   def certificate(options)
     if options[:type] == 'github'
       create_keychain(
-        name: 'ios_app_keychain',
-        password: '****************',
+        name: 'fastlane_ios_app_keychain',
+        password: ENV['KEYCHAIN_PASSWORD'],
         timeout: 1800,
         default_keychain: true,
         unlock: true,
@@ -39,21 +39,20 @@ platform :ios do
       import_certificate(
         certificate_path: 'distribution.p12',
         certificate_password: '****************',
-        keychain_name: 'ios_app_keychain',
+        keychain_name: 'fastlane_ios_app_keychain',
         keychain_password: '****************'
       )
     end
-    install_provisioning_profile(path: 'wink_provisioning_profile.mobileprovision')
+    install_provisioning_profile(path: ENV['PROVISIONING_PROFILE_PATH'])
     update_project_provisioning(
       xcodeproj: 'Runner.xcodeproj',
-      target_filter: 'github',
-      profile: 'wink_provisioning_profile.mobileprovision',
+      profile: ENV['PROVISIONING_PROFILE_PATH'],
       build_configuration: 'Release'
     )
     api_key = app_store_connect_api_key(
       key_id: ENV['APPSTORE_CONNECT_API_KEY_ID'],
       issuer_id: ENV['APPSTORE_CONNECT_API_KEY_ISSUER_ID'],
-      key_filepath: 'AuthKey_VK42452L89.p8',
+      key_filepath: ENV['AUTH_KEYFILE_PATH'],
     )
     api_key
   end
@@ -64,7 +63,7 @@ platform :ios do
 
     sh("flutter", "clean")
 
-    sh("flutter", "build", "ios", "--no-codesign")
+    sh("flutter", "build", "ios")
   end
 
   # Send slack message
@@ -91,6 +90,7 @@ platform :ios do
       add_badge(alpha: true, dark:true)
     end
   end
+
   desc 'Update version'
   lane :version do |options|
     updateVersion(options)
@@ -132,16 +132,24 @@ platform :ios do
     # Add badge to app icon (only testbed)
     add_badge_to_icon
 
-    api_key = certificate(options)
+#     api_key = certificate(options)
+
+    get_certificates
+    get_provisioning_profile
 
     build_app(
-      workspace: 'Runner.xcworkspace',
+      workspace: "Runner.xcworkspace",
+      configuration: "Release",
+      clean: true,
+      silent: true,
       scheme: 'Runner',
+      xcargs: '-allowProvisioningUpdates'
     )
 
     upload_to_testflight(
-    force: true,
-    api_key: api_key # 깃허브 액션 환경에서 필요
+      uses_non_exempt_encryption: false,
+#       skip_submission: true # 업로드 후 배포할지
+#     api_key: api_key
     )
 
 
