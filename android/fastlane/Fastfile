@@ -69,6 +69,7 @@ platform :android do
 
   # Flutter build appbundle
   lane :flutter_build_appbundle do
+    sh("echo", "\"$PWD\"")
     sh("cd", "..")
     sh("flutter", "clean")
     sh("flutter", "build", "appbundle")
