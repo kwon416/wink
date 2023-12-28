@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:wink/controller/fcm_controller.dart';
 import 'package:wink/home/view/invite_screen.dart';
 import 'package:wink/home/view/notification_screen.dart';
 import 'package:wink/home/view/verification_screen.dart';
@@ -149,6 +150,12 @@ class _HomeFragmentState extends State<HomeFragment> {
                         }
                       },
                       child: Text('보내기'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        FcmController.instance.initializeNotification();
+                      },
+                      child: Text('푸시 초기화'),
                     ),
                   ],
                 ),

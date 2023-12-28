@@ -38,9 +38,9 @@ platform :ios do
       )
       import_certificate(
         certificate_path: 'distribution.p12',
-        certificate_password: '****************',
+        certificate_password: ENV['CERTIFICATE_PASSWORD'],
         keychain_name: 'fastlane_ios_app_keychain',
-        keychain_password: '****************'
+        keychain_password: ENV['KEYCHAIN_PASSWORD']
       )
     end
     install_provisioning_profile(path: ENV['PROVISIONING_PROFILE_PATH'])
@@ -59,7 +59,7 @@ platform :ios do
 
   # Flutter build ios
   lane :flutter_build_ios do
-    sh("cd", "..")
+#     sh("cd", "..")
 
     sh("flutter", "clean")
 
@@ -131,11 +131,12 @@ platform :ios do
 
     # Add badge to app icon (only testbed)
     add_badge_to_icon
-
-#     api_key = certificate(options)
-
-    get_certificates
-    get_provisioning_profile
+    if options[:type] == 'github'
+      api_key = certificate(options)
+    else
+      get_certificates
+      get_provisioning_profile
+    end
 
     build_app(
       workspace: "Runner.xcworkspace",

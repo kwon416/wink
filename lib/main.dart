@@ -7,6 +7,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:wink/app.dart';
+import 'package:wink/controller/fcm_controller.dart';
 import 'package:wink/controller/purchase_controller.dart';
 import 'package:wink/provider/dynamic_links.dart';
 import 'package:wink/provider/wink_list_provider.dart';
@@ -31,6 +32,7 @@ void main() async {
   );
   // ***파이어 베이스 메세징 백그라운드 핸들러는 최상위에 위치***
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
   //수직 고정 및 statusBar 표시
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
@@ -70,6 +72,7 @@ class DbService extends GetxService {
     Get.put(WinkProvider(), permanent: true);
     Get.put(WinkListProvider(), permanent: true);
     Get.put(PurchaseController(), permanent: true);
+    Get.put(FcmController(), permanent: true);
     // Get.lazyPut<WinkProvider>(() => WinkProvider());
     await 0.delay();
     print('$runtimeType ready!');

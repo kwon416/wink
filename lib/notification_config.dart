@@ -30,9 +30,11 @@ part of 'main.dart';
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await setupFlutterNotifications();
+  debugPrint("background message: ${message.toMap()}");
   //notification이 있으면 백그라운드 알림 뜸
-  //notification이 없으면 파이어베이스 알림이 안뜨므로 data로 로컬 노티 생성
-  if (message.notification == null) showFlutterNotification(message);
+  // notification이 없으면 파이어베이스 알림이 안뜨므로 data로 로컬 노티 생성
+  /// 안드로이드 종료&백에서 이거때매 두번 뜸
+  // if (message.notification == null) showFlutterNotification(message);
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
   print('Handling a background message ${message.messageId}');
@@ -40,7 +42,6 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 void onSelectNotification(NotificationResponse notificationResponse) async {
   print('push notification clicked!');
-  print(notificationResponse);
   final String? payload = notificationResponse.payload;
   if (notificationResponse.payload != null) {
     debugPrint('notificaiton routing payload: $payload');
@@ -67,12 +68,13 @@ Future<void> setupFlutterNotifications() async {
     'High Importance Notifications', // title
     description: 'This channel is used for important notifications.', // description
     importance: Importance.high,
+    enableVibration: true,
   );
 
   flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
   ///플랫폼 별 초기화
   const AndroidInitializationSettings initializationSettingsAndroid =
-  AndroidInitializationSettings('@mipmap/ic_launcher');
+  AndroidInitializationSettings('notification_icon'); //res/drawable/ 에 아이콘.png 만들어야함
   final DarwinInitializationSettings initializationSettingsDarwin =
   DarwinInitializationSettings(
     //퍼미션 리퀘스트 따로하기 위해서 false
@@ -134,14 +136,14 @@ Future<void> setupFlutterNotifications() async {
   /// Update the iOS foreground notification presentation options to allow
   /// heads up notifications.
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-    alert: false,
+    alert: true,
     badge: true,
     sound: true,
   );
   isFlutterLocalNotificationsInitialized = true;
 }
 
-///Custom notifications
+///Custom notifications for Android foreground
 void showFlutterNotification(RemoteMessage message) {
   print("run showFlutterNotification");
   RemoteNotification? notification = message.notification;
@@ -160,7 +162,7 @@ void showFlutterNotification(RemoteMessage message) {
           importance: Importance.max,
           priority: Priority.high,
           ticker: 'ticker',
-          icon: '@mipmap/ic_launcher',
+          // icon: '@mipmap/ic_launcher',
           // actions: <AndroidNotificationAction>[
           //   AndroidNotificationAction(
           //       'id_1', data["key_1"] ?? '',

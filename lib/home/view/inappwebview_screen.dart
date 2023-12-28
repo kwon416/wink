@@ -16,9 +16,9 @@ class _InAppWebViewScreenState extends State<InAppWebViewScreen> {
   final GlobalKey webViewKey = GlobalKey();
   // Uri myUrl = Uri.parse("https://inappwebview.dev/");
   // Uri myUrl = Uri.parse("http://localhost:8080/test");
-  Uri myUrl = Uri.parse("https://d1jexlmzhrvawc.cloudfront.net/home");
+  Uri myUrl = Uri.parse("https://dev-id.spopick.com/");
   late final InAppWebViewController webViewController;
-  late final PullToRefreshController pullToRefreshController;
+  // late final PullToRefreshController pullToRefreshController;
   double progress = 0;
 
   InAppWebViewGroupOptions myOptions = InAppWebViewGroupOptions(
@@ -32,7 +32,7 @@ class _InAppWebViewScreenState extends State<InAppWebViewScreen> {
       allowFileAccessFromFileURLs: true, //
       allowUniversalAccessFromFileURLs: true,
       verticalScrollBarEnabled: true, //수직 스크롤바 사용
-      userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.122 Safari/537.36',
+      // userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.122 Safari/537.36',
       // userAgent: 'random'
     ),
     android: AndroidInAppWebViewOptions(
@@ -57,20 +57,20 @@ class _InAppWebViewScreenState extends State<InAppWebViewScreen> {
   void initState()  {
     super.initState();
 
-    pullToRefreshController = (kIsWeb
-        ? null
-        : PullToRefreshController(
-      options: PullToRefreshOptions(
-        color: grey,
-        backgroundColor: Get.theme.colorScheme.primaryContainer
-      ),
-      onRefresh: () async {
-        if (defaultTargetPlatform == TargetPlatform.android) {
-          webViewController.reload();
-        } else if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.macOS) {
-          webViewController.loadUrl(urlRequest: URLRequest(url: await webViewController.getUrl()));}
-      },
-    ))!;
+    // pullToRefreshController = (kIsWeb
+    //     ? null
+    //     : PullToRefreshController(
+    //   options: PullToRefreshOptions(
+    //     color: grey,
+    //     backgroundColor: Get.theme.colorScheme.primaryContainer
+    //   ),
+    //   onRefresh: () async {
+    //     if (defaultTargetPlatform == TargetPlatform.android) {
+    //       webViewController.reload();
+    //     } else if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.macOS) {
+    //       webViewController.loadUrl(urlRequest: URLRequest(url: await webViewController.getUrl()));}
+    //   },
+    // ))!;
   }
 
   Future<bool> _goBack(BuildContext context) async {
@@ -108,22 +108,22 @@ class _InAppWebViewScreenState extends State<InAppWebViewScreen> {
                 // initialFile: "assets/index.html",
                 initialUrlRequest: URLRequest(url: myUrl),
                 initialOptions: myOptions,
-                pullToRefreshController: pullToRefreshController,
+                // pullToRefreshController: pullToRefreshController,
                 onLoadStart: (InAppWebViewController controller, uri) {
                   print('onLoadStart: $uri');
                   setState(() {myUrl = uri!;});
                 },
                 onLoadStop: (controller, uri) async {
                   print('onLoadStop: $uri');
-                  pullToRefreshController.endRefreshing();
+                  // pullToRefreshController.endRefreshing();
                   setState(() {myUrl = uri!;});
                 },
                 onLoadError: (controller, uri, code, message) {
                   print('onLoadError: $uri, code: $code, ErrorMessage: $message');
-                  pullToRefreshController.endRefreshing();
+                  // pullToRefreshController.endRefreshing();
                 },
                 onProgressChanged: (controller, progress) {
-                  if (progress == 100) {pullToRefreshController.endRefreshing();}
+                  // if (progress == 100) {pullToRefreshController.endRefreshing();}
                   setState(() {this.progress = progress / 100;});
                 },
                 onUpdateVisitedHistory: (controller, uri, androidIsReload) {
@@ -139,9 +139,9 @@ class _InAppWebViewScreenState extends State<InAppWebViewScreen> {
                 },
                 shouldOverrideUrlLoading: (controller, navigationAction) async {
                   var uri = navigationAction.request.url!;
-
                   if (![ "http", "https", "file", "chrome",
                     "data", "javascript", "about"].contains(uri.scheme)) {
+                    return NavigationActionPolicy.ALLOW;
                     if (await canLaunchUrl(myUrl)) {
                       // Launch the App
                       await launchUrl(

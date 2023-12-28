@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -48,7 +50,7 @@ class _HomePageState extends State<HomePage> {
       provisional: false,
       sound: true,
     );
-    print('User granted permission: ${settings.authorizationStatus}');
+    print('firebaseMessaging - User granted permission: ${settings.authorizationStatus}');
 
     FirebaseMessaging.instance.getToken().then((token){
       print("get FCM token : ${token ?? 'token NULL!'}");
@@ -79,18 +81,17 @@ class _HomePageState extends State<HomePage> {
     ///파이어 베이스 포어 그라운드 푸시 알림 처리
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       print('Got a message whilst in the foreground!');
-      print('Message data: ${message.data}');
-      //TODO 알림으로 보여줄지 스낵바로 보여줄지
-      //
-      showFlutterNotification(message);
+      print('Message: ${message.toMap()}');
+      // 안드로이드 포어에서는 FCM으로 못열기 때문에 메세지를 로컬 노티로 열어줌
+      if (Platform.isAndroid) showFlutterNotification(message);
     });
     FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
   }
 
   void _handleMessage(RemoteMessage message) {
+    debugPrint("in _handleMessage : ${message.toMap()}");
     if (message.data['status'] != null) {
       Get.toNamed('${message.data['status']}');
-
     }
   }
 

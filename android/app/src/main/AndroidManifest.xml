@@ -2,7 +2,7 @@
     package="com.springs.namp.wink">
 
 <!--    <uses-feature android:name="android.hardware.camera" android:required="false" />-->
-
+    <!-- 푸시알림 퍼미션 -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -65,6 +65,9 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-1029534013926678~3228274235"/>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/notification_icon" />
         <!--flutter inappWebview configure -->
         <provider
             android:name="com.pichillilorenzo.flutter_inappwebview.InAppWebViewFileProvider"

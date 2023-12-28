@@ -25,7 +25,7 @@ class SampleProvider extends GetConnect {
       "Content-Type": "application/json"
     };
     final body ={
-      "to" : "fva3anwrStGj7lx_kwAuln:APA91bFNf2I7slRKun09wQPiJETrB3Tdun4CyWYhCcKP7vnY5PMxbvWiF6E4x5kW5ImTFxRSfJDPvydM2vXTKXvvp9Iq4cRmSDfaOABYlsc2XBVeNIiPAmZ3qeKUbeejcjOh3biu2tWo",
+      "to" : "dvIbYRzxCEsNmAhncTCUet:APA91bHDM2i-0RfHiZo7plJPXPSd5H4cbx-FUNXYXl_xWMmk9f4X1e-Jt-rxfmdZ33jx2cx6xOCN1Xslh6uVJKrLAy7QvS7BHf9KToSxgeYikIhth_63Sss3pE7ZO6BWjnTROwckzFct",
       "collapse_key" : "type_a",
       "data" : {
         "body" : "fcm noti body go to notification screen",
