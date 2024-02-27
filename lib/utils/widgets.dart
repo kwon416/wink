@@ -9,7 +9,11 @@ import 'space.dart';
 import 'constant.dart';
 
 ///공통 텍스트 입력 폼
-InputDecoration commonInputDecoration({String? labelText, String? hintText, Widget? prefixIcon, Widget? suffixIcon}) {
+InputDecoration commonInputDecoration(
+    {String? labelText,
+    String? hintText,
+    Widget? prefixIcon,
+    Widget? suffixIcon}) {
   return InputDecoration(
     filled: true,
     fillColor: textFieldColor,
@@ -22,23 +26,32 @@ InputDecoration commonInputDecoration({String? labelText, String? hintText, Widg
     contentPadding: EdgeInsets.all(buttonPadding),
     border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(borderRadius),
-        borderSide: BorderSide.none
-    ),
-
+        borderSide: BorderSide.none),
   );
 }
 
-BoxDecoration boxDecorations({double radius = borderRadius, Color color = Colors.transparent, Color? bgColor, var showShadow = false}) {
+BoxDecoration boxDecorations(
+    {double radius = borderRadius,
+    Color color = Colors.transparent,
+    Color? bgColor,
+    var showShadow = false}) {
   return BoxDecoration(
     color: bgColor,
-    boxShadow: showShadow ? [BoxShadow(color: boxShadow, blurRadius: 10, spreadRadius: 2)] : [BoxShadow(color: Colors.transparent)],
+    boxShadow: showShadow
+        ? [BoxShadow(color: boxShadow, blurRadius: 10, spreadRadius: 2)]
+        : [BoxShadow(color: Colors.transparent)],
     border: Border.all(color: color),
     borderRadius: BorderRadius.all(Radius.circular(radius)),
   );
 }
 
 BoxDecoration boxDecoration(
-    {double radius = 80.0, Color backGroundColor = transparent, double blurRadius = 8.0, double spreadRadius = 8.0, Color radiusColor = Colors.black12, Gradient? gradient}) {
+    {double radius = 80.0,
+    Color backGroundColor = transparent,
+    double blurRadius = 8.0,
+    double spreadRadius = 8.0,
+    Color radiusColor = Colors.black12,
+    Gradient? gradient}) {
   return BoxDecoration(
     borderRadius: BorderRadius.circular(radius),
     boxShadow: [
@@ -62,26 +75,36 @@ class SDButton extends StatefulWidget {
   var isStroked = false;
   var height = 40.0;
 
-  SDButton({super.key, required this.textContent, required this.onPressed, this.isStroked = false, this.height = 45.0});
+  SDButton(
+      {super.key,
+      required this.textContent,
+      required this.onPressed,
+      this.isStroked = false,
+      this.height = 45.0});
 
   @override
   SDButtonState createState() => SDButtonState();
 }
+
 class SDButtonState extends State<SDButton> {
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     TextTheme textTheme = Theme.of(context).textTheme.apply(
-      bodyColor: colorScheme.onPrimary,
-      displayColor: colorScheme.onPrimary,
-    );
+          bodyColor: colorScheme.onPrimary,
+          displayColor: colorScheme.onPrimary,
+        );
     return GestureDetector(
       onTap: widget.onPressed,
       child: Container(
         // height: widget.height,
         padding: EdgeInsets.all(buttonPadding),
         alignment: Alignment.center,
-        decoration: widget.isStroked ? boxDecorations(bgColor: Colors.transparent, color: colorScheme.primary) : boxDecorations(bgColor: colorScheme.primary, radius: borderRadius),
+        decoration: widget.isStroked
+            ? boxDecorations(
+                bgColor: Colors.transparent, color: colorScheme.primary)
+            : boxDecorations(
+                bgColor: colorScheme.primary, radius: borderRadius),
         child: Text(
           widget.textContent,
           textAlign: TextAlign.center,
@@ -99,7 +122,8 @@ class BottomElevatedButton extends StatefulWidget {
   var textContent;
   VoidCallback onPressed;
 
-  BottomElevatedButton({super.key, required this.textContent, required this.onPressed});
+  BottomElevatedButton(
+      {super.key, required this.textContent, required this.onPressed});
 
   @override
   State<BottomElevatedButton> createState() => _BottomElevatedButtonState();
@@ -110,39 +134,52 @@ class _BottomElevatedButtonState extends State<BottomElevatedButton> {
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     TextTheme textTheme = Theme.of(context).textTheme.apply(
-      bodyColor: colorScheme.onPrimary,
-      displayColor: colorScheme.onPrimary,
-    );
+          bodyColor: colorScheme.primary,
+          displayColor: colorScheme.onPrimary,
+        );
     return ElevatedButton(
-        onPressed: widget.onPressed,
-        style: ButtonStyle(
-          shape: MaterialStateProperty.all<OutlinedBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(circularRadius),
-            ),
+      onPressed: widget.onPressed,
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all<OutlinedBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(circularRadius),
           ),
         ),
-        child: Text(
-          widget.textContent,
-          textAlign: TextAlign.center,
-          // style: boldTextStyle(size: 16, color: colorScheme.onPrimary, letterSpacing: 2),
-          style: textTheme.labelMedium?.copyWith(fontSize: textSizeMedium),
-        ),
+      ),
+      child: Text(
+        widget.textContent,
+        textAlign: TextAlign.center,
+        // style: boldTextStyle(size: 16, color: colorScheme.onPrimary, letterSpacing: 2),
+        style: textTheme.labelMedium?.copyWith(fontSize: textSizeMedium),
+      ),
     );
   }
 }
 
 ///프로필 스크린 컨테이너
-settIngContainer({String? title, IconData? icon, Function? onTap, Color? textColor, Color? boxColor}) {
+settIngContainer(
+    {String? title,
+    IconData? icon,
+    Function? onTap,
+    Color? textColor,
+    Color? boxColor}) {
   return Container(
     padding: EdgeInsets.all(buttonPadding),
     margin: EdgeInsets.symmetric(vertical: buttonMargin),
-    decoration: BoxDecoration(borderRadius: BorderRadius.circular(borderRadius), color: boxColor),
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(borderRadius), color: boxColor),
     child: Row(
       children: [
-        Icon(icon, color: textColor,),
+        Icon(
+          icon,
+          color: textColor,
+        ),
         Space(buttonPadding),
-        Text(title!, style: TextStyle(color: textColor),)],
+        Text(
+          title!,
+          style: TextStyle(color: textColor),
+        )
+      ],
     ),
   ).onTap(onTap);
 }
@@ -151,14 +188,13 @@ settIngContainer({String? title, IconData? icon, Function? onTap, Color? textCol
 Widget toggleContainer(String value, ColorScheme colorScheme, bool isSelected) {
   return Container(
     constraints: BoxConstraints(
-      minWidth: (Get.width - appPadding*3) / 3 ,
+      minWidth: (Get.width - appPadding * 3) / 3,
     ),
     padding: EdgeInsets.all(1),
     margin: EdgeInsets.all(2),
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(circularRadius),
-        color: isSelected ? colorScheme.primary : transparent
-    ),
+        color: isSelected ? colorScheme.primary : transparent),
     child: Center(
       child: Text(value),
     ),
@@ -167,7 +203,10 @@ Widget toggleContainer(String value, ColorScheme colorScheme, bool isSelected) {
 
 ///OS별 스위치 버튼 디자인
 Switch customAdaptiveSwitch(
-    {required bool value, required Function(bool newValue) onChanged, Color? activeColor, Color? activeTrackColor}) {
+    {required bool value,
+    required Function(bool newValue) onChanged,
+    Color? activeColor,
+    Color? activeTrackColor}) {
   return Switch.adaptive(
     value: value,
     onChanged: onChanged,
@@ -179,37 +218,51 @@ Switch customAdaptiveSwitch(
 }
 
 ///앱 테마 다이얼로그(확인 버튼만 있을 수도 있고 버튼이 없을 수도 있음)
-void showAppDialog(String title, String middleText, {bool confirm=true, }) {
+void showAppDialog(
+  String title,
+  String middleText, {
+  bool confirm = true,
+}) {
   Get.defaultDialog(
     title: title,
     middleText: middleText,
     radius: borderRadius,
-    titlePadding: EdgeInsets.only(top: buttonPadding, left: buttonPadding, right: buttonPadding),
-    contentPadding: EdgeInsets.only(top: buttonPadding, left: buttonPadding, right: buttonPadding),
+    titlePadding: EdgeInsets.only(
+        top: buttonPadding, left: buttonPadding, right: buttonPadding),
+    contentPadding: EdgeInsets.only(
+        top: buttonPadding, left: buttonPadding, right: buttonPadding),
     confirm: confirm
         ? Column(
-          mainAxisSize: MainAxisSize.min,
-
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            TextButton(
-                onPressed: () => Get.back(),
-                child: Text('확인', style: TextStyle(fontWeight: FontWeight.bold, fontSize: textSizeMedium),)
-              ),
-          ],
-        )
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextButton(
+                  onPressed: () => Get.back(),
+                  child: Text(
+                    '확인',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: textSizeMedium),
+                  )),
+            ],
+          )
         : null,
-
   );
 }
+
 ///앱 테마 선택 다이얼로그 (확인과 취소 버튼이 존재)
-void showChoiceDialog(String title, String middleText,{void Function()? onConfirm}) {
+void showChoiceDialog(String title, String middleText,
+    {void Function()? onConfirm}) {
   Get.defaultDialog(
     title: title,
     middleText: middleText,
     radius: borderRadius,
-    titlePadding: EdgeInsets.only(top: buttonPadding, left: buttonPadding, right: buttonPadding),
-    contentPadding: EdgeInsets.only(top: buttonPadding, left: buttonPadding, right: buttonPadding, bottom: buttonPadding),
+    titlePadding: EdgeInsets.only(
+        top: buttonPadding, left: buttonPadding, right: buttonPadding),
+    contentPadding: EdgeInsets.only(
+        top: buttonPadding,
+        left: buttonPadding,
+        right: buttonPadding,
+        bottom: buttonPadding),
     onConfirm: onConfirm,
     textConfirm: '확인',
     textCancel: '취소',
@@ -218,35 +271,40 @@ void showChoiceDialog(String title, String middleText,{void Function()? onConfir
 
 ///pending 다이얼로그
 void showPendingDialog() {
-
   Get.dialog(
-    barrierDismissible: false,
-    Center(
-      child: SizedBox(
-        width: 100,
-        child: AlertDialog(
-          backgroundColor: transparent,
-          titlePadding: EdgeInsets.symmetric(vertical: buttonPadding),
-          contentPadding: EdgeInsets.symmetric(vertical: buttonPadding),
-          insetPadding: EdgeInsets.zero,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius)),
-          title: GetPlatform.isIOS ? CupertinoActivityIndicator(color: white,radius: 20,) : Center(child: CircularProgressIndicator()),
-          // content: Column(
-          //   mainAxisSize: MainAxisSize.min,
-          //   crossAxisAlignment: CrossAxisAlignment.center,
-          //   children: const [
-          //     Text('잠시만 기다려 주세요', style: TextStyle(color: white),),
-          //   ],
-          // ),
+      barrierDismissible: false,
+      Center(
+        child: SizedBox(
+          width: 100,
+          child: AlertDialog(
+            backgroundColor: transparent,
+            titlePadding: EdgeInsets.symmetric(vertical: buttonPadding),
+            contentPadding: EdgeInsets.symmetric(vertical: buttonPadding),
+            insetPadding: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(borderRadius)),
+            title: GetPlatform.isIOS
+                ? CupertinoActivityIndicator(
+                    color: white,
+                    radius: 20,
+                  )
+                : Center(child: CircularProgressIndicator()),
+            // content: Column(
+            //   mainAxisSize: MainAxisSize.min,
+            //   crossAxisAlignment: CrossAxisAlignment.center,
+            //   children: const [
+            //     Text('잠시만 기다려 주세요', style: TextStyle(color: white),),
+            //   ],
+            // ),
+          ),
         ),
-      ),
-    )
-  );
+      ));
 }
 
 ///앱 테마 스낵바
 ///awesome_snackbar 고려
-void showAppSnackBar(String title, String message, {SnackPosition? snackPosition}) {
+void showAppSnackBar(String title, String message,
+    {SnackPosition? snackPosition}) {
   Get.closeCurrentSnackbar();
   Get.snackbar(
     title,
@@ -263,28 +321,33 @@ void showAppSnackBar(String title, String message, {SnackPosition? snackPosition
 
 ///안드로이드에서 사용하는 빈 화면
 Widget appEmptyWidget(String image, String? title, String? text) {
-  return LayoutBuilder(
-      builder: (context, constraints) {
-        return SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
-          child: SizedBox(
-            height: constraints.maxHeight,
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(image, width: 200,),
-                  Space(buttonMargin),
-                  Text(title??'', style: TextStyle(fontSize: textSizeLarge, fontWeight: FontWeight.bold),),
-                  Space(buttonMargin),
-                  Text(text??'',style: TextStyle(fontSize: textSizeMedium)),
-                ],
+  return LayoutBuilder(builder: (context, constraints) {
+    return SingleChildScrollView(
+      physics: AlwaysScrollableScrollPhysics(),
+      child: SizedBox(
+        height: constraints.maxHeight,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                image,
+                width: 200,
               ),
-            ),
+              Space(buttonMargin),
+              Text(
+                title ?? '',
+                style: TextStyle(
+                    fontSize: textSizeLarge, fontWeight: FontWeight.bold),
+              ),
+              Space(buttonMargin),
+              Text(text ?? '', style: TextStyle(fontSize: textSizeMedium)),
+            ],
           ),
-        );
-      }
-  );
+        ),
+      ),
+    );
+  });
 }
 
 ///플랫폼 별 refresh Indicator
@@ -296,7 +359,7 @@ class CustomRefreshIndicator extends StatelessWidget {
     required this.builder,
     this.emptyMessageTitle,
     this.emptyMessageBody,
-});
+  });
 
   final int itemCount;
   final Future<void> Function() onRefresh;
@@ -318,60 +381,69 @@ class CustomRefreshIndicator extends StatelessWidget {
             onRefresh: onRefresh,
           ),
           itemCount == 0
-          ?SliverFillRemaining(
-            child: Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(splashLogo, width: 200,),
-                  Space(buttonMargin),
-                  Text(emptyMessageTitle??"", style: TextStyle(fontSize: textSizeLarge, fontWeight: FontWeight.bold),),
-                  Space(buttonMargin),
-                  Text(emptyMessageBody??"",style: TextStyle(fontSize: textSizeMedium)),
-                ],
-              ),
-            ),
-          )
-          :SliverList(
-            delegate: SliverChildBuilderDelegate(
-              builder,
-              childCount: itemCount,
-            ),
-          ),
-
+              ? SliverFillRemaining(
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          appIcon,
+                          width: 200,
+                        ),
+                        Space(buttonMargin),
+                        Text(
+                          emptyMessageTitle ?? "",
+                          style: TextStyle(
+                              fontSize: textSizeLarge,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Space(buttonMargin),
+                        Text(emptyMessageBody ?? "",
+                            style: TextStyle(fontSize: textSizeMedium)),
+                      ],
+                    ),
+                  ),
+                )
+              : SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    builder,
+                    childCount: itemCount,
+                  ),
+                ),
         ],
       );
     } else {
       return RefreshIndicator(
         onRefresh: onRefresh,
         child: itemCount != 0
-            ?ListView.builder(
-          itemCount: itemCount,
-          physics: AlwaysScrollableScrollPhysics(
-            // parent: BouncingScrollPhysics()
-          ),
-          itemBuilder: builder,
-        )
-        :appEmptyWidget(splashLogo, emptyMessageTitle, emptyMessageBody),
+            ? ListView.builder(
+                itemCount: itemCount,
+                physics: AlwaysScrollableScrollPhysics(
+                    // parent: BouncingScrollPhysics()
+                    ),
+                itemBuilder: builder,
+              )
+            : appEmptyWidget(appIcon, emptyMessageTitle, emptyMessageBody),
       );
     }
   }
-
 }
 
 ///인앱결제 바텀 모달 시트
 void purchaseBottomSheet(BuildContext context, Widget widget) {
   Get.bottomSheet(
-    SizedBox(
-      height: Get.height * 0.8,
-      child: widget,
-    ),
-    isDismissible: false,
-    isScrollControlled: true,
-    shape: RoundedRectangleBorder(borderRadius: radiusOnly(topLeft: borderRadius, topRight: borderRadius)),
-    backgroundColor: Get.isDarkMode ? Color.fromARGB(255, 48, 48, 48) :Colors.white
-  );
+      SizedBox(
+        height: Get.height * 0.8,
+        child: widget,
+      ),
+      isDismissible: false,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+          borderRadius:
+              radiusOnly(topLeft: borderRadius, topRight: borderRadius)),
+      backgroundColor:
+          Get.isDarkMode ? Color.fromARGB(255, 48, 48, 48) : Colors.white);
 }
 
 //

@@ -27,10 +27,10 @@ class _InviteScreenState extends State<InviteScreen> {
     setState(() {
       isProcessing = true;
     });
-    String inviteLink = await DynamicLinks().getShortLink('invite','id');
+    String inviteLink = await DynamicLinks().getShortLink('invite', 'id');
     Clipboard.setData(ClipboardData(text: inviteLink))
-    .then((value) => showAppSnackBar('링크가 복사되었습니다.', inviteLink))
-    .then((value) => print(inviteLink));
+        .then((value) => showAppSnackBar('링크가 복사되었습니다.', inviteLink))
+        .then((value) => print(inviteLink));
     await Future.delayed(Duration(seconds: buttonWaitDuration));
     setState(() {
       isProcessing = false;
@@ -43,14 +43,15 @@ class _InviteScreenState extends State<InviteScreen> {
     setState(() {
       isProcessing = true;
     });
-    String inviteLink = await DynamicLinks().getShortLink('invite','id');
+    String inviteLink = await DynamicLinks().getShortLink('invite', 'id');
     print(inviteLink);
-    if(GetPlatform.isIOS){
+    if (GetPlatform.isIOS) {
       //pad에서 포지션 잡아줘야함
 
-      await Share.share(inviteLink, subject: "Wink\n$inviteLink",
+      await Share.share(inviteLink,
+          subject: "Wink\n$inviteLink",
           sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
-    }else{
+    } else {
       await Share.share(inviteLink, subject: "Wink\n$inviteLink");
     }
     await Future.delayed(Duration(seconds: 2));
@@ -90,20 +91,30 @@ class _InviteScreenState extends State<InviteScreen> {
                 ),
                 Space(buttonMargin),
                 Image.asset(
-                  splashLogo,
-                  width: Get.width/2,
+                  appIcon,
+                  width: Get.width / 2,
                 ),
                 Space(buttonMargin),
-                Text("초대한 사람 수: $invitedCount",),
-                Space(buttonMargin),
-                ElevatedButton(
-                  onPressed: isProcessing ? (){} : copyLink,
-                  child: Text("링크 복사하기",),
+                Text(
+                  "초대한 사람 수: $invitedCount",
                 ),
                 Space(buttonMargin),
                 ElevatedButton(
-                  onPressed: isProcessing ? (){} : (){inviteFriends(context);},
-                  child: Text("친구 초대하기",),
+                  onPressed: isProcessing ? () {} : copyLink,
+                  child: Text(
+                    "링크 복사하기",
+                  ),
+                ),
+                Space(buttonMargin),
+                ElevatedButton(
+                  onPressed: isProcessing
+                      ? () {}
+                      : () {
+                          inviteFriends(context);
+                        },
+                  child: Text(
+                    "친구 초대하기",
+                  ),
                 ),
               ],
             ),
@@ -113,4 +124,3 @@ class _InviteScreenState extends State<InviteScreen> {
     );
   }
 }
-

@@ -43,7 +43,6 @@ class _SignUpPageState extends State<SignUpPage> {
 
   bool? checkBoxValue = false;
 
-
   @override
   void dispose() {
     _passController.dispose();
@@ -74,15 +73,13 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     TextTheme textTheme = Theme.of(context).textTheme.apply(
-      bodyColor: colorScheme.onPrimaryContainer,
-      displayColor: colorScheme.onPrimaryContainer,
-    );
+          bodyColor: colorScheme.onPrimaryContainer,
+          displayColor: colorScheme.onPrimaryContainer,
+        );
 
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
@@ -102,17 +99,24 @@ class _SignUpPageState extends State<SignUpPage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Space(AppBar().preferredSize.height),
-                    Image.asset(splashLogo,height: Get.statusBarHeight,),
-                    Space(buttonMargin*4),
+                    Image.asset(
+                      appIcon,
+                      height: Get.statusBarHeight,
+                    ),
+                    Space(buttonMargin * 4),
                     Center(
                       child: Text(
                         "WINK 회원가입",
-                        style: TextStyle(fontSize: mainTitleTextSize, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: mainTitleTextSize,
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
-                    IconButton(onPressed: () => Get.changeTheme(Get.isDarkMode? lightTheme : darkTheme), icon: Icon(Icons.change_circle_rounded)),
+                    IconButton(
+                        onPressed: () => Get.changeTheme(
+                            Get.isDarkMode ? lightTheme : darkTheme),
+                        icon: Icon(Icons.change_circle_rounded)),
                     Space(60),
-
                     Form(
                       key: _signUpFormKey,
                       child: Column(
@@ -124,7 +128,9 @@ class _SignUpPageState extends State<SignUpPage> {
                             controller: controller.userName,
                             keyboardType: TextInputType.name,
                             textInputAction: TextInputAction.done,
-                            inputFormatters: [LengthLimitingTextInputFormatter(15)],
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(15)
+                            ],
                             style: TextStyle(fontSize: 20),
                             validator: (text) {
                               if (text == null || text.isEmpty) {
@@ -132,7 +138,9 @@ class _SignUpPageState extends State<SignUpPage> {
                               }
                               return null;
                             },
-                            decoration: commonInputDecoration(hintText: "15자 이내로 입력해주세요",prefixIcon: Icon(Icons.person_outline_rounded)),
+                            decoration: commonInputDecoration(
+                                hintText: "15자 이내로 입력해주세요",
+                                prefixIcon: Icon(Icons.person_outline_rounded)),
                           ),
                           Space(buttonMargin),
                           Text('성별을 선택해주세요'),
@@ -142,28 +150,33 @@ class _SignUpPageState extends State<SignUpPage> {
                               padding: EdgeInsets.zero,
                               decoration: BoxDecoration(
                                 color: colorScheme.secondaryContainer,
-                                border: Border.all(color: colorScheme.secondaryContainer),
-                                borderRadius: BorderRadius.all(Radius.circular(circularRadius)),
+                                border: Border.all(
+                                    color: colorScheme.secondaryContainer),
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(circularRadius)),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.grey.withOpacity(0),
                                     spreadRadius: 1,
                                     blurRadius: 1,
-                                    offset: Offset(0, 2), // changes position of shadow
+                                    offset: Offset(
+                                        0, 2), // changes position of shadow
                                   ),
                                 ],
                               ),
                               child: ToggleButtons(
-                                onPressed: (index){
+                                onPressed: (index) {
                                   setState(() {
-                                    for (int i = 0; i < _selectedMenu.length; i++) {
+                                    for (int i = 0;
+                                        i < _selectedMenu.length;
+                                        i++) {
                                       _selectedMenu[i] = i == index;
                                     }
-                                    if(index == 0){
+                                    if (index == 0) {
                                       controller.gender = gender[0].obs;
-                                    } else if(index == 1){
+                                    } else if (index == 1) {
                                       controller.gender = gender[1].obs;
-                                    } else{
+                                    } else {
                                       controller.gender = gender[2].obs;
                                     }
                                   });
@@ -173,11 +186,11 @@ class _SignUpPageState extends State<SignUpPage> {
                                 selectedColor: colorScheme.onPrimary,
                                 fillColor: transparent,
                                 color: colorScheme.onPrimaryContainer,
-
                                 isSelected: _selectedMenu,
                                 children: [
-                                  for(int i = 0; i < gender.length; i++)
-                                    toggleContainer(gender[i], colorScheme, _selectedMenu[i]),
+                                  for (int i = 0; i < gender.length; i++)
+                                    toggleContainer(gender[i], colorScheme,
+                                        _selectedMenu[i]),
                                 ],
                               ),
                             ),
@@ -277,7 +290,9 @@ class _SignUpPageState extends State<SignUpPage> {
                           Space(buttonMargin),
                           CheckboxListTile(
                             contentPadding: EdgeInsets.all(0),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius)),
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(borderRadius)),
                             checkColor: colorScheme.onPrimary,
                             activeColor: colorScheme.primary,
                             title: Text("이용약관 동의", style: textTheme.bodyLarge),
@@ -305,7 +320,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                     print(controller.gender);
                                     if (checkBoxValue == true) {
                                       print('signUp check success');
-                                      Get.to(() => VerificationScreen(), arguments: 'signUp');
+                                      Get.to(() => VerificationScreen(),
+                                          arguments: 'signUp');
                                       // controller.registerUser(
                                       //   controller.email.text.trim(),
                                       //   controller.password.text.trim(),
@@ -327,20 +343,27 @@ class _SignUpPageState extends State<SignUpPage> {
                                   }
                                 }
                               },
-                              child: Text("전화번호 인증하기",),
+                              child: Text(
+                                "전화번호 인증하기",
+                              ),
                             ),
                           ),
-                          Space(buttonMargin*2),
+                          Space(buttonMargin * 2),
                           GestureDetector(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginPage()));
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text("이미 계정이 있으신가요?"),
                                 Space(4),
-                                Text('로그인', style: TextStyle(fontWeight: FontWeight.bold)),
+                                Text('로그인',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold)),
                               ],
                             ),
                           )

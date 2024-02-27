@@ -20,7 +20,12 @@ class SettingScreen extends StatefulWidget {
 
 class SettingScreenState extends State<SettingScreen> {
   List<String> title = ['General'.tr, 'Cache'.tr, 'Others'.tr];
-  List<String> generalSettings = ['Language Settings'.tr, 'Stream Quality', 'Notification Settings'.tr, 'Dark Mode'.tr];
+  List<String> generalSettings = [
+    'Language Settings'.tr,
+    // 'Stream Quality',
+    'Notification Settings'.tr,
+    'Dark Mode'.tr
+  ];
 
   bool mode = true;
   bool notifications = true;
@@ -28,13 +33,20 @@ class SettingScreenState extends State<SettingScreen> {
   bool enableCache = true;
   List<IconData> generalSettingsIconList = [
     Icons.translate_rounded,
-    Icons.wifi,
+    // Icons.wifi,
     Icons.notifications,
     Icons.change_circle_rounded
   ];
   List<String> cacheList = ['Enable Cache'.tr, 'Delete Cache'.tr];
-  List<IconData> leadingcatchIconList = [Icons.square_rounded, Icons.cleaning_services_rounded];
-  List<String> otherSetings = ['Privacy Policy'.tr, 'Terms of Use'.tr, '회원 탈퇴'.tr];
+  List<IconData> leadingcatchIconList = [
+    Icons.square_rounded,
+    Icons.cleaning_services_rounded
+  ];
+  List<String> otherSetings = [
+    'Privacy Policy'.tr,
+    'Terms of Use'.tr,
+    '회원 탈퇴'.tr
+  ];
   List<IconData> otherSetingsLeadingIcon = [
     Icons.privacy_tip,
     // Icons.notifications,
@@ -74,10 +86,12 @@ class SettingScreenState extends State<SettingScreen> {
                   children: [
                     Text(
                       title[0],
-                      style: boldTextStyle(size: textSizeNormal.toInt(), color: colorScheme.onPrimaryContainer),
+                      style: boldTextStyle(
+                          size: textSizeNormal.toInt(),
+                          color: colorScheme.onPrimaryContainer),
                     ),
                     Wrap(
-                      spacing: buttonMargin*2,
+                      spacing: buttonMargin * 2,
                       direction: Axis.vertical,
                       children: List.generate(generalSettings.length, (index) {
                         return generalSettingsComponent(index);
@@ -91,7 +105,9 @@ class SettingScreenState extends State<SettingScreen> {
                   children: [
                     Text(
                       title[1],
-                      style: boldTextStyle(size: textSizeNormal.toInt(), color: colorScheme.onPrimaryContainer),
+                      style: boldTextStyle(
+                          size: textSizeNormal.toInt(),
+                          color: colorScheme.onPrimaryContainer),
                     ),
                     // SizedBox(height: 14),
                     // Container(
@@ -111,7 +127,7 @@ class SettingScreenState extends State<SettingScreen> {
                     //   ],
                     // ),
                     Wrap(
-                      spacing: buttonMargin*2,
+                      spacing: buttonMargin * 2,
                       direction: Axis.vertical,
                       children: List.generate(cacheList.length, (index) {
                         return cacheSettings(index);
@@ -125,10 +141,12 @@ class SettingScreenState extends State<SettingScreen> {
                   children: [
                     Text(
                       title[2],
-                      style: boldTextStyle(size: textSizeNormal.toInt(), color: colorScheme.onPrimaryContainer),
+                      style: boldTextStyle(
+                          size: textSizeNormal.toInt(),
+                          color: colorScheme.onPrimaryContainer),
                     ),
                     Wrap(
-                      spacing: buttonMargin*2,
+                      spacing: buttonMargin * 2,
                       direction: Axis.vertical,
                       children: List.generate(otherSetings.length, (index) {
                         return otherSettings(index);
@@ -148,12 +166,12 @@ class SettingScreenState extends State<SettingScreen> {
     List trailingIcons = [
       Text(
         'Language'.tr,
-        style: secondaryTextStyle(color: Get.isDarkMode?black:white),
+        style: secondaryTextStyle(color: Get.isDarkMode ? black : white),
       ),
-      Text(
-        'Full HD',
-        style: secondaryTextStyle(color: Get.isDarkMode?black:white),
-      ),
+      // Text(
+      //   'Full HD',
+      //   style: secondaryTextStyle(color: Get.isDarkMode ? black : white),
+      // ),
       customAdaptiveSwitch(
         value: notifications,
         onChanged: (newValue) {
@@ -165,7 +183,7 @@ class SettingScreenState extends State<SettingScreen> {
         value: Get.isDarkMode,
         onChanged: (newValue) {
           // isDarkMode = !isDarkMode;
-          Get.changeTheme(Get.isDarkMode? lightTheme : darkTheme);
+          Get.changeTheme(Get.isDarkMode ? lightTheme : darkTheme);
           setState(() {});
         },
       ),
@@ -177,11 +195,10 @@ class SettingScreenState extends State<SettingScreen> {
             Get.to(() => LanguageSettingScreen());
             break;
         }
-
       },
       child: Container(
-        height: iconSizeSmall + 2*buttonPadding,
-        width: MediaQuery.of(context).size.width - appPadding*2,
+        height: iconSizeSmall + 2 * buttonPadding,
+        width: MediaQuery.of(context).size.width - appPadding * 2,
         padding: EdgeInsets.only(left: buttonPadding, right: buttonPadding),
         // padding: EdgeInsets.all(buttonPadding),
         decoration: BoxDecoration(
@@ -191,12 +208,14 @@ class SettingScreenState extends State<SettingScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Icon(generalSettingsIconList[index], color: Get.isDarkMode?black:white),
+            Icon(generalSettingsIconList[index],
+                color: Get.isDarkMode ? black : white),
             SizedBox(width: buttonPadding),
             Expanded(
               child: Text(
                 generalSettings[index],
-                style: primaryTextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                style: primaryTextStyle(
+                    color: Theme.of(context).colorScheme.onPrimary),
               ),
             ),
             SizedBox(
@@ -211,15 +230,14 @@ class SettingScreenState extends State<SettingScreen> {
   cacheSettings(int index) {
     return GestureDetector(
       onTap: () async {
-        if (index == 0){
-        }
+        if (index == 0) {}
         if (index == 1) {
           showAppSnackBar("캐시 데이터가 삭제됨", "123");
           // Get.snackbar("캐시 데이터가 삭제됨", "123",snackPosition: SnackPosition.BOTTOM);
         }
       },
       child: Container(
-          width: MediaQuery.of(context).size.width - appPadding*2,
+          width: MediaQuery.of(context).size.width - appPadding * 2,
           padding: EdgeInsets.all(buttonPadding),
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.primary,
@@ -230,24 +248,26 @@ class SettingScreenState extends State<SettingScreen> {
             children: [
               Icon(
                 leadingcatchIconList[index],
-                color: Get.isDarkMode?black:white,
+                color: Get.isDarkMode ? black : white,
               ),
               SizedBox(width: buttonPadding),
               Expanded(
                 child: Text(
                   cacheList[index],
-                  style: primaryTextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                  style: primaryTextStyle(
+                      color: Theme.of(context).colorScheme.onPrimary),
                 ),
               ),
               index == 0
-                  ? SizedBox(height: iconSizeSmall,
-                    child: customAdaptiveSwitch(
-                    value: enableCache,
-                    onChanged: (newvalue) {
-                      enableCache = !enableCache;
-                      setState(() {});
-                    }),
-                  )
+                  ? SizedBox(
+                      height: iconSizeSmall,
+                      child: customAdaptiveSwitch(
+                          value: enableCache,
+                          onChanged: (newvalue) {
+                            enableCache = !enableCache;
+                            setState(() {});
+                          }),
+                    )
                   : Offstage(),
             ],
           )),
@@ -261,16 +281,14 @@ class SettingScreenState extends State<SettingScreen> {
           case 2:
             //회원 탈퇴 액션
             // controller.deleteUser();
-            showChoiceDialog("회원 탈퇴", "정말로 회원 탈퇴하시겠습니까?", onConfirm: controller.deleteUser);
+            showChoiceDialog("회원 탈퇴", "정말로 회원 탈퇴하시겠습니까?",
+                onConfirm: controller.deleteUser);
             break;
-
         }
       },
       child: Container(
-          width: MediaQuery.of(context).size.width - appPadding*2,
-          padding: EdgeInsets.all(
-            buttonPadding
-          ),
+          width: MediaQuery.of(context).size.width - appPadding * 2,
+          padding: EdgeInsets.all(buttonPadding),
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.primary,
             borderRadius: BorderRadius.circular(borderRadius),
@@ -281,22 +299,26 @@ class SettingScreenState extends State<SettingScreen> {
             children: [
               Icon(
                 otherSetingsLeadingIcon[index],
-                  color: Get.isDarkMode?black:white,
+                color: Get.isDarkMode ? black : white,
               ),
               SizedBox(width: buttonPadding),
               Expanded(
                 child: Text(
                   otherSetings[index],
-                  style: primaryTextStyle(color: index==2 ? Colors.deepOrange : Theme.of(context).colorScheme.onPrimary),
+                  style: primaryTextStyle(
+                      color: index == 2
+                          ? Colors.deepOrange
+                          : Theme.of(context).colorScheme.onPrimary),
                 ),
               ),
-              Icon(Icons.arrow_forward_ios_rounded, color: Get.isDarkMode?black:white,)
+              Icon(
+                Icons.arrow_forward_ios_rounded,
+                color: Get.isDarkMode ? black : white,
+              )
             ],
           )),
     );
   }
-
-
 }
 
 ///언어 설정 화면
@@ -306,13 +328,21 @@ class LanguageSettingScreen extends StatefulWidget {
   @override
   State<LanguageSettingScreen> createState() => _LanguageSettingScreenState();
 }
-class _LanguageSettingScreenState extends State<LanguageSettingScreen> {
 
+class _LanguageSettingScreenState extends State<LanguageSettingScreen> {
   @override
   Widget build(BuildContext context) {
-    List<IconData> languageLeadingIcon = [Icons.language, Icons.language, Icons.language,];
+    List<IconData> languageLeadingIcon = [
+      Icons.language,
+      Icons.language,
+      Icons.language,
+    ];
     List<String> languageList = ['Korean'.tr, 'English'.tr, 'Japanese'.tr];
-    List<Locale> localeList = [Locale('ko_KR'), Locale('en_US'), Locale('ja_JP')];
+    List<Locale> localeList = [
+      Locale('ko_KR'),
+      Locale('en_US'),
+      Locale('ja_JP')
+    ];
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(
@@ -327,12 +357,16 @@ class _LanguageSettingScreenState extends State<LanguageSettingScreen> {
         actions: [
           GestureDetector(
             onTap: () {
-              Get.updateLocale(Get.deviceLocale?? const Locale('ko_KR'));
+              Get.updateLocale(Get.deviceLocale ?? const Locale('ko_KR'));
               Get.offAll(() => HomePage());
             },
             child: Padding(
               padding: EdgeInsets.only(right: buttonPadding),
-              child: Center(child: Text('Reset'.tr, style: primaryTextStyle(color: colorScheme.primary),)),
+              child: Center(
+                  child: Text(
+                'Reset'.tr,
+                style: primaryTextStyle(color: colorScheme.primary),
+              )),
             ),
           ),
         ],
@@ -342,46 +376,49 @@ class _LanguageSettingScreenState extends State<LanguageSettingScreen> {
         padding: EdgeInsets.symmetric(horizontal: appPadding),
         child: Center(
           child: ListView.builder(
-              itemCount: 3,
-              itemBuilder: (context, index) {
-                print(Get.locale);
-                return GestureDetector(
-                  onTap: () {
-                    Get.updateLocale(localeList[index]);
-                    Get.offAll(() => HomePage());
-                  },
-                  child: Container(
-                      margin: EdgeInsets.symmetric(vertical: buttonMargin),
-                      width: MediaQuery.of(context).size.width - appPadding*2,
-                      padding: EdgeInsets.all(
-                          buttonPadding
-                      ),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary,
-                        borderRadius: BorderRadius.circular(borderRadius),
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+            itemCount: 3,
+            itemBuilder: (context, index) {
+              print(Get.locale);
+              return GestureDetector(
+                onTap: () {
+                  Get.updateLocale(localeList[index]);
+                  Get.offAll(() => HomePage());
+                },
+                child: Container(
+                    margin: EdgeInsets.symmetric(vertical: buttonMargin),
+                    width: MediaQuery.of(context).size.width - appPadding * 2,
+                    padding: EdgeInsets.all(buttonPadding),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primary,
+                      borderRadius: BorderRadius.circular(borderRadius),
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Icon(
+                          languageLeadingIcon[index],
+                          color: Get.isDarkMode ? black : white,
+                        ),
+                        SizedBox(width: buttonPadding),
+                        Expanded(
+                          child: Text(
+                            languageList[index],
+                            // otherSetings[index],
+                            style:
+                                primaryTextStyle(color: colorScheme.onPrimary),
+                          ),
+                        ),
+                        if (Get.locale.toString() ==
+                            localeList[index].toString())
                           Icon(
-                            languageLeadingIcon[index],
-                            color: Get.isDarkMode?black:white,
-                          ),
-                          SizedBox(width: buttonPadding),
-                          Expanded(
-                            child: Text(
-                              languageList[index],
-                              // otherSetings[index],
-                              style: primaryTextStyle(color: colorScheme.onPrimary),
-                            ),
-                          ),
-                          if (Get.locale.toString() == localeList[index].toString())
-                          Icon(Icons.check, color: Get.isDarkMode?black:white,)
-                        ],
-                      )),
-                );
-              },
+                            Icons.check,
+                            color: Get.isDarkMode ? black : white,
+                          )
+                      ],
+                    )),
+              );
+            },
           ),
         ),
       ),

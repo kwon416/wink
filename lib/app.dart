@@ -6,12 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:wink/authentication/authentication.dart';
+import 'package:wink/home/home.dart';
 import 'package:wink/home/view/notification_screen.dart';
 import 'package:wink/login/view/splash_page.dart';
 import 'package:wink/theme/theme.dart';
 // import 'package:wink/home/home.dart';
 // import 'package:wink/login/login.dart';
 import 'package:wink/utils/languages.dart';
+
+import 'home/view/editprofile_screen.dart';
+import 'home/view/home_page.dart';
 
 
 
@@ -102,8 +106,9 @@ class _AppViewState extends State<AppView> {
           home: SplashPage(),
           onGenerateRoute: (_) => SplashPage.route(),
           getPages: [
-            GetPage(name: '/', page: () => NotificationScreen()),
+            GetPage(name: '/', page: () => HomePage()),
             GetPage(name: '/notification', page: () => NotificationScreen()),
+            GetPage(name: '/edit', page: () => EditProfileScreen()),
           ],
           navigatorKey: _navigatorKey,
 

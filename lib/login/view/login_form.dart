@@ -25,9 +25,9 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     TextTheme textTheme = Theme.of(context).textTheme.apply(
-      bodyColor: colorScheme.onPrimaryContainer,
-      displayColor: colorScheme.onPrimaryContainer,
-    );
+          bodyColor: colorScheme.onPrimaryContainer,
+          displayColor: colorScheme.onPrimaryContainer,
+        );
 
     return Form(
       key: _formKey,
@@ -40,11 +40,14 @@ class _LoginFormState extends State<LoginForm> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Space(60),
-              Text("WINK", style: textTheme.displayMedium,),
+              Text(
+                "WINK",
+                style: textTheme.displayMedium,
+              ),
               Space(buttonMargin),
               // Text("Please Login to your account", style: textTheme.bodyLarge,),
               Space(buttonMargin),
-              Image.asset(splashLogo, width: Get.height*0.3, fit: BoxFit.cover),
+              Image.asset(appIcon, width: Get.height * 0.3, fit: BoxFit.cover),
             ],
           ),
           Space(70),
@@ -102,7 +105,9 @@ class _LoginFormState extends State<LoginForm> {
               // print('로그인 실패');
               Get.to(() => VerificationScreen(), arguments: 'logIn');
             },
-            child: Text('기존 회원 로그인',),
+            child: Text(
+              '로그인',
+            ),
           ),
           // const Padding(padding: EdgeInsets.all(12)),
           // ElevatedButton(
@@ -120,20 +125,25 @@ class _LoginFormState extends State<LoginForm> {
           //   ),
           // ),
           Space(appPadding),
-          _LoginButton(),
-          Space(appPadding),
-          Divider(thickness: 1,),
+          // _LoginButton(),
+          // Space(appPadding),
+          Divider(
+            thickness: 1,
+          ),
           Space(appPadding),
           GestureDetector(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpPage()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SignUpPage()));
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("계정이 아직 없으신가요?", style: TextStyle(fontSize: 16)),
                 Space(4),
-                Text('회원가입', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                Text('회원가입',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
               ],
             ),
           ),
@@ -192,11 +202,13 @@ class _LoginButton extends StatelessWidget {
     // ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     return ElevatedButton(
-            key: const Key('loginForm_continue_raisedButton'),
-            onPressed: () {
-                controller.loginEmailUser('admin@google.com', '123456');
-              },
-      child: Text('어드민 로그인',),
+      key: const Key('loginForm_continue_raisedButton'),
+      onPressed: () {
+        controller.loginEmailUser('admin@google.com', '123456');
+      },
+      child: Text(
+        '어드민 로그인',
+      ),
     );
   }
 }

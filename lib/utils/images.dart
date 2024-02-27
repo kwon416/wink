@@ -34,4 +34,5 @@ const String freeCharge = "assets/images/freeCharge.png";
 const String olaMoney = "assets/images/olaMoney.png";
 
 const String splashLogo = "assets/images/splash_logo.png";
+const String appIcon = "assets/icons/launcher_icon-removebg.png";
 const String loading = "assets/images/placeholder.jpg";

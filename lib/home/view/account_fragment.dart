@@ -27,166 +27,181 @@ class AccountFragment extends StatelessWidget {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     // final LoginController l = Get.put(LoginController());
-    return GetBuilder<MembershipController>(
-      builder: (controller) {
-        return LayoutBuilder(
-          builder: (context, constraints) {
-            // final width = constraints.maxWidth;
-            // final height = constraints.maxHeight;
-            // final ratio = width / height;
-            return Scaffold(
-              appBar: AppBar(
-                // iconTheme: IconThemeData(color: Get.isDarkMode ? Colors.white : Colors.black),
-                backgroundColor: colorScheme.primaryContainer,
-                title: Text('Profile'.tr),
-                actions: [
-                  GestureDetector(
-                    onTap: () {
-                      purchaseBottomSheet(context, PurchaseScreen());
-                    },
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Image.asset(icHeart, height: iconSizeLarge),
-                        Text(' ${controller.userData?.coin}  ', style: boldTextStyle(color: colorScheme.onPrimaryContainer)),
-                      ],
-                    ),
-                  ),
+    return GetBuilder<MembershipController>(builder: (controller) {
+      return Scaffold(
+        appBar: AppBar(
+          // iconTheme: IconThemeData(color: Get.isDarkMode ? Colors.white : Colors.black),
+          backgroundColor: colorScheme.primaryContainer,
+          title: Text('Profile'.tr),
+          actions: [
+            GestureDetector(
+              onTap: () {
+                purchaseBottomSheet(context, PurchaseScreen());
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.asset(icHeart, height: iconSizeLarge),
+                  Text(' ${controller.userData?.coin ?? ''}  ',
+                      style:
+                          boldTextStyle(color: colorScheme.onPrimaryContainer)),
                 ],
               ),
-              body: Center(
-                child: Stack(
-                  children: [
-                    //회색 배경
-                    Container(width: Get.width, color: Colors.black12,),
-                    //아이콘? 미사용
-                    Container(
-                      alignment: Alignment.topRight,
-                      margin: EdgeInsets.only(top: 40, right: 16),
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.close, color: white, size: 30),
-                      ),
-                    ),
-                    //버튼 리스트
-                    SingleChildScrollView(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(appPadding),
-                            decoration: boxDecorationWithShadow(
-                              borderRadius: BorderRadius.circular(borderRadius),
-                              backgroundColor: transparent,
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                CircleAvatar(backgroundImage: AssetImage(splashLogo), radius: 70,backgroundColor: colorScheme.primary),
-                                Space(buttonMargin),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text(controller.userData?.userName, style: boldTextStyle(color: colorScheme.onPrimaryContainer)),
-                                    Space(buttonMargin),
-                                    Text(controller.userData?.phoneNo, style: primaryTextStyle(color: colorScheme.onPrimaryContainer)),
-                                    Space(buttonMargin),
-                                    Text(controller.userData?.uid, style: secondaryTextStyle(color: colorScheme.onPrimaryContainer)),
-                                  ],
-                                ).expand()
-                              ],
-                            ),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(topLeft: Radius.circular(borderRadius), topRight: Radius.circular(borderRadius)),
-                              color: colorScheme.primaryContainer,
-                            ),
-                            padding: EdgeInsets.symmetric(vertical: appPadding, horizontal: appPadding),
-                            width: Get.width,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                settIngContainer(
-                                  icon: Icons.edit,
-                                  title: '프로필 수정',
-                                  boxColor: colorScheme.primary,
-                                  textColor: colorScheme.onPrimary,
-                                  onTap: () {
-                                    Get.to(() => (EditProfileScreen()));
-                                    // SHEditProfileScreen().launch(
-                                    //   context,
-                                    //   pageRouteAnimation: PageRouteAnimation.SlideBottomTop,
-                                    // );
-                                  },
-                                ),
-                                settIngContainer(
-                                  icon: Icons.person,
-                                  title: '친구 초대',
-                                  boxColor: colorScheme.primary,
-                                  textColor: colorScheme.onPrimary,
-                                  onTap: () {
-                                    // controller.getCurrentUser(l.getUser().value.uid);
-                                    Get.to(() => InviteScreen());
-                                  },
-                                ),
-                                settIngContainer(
-                                  icon: Icons.settings,
-                                  title: 'Settings'.tr,
-                                  boxColor: colorScheme.primary,
-                                  textColor: colorScheme.onPrimary,
-                                  onTap: () {
-
-                                    Get.to(() => SettingScreen());
-
-                                  },
-                                ),
-                                Space(buttonMargin*2),
-                                settIngContainer(
-                                  icon: Icons.chat,
-                                  title: 'Terms of Use'.tr,
-                                  boxColor: colorScheme.primary,
-                                  textColor: colorScheme.onPrimary,
-                                  onTap: () {
-                                    // showAppDialog('123', 'middleText');
-                                    Get.to(() => InAppWebViewScreen());
-                                  }
-                                ),
-                                settIngContainer(
-                                  icon: Icons.send,
-                                  title: 'Contact Us'.tr,
-                                  boxColor: colorScheme.primary,
-                                  textColor: colorScheme.onPrimary,
-                                  onTap: () {
-                                    Get.to(() => Other());
-                                  }
-                                ),
-                                Space(buttonMargin*2),
-                                settIngContainer(
-                                  icon: Icons.logout,
-                                  title: '로그아웃',
-                                  boxColor: colorScheme.primary,
-                                  textColor: Colors.deepOrange,
-                                  onTap: () {
-                                      LoginController().logOutUser();
-                                  },
-                                ),
-                                Row(children: [Text('v', style: primaryTextStyle(color: colorScheme.onPrimaryContainer),), VersionInfoWidget(textStyle: primaryTextStyle(color: colorScheme.onPrimaryContainer)),],).paddingLeft(16),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
+            ),
+          ],
+        ),
+        body: Center(
+          child: Stack(
+            children: [
+              //회색 배경
+              Container(
+                width: Get.width,
+                color: Colors.black12,
+              ),
+              //아이콘? 미사용
+              Container(
+                alignment: Alignment.topRight,
+                margin: EdgeInsets.only(top: 40, right: 16),
+                child: IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.close, color: white, size: 30),
                 ),
               ),
-            );
-          }
-        );
-      }
-    );
+              //버튼 리스트
+              SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(appPadding),
+                      decoration: boxDecorationWithShadow(
+                        borderRadius: BorderRadius.circular(borderRadius),
+                        backgroundColor: transparent,
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          CircleAvatar(
+                              backgroundImage: AssetImage(appIcon),
+                              radius: 70,
+                              backgroundColor: colorScheme.primary),
+                          Space(buttonMargin),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(controller.userData?.userName ?? '',
+                                  style: boldTextStyle(
+                                      color: colorScheme.onPrimaryContainer)),
+                              Space(buttonMargin),
+                              Text(controller.userData?.phoneNo ?? '',
+                                  style: primaryTextStyle(
+                                      color: colorScheme.onPrimaryContainer)),
+                              Space(buttonMargin),
+                              Text(controller.userData?.uid ?? '',
+                                  style: secondaryTextStyle(
+                                      color: colorScheme.onPrimaryContainer)),
+                            ],
+                          ).expand()
+                        ],
+                      ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(borderRadius),
+                            topRight: Radius.circular(borderRadius)),
+                        color: colorScheme.primaryContainer,
+                      ),
+                      padding: EdgeInsets.symmetric(
+                          vertical: appPadding, horizontal: appPadding),
+                      width: Get.width,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          settIngContainer(
+                            icon: Icons.edit,
+                            title: '프로필 수정',
+                            boxColor: colorScheme.primary,
+                            textColor: colorScheme.onPrimary,
+                            onTap: () {
+                              Get.to(() => (EditProfileScreen()));
+                              // SHEditProfileScreen().launch(
+                              //   context,
+                              //   pageRouteAnimation: PageRouteAnimation.SlideBottomTop,
+                              // );
+                            },
+                          ),
+                          settIngContainer(
+                            icon: Icons.person,
+                            title: '친구 초대',
+                            boxColor: colorScheme.primary,
+                            textColor: colorScheme.onPrimary,
+                            onTap: () {
+                              // controller.getCurrentUser(l.getUser().value.uid);
+                              Get.to(() => InviteScreen());
+                            },
+                          ),
+                          settIngContainer(
+                            icon: Icons.settings,
+                            title: 'Settings'.tr,
+                            boxColor: colorScheme.primary,
+                            textColor: colorScheme.onPrimary,
+                            onTap: () {
+                              Get.to(() => SettingScreen());
+                            },
+                          ),
+                          Space(buttonMargin * 2),
+                          settIngContainer(
+                              icon: Icons.chat,
+                              title: 'Terms of Use'.tr,
+                              boxColor: colorScheme.primary,
+                              textColor: colorScheme.onPrimary,
+                              onTap: () {
+                                // showAppDialog('123', 'middleText');
+                                Get.to(() => InAppWebViewScreen());
+                              }),
+                          settIngContainer(
+                              icon: Icons.send,
+                              title: 'Contact Us'.tr,
+                              boxColor: colorScheme.primary,
+                              textColor: colorScheme.onPrimary,
+                              onTap: () {
+                                Get.to(() => Other());
+                              }),
+                          Space(buttonMargin * 2),
+                          settIngContainer(
+                            icon: Icons.logout,
+                            title: '로그아웃',
+                            boxColor: colorScheme.primary,
+                            textColor: Colors.deepOrange,
+                            onTap: () {
+                              LoginController().logOutUser();
+                            },
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                'v',
+                                style: primaryTextStyle(
+                                    color: colorScheme.onPrimaryContainer),
+                              ),
+                              VersionInfoWidget(
+                                  textStyle: primaryTextStyle(
+                                      color: colorScheme.onPrimaryContainer)),
+                            ],
+                          ).paddingLeft(16),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      );
+    });
   }
 }
 
@@ -200,13 +215,13 @@ class Other extends GetView<MembershipController> {
     LoginController l = Get.put(LoginController());
 
     BannerAd bannerAd = BannerAd(
-        size: AdSize.banner,
-        adUnitId: AdHelper.bannerAdUnitId,
-        listener: BannerAdListener(
-          onAdFailedToLoad: (Ad ad, LoadAdError error) {},
-          onAdLoaded: (_) {},
-        ),
-        request: AdRequest(),
+      size: AdSize.banner,
+      adUnitId: AdHelper.bannerAdUnitId,
+      listener: BannerAdListener(
+        onAdFailedToLoad: (Ad ad, LoadAdError error) {},
+        onAdLoaded: (_) {},
+      ),
+      request: AdRequest(),
     )..load();
 
     return Scaffold(
@@ -217,7 +232,8 @@ class Other extends GetView<MembershipController> {
           onPressed: () {
             Get.back();
           },
-        ),),
+        ),
+      ),
       backgroundColor: colorScheme.primaryContainer,
       body: SingleChildScrollView(
         physics: AlwaysScrollableScrollPhysics(),
@@ -229,15 +245,20 @@ class Other extends GetView<MembershipController> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 SizedBox(
-                  // height: (Get.width-(appPadding*2)) * 0.15625,
-                  width: 320,
-                  height: 50,
-                  child: AdWidget(ad: bannerAd)
+                    // height: (Get.width-(appPadding*2)) * 0.15625,
+                    width: 320,
+                    height: 50,
+                    child: AdWidget(ad: bannerAd)),
+                Text(
+                  'auth user instance',
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Text('auth user instance', style: TextStyle(fontWeight: FontWeight.bold),),
                 Text(l.getUser().toString()),
                 Space(20),
-                Text('User Data From Realtime DB From firebase', style: TextStyle(fontWeight: FontWeight.bold),),
+                Text(
+                  'User Data From Realtime DB From firebase',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
                 Text('get userName : ${controller.userData?.userName}'),
                 Text('get uid : ${controller.userData?.uid}'),
                 Text('get fcmToken : ${controller.userData?.fcmToken}'),
@@ -245,7 +266,6 @@ class Other extends GetView<MembershipController> {
                 Text('get gender : ${controller.userData?.gender}'),
                 Text('get coin : ${controller.userData?.coin}'),
                 Text('get winkData : ${controller.userData?.wink}'),
-
                 Space(buttonMargin),
                 SDButton(
                   textContent: '새로고침',
@@ -268,4 +288,3 @@ class Other extends GetView<MembershipController> {
     );
   }
 }
-

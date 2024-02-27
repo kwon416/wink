@@ -3,24 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wink/provider/sample_provider.dart';
 
-
 import 'package:wink/repository/database_repository/database_repository.dart';
 
 import '../provider/wink_list_provider.dart';
 import '../provider/wink_provider.dart';
-
 
 class MembershipController extends GetxController {
   static MembershipController get instance => Get.find();
   final WinkProvider winkProvider = Get.find();
   final WinkListProvider winkListProvider = Get.find();
 
-
-
   ///유저 데이터
   ///Map<String, dynamic>
   var userData;
-  late String uid;
+  String uid = '';
+
   ///전화번호 로그인 변수
   String verificationId = '';
   int? resendToken;
@@ -28,15 +25,15 @@ class MembershipController extends GetxController {
     verificationId = s;
     update();
   }
+
   setResendToken(int? s) {
     resendToken = s;
     update();
   }
 
   ///입력 컨트롤
-  final winkToInput =TextEditingController();
-  final userNameController =TextEditingController();
-
+  final winkToInput = TextEditingController();
+  final userNameController = TextEditingController();
 
   void generateAccessToken() {
     winkProvider.getAuthToken().then((result) {
@@ -44,14 +41,15 @@ class MembershipController extends GetxController {
       print(data.toString());
     });
   }
+
   ///미사용
   void saveUser() {
     Map<String, dynamic> body = {"key": "value"};
     winkProvider.postUserSave(body).then((value) => print(value.body));
   }
 
-
-  void createEmailUser(Rx<User?> rxUser, String email, String password, String userName, String phoneNumber) {
+  void createEmailUser(Rx<User?> rxUser, String email, String password,
+      String userName, String phoneNumber) {
     // final user = UserData(
     //   gender: rxUser.value?.email ?? email,
     //   uid: rxUser.value!.uid,
@@ -62,16 +60,18 @@ class MembershipController extends GetxController {
     // );
     // DatabaseRepository.instance.createUser(user);
   }
+
   ///현재 uid 값으로 db에서 유저데이터 가져오기
   Future<bool> getCurrentUser(String uid) async {
     this.uid = uid;
     print('run getCurrentUser uid: $uid');
-    userData  =  await DatabaseRepository.instance.readUser(uid);
+    userData = await DatabaseRepository.instance.readUser(uid);
     // Future.delayed(Duration.zero);
     update();
     print('End run getCurrentUser');
     return Future.value(true);
   }
+
   ///fcm Token 업데이트
   Future<void> updateFcmToken(String uid, String fcmToken) async {
     print("start FCM Token update");
@@ -81,15 +81,17 @@ class MembershipController extends GetxController {
   }
 
   ///유저 정보 업데이트(성별, 이름, 윙크)
-  Future<void> updateUser(String uid, {String? gender, String? userName, String? winkTo}) async {
+  Future<void> updateUser(String uid,
+      {String? gender, String? userName, String? winkTo}) async {
     final Map<String, dynamic> data = {};
-    if (gender != null) data.addAll({"gender" : gender});
-    if (userName != null) data.addAll({"userName" : userName});
-    if (winkTo != null) data.addAll({"wink/winkTo" : winkTo});
+    if (gender != null) data.addAll({"gender": gender});
+    if (userName != null) data.addAll({"userName": userName});
+    if (winkTo != null) data.addAll({"wink/winkTo": winkTo});
 
     await DatabaseRepository.instance.updateUser(uid, data);
     await getCurrentUser(uid);
   }
+
   ///코인 추가
   Future<void> addCoin({int addCoin = 1}) async {
     final int coin = userData.coin;

@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:wink/controller/fcm_controller.dart';
 import 'package:wink/controller/membership_controller.dart';
 import 'package:wink/home/home.dart';
 import 'package:wink/main.dart';
@@ -35,65 +36,6 @@ class _HomePageState extends State<HomePage> {
   ];
 
   final MembershipController m = Get.put(MembershipController());
-  // final LoginController l = Get.put(LoginController());
-
-  ///파이어베이스 알림 권한 요청 + fcmToken 관리
-  void initializeNotification() async {
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
-
-    NotificationSettings settings = await messaging.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
-    print('firebaseMessaging - User granted permission: ${settings.authorizationStatus}');
-
-    FirebaseMessaging.instance.getToken().then((token){
-      print("get FCM token : ${token ?? 'token NULL!'}");
-      // FCM 토큰을 서버에 저장 👈👈👈👈👈👈👈👈👈👈👈
-      // if(token != null) m.updateFcmToken(l.getUser().value.uid, token);
-      if(token != null) m.updateFcmToken(m.uid, token);
-      // client.post(Uri.parse(Constants.API + 'booster/v1/fcm-token'), body: jsonEncode({ 'fcmToken': "$token" }));
-    });
-
-    FirebaseMessaging.instance.onTokenRefresh.listen((token) {
-      print("on refresh FCM token : $token");
-      // m.updateFcmToken(l.getUser().value.uid, token);
-      m.updateFcmToken(m.uid, token);
-      // FCM 토큰을 서버에 저장 👈👈👈👈👈👈👈👈👈👈👈
-      // client.post(Uri.parse(Constants.API + 'booster/v1/fcm-token'), body: jsonEncode({ 'fcmToken': "$token" }));
-    });
-
-  }
-
-  Future<void>  _firebaseMessagingForegroundHandler() async {
-    RemoteMessage? initialMessage =
-    await FirebaseMessaging.instance.getInitialMessage();
-
-    if (initialMessage != null) {
-      _handleMessage(initialMessage);
-    }
-
-    ///파이어 베이스 포어 그라운드 푸시 알림 처리
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('Got a message whilst in the foreground!');
-      print('Message: ${message.toMap()}');
-      // 안드로이드 포어에서는 FCM으로 못열기 때문에 메세지를 로컬 노티로 열어줌
-      if (Platform.isAndroid) showFlutterNotification(message);
-    });
-    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
-  }
-
-  void _handleMessage(RemoteMessage message) {
-    debugPrint("in _handleMessage : ${message.toMap()}");
-    if (message.data['status'] != null) {
-      Get.toNamed('${message.data['status']}');
-    }
-  }
 
   @override
   void dispose(){
@@ -102,9 +44,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState(){
     super.initState();
-
-    _firebaseMessagingForegroundHandler();
-    initializeNotification();
+    FcmController.instance.initializeNotification();
   }
 
   @override
@@ -113,8 +53,6 @@ class _HomePageState extends State<HomePage> {
 
     // String uid = l.getUser().value.uid;
     // await m.getCurrentUser(uid);
-
-    // initializeNotification();
   }
 
 

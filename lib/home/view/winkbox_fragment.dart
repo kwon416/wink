@@ -6,7 +6,6 @@ import 'package:wink/utils/widgets.dart';
 
 import '../../utils/constant.dart';
 
-
 class WinkBoxFragment extends StatefulWidget {
   const WinkBoxFragment({super.key});
 
@@ -19,7 +18,7 @@ class _WinkBoxFragmentState extends State<WinkBoxFragment> {
 
   Future<void> onRefresh() async {
     setState(() {
-      itemCount = 30;
+      itemCount = 5;
     });
   }
 
@@ -45,11 +44,11 @@ class _WinkBoxFragmentState extends State<WinkBoxFragment> {
               return Container(
                 margin: EdgeInsets.symmetric(vertical: buttonMargin),
                 width: double.infinity,
-                decoration: boxDecorationRoundedWithShadow(borderRadius.toInt(), backgroundColor: colorScheme.primary),
+                decoration: boxDecorationRoundedWithShadow(borderRadius.toInt(),
+                    backgroundColor: colorScheme.primary),
                 child: ListTile(
                   onTap: () {
-                    Get.defaultDialog(
-                    );
+                    Get.defaultDialog();
                     // SDLessonsDetScreen(
                     //   name: scoreboardAvailable[index].title,
                     //   backgroundImages: scoreboardAvailable[index].backgroundImages,
@@ -64,16 +63,26 @@ class _WinkBoxFragmentState extends State<WinkBoxFragment> {
                       child: FadeInImage(
                         fit: BoxFit.cover,
                         placeholder: AssetImage(loading),
-                        image: Image.asset(splashLogo, height: 35, width: 20).image,
+                        image:
+                            Image.asset(appIcon, height: 35, width: 20).image,
                       ),
                     ),
                   ),
-                  title: Text('익명 $index', style: boldTextStyle(size: textSizeMedium.toInt(),color: colorScheme.onPrimary)),
+                  title: Text('익명 ${index + 1}',
+                      style: boldTextStyle(
+                          size: textSizeMedium.toInt(),
+                          color: colorScheme.onPrimary)),
                   subtitle: Container(
                     margin: EdgeInsets.only(top: buttonMargin),
-                    child: Text('ㅁㄴㅇㄹ $index', style: secondaryTextStyle(size: textSizeSmall.toInt(), color: colorScheme.onPrimary)),
+                    child: Text('누군가 당신을 궁금해해요!',
+                        style: secondaryTextStyle(
+                            size: textSizeSmall.toInt(),
+                            color: colorScheme.onPrimary)),
                   ),
-                  trailing: Text('질문하기',style: boldTextStyle(size: textSizeSMedium.toInt(),color: colorScheme.onPrimary)),
+                  trailing: Text('질문하기',
+                      style: boldTextStyle(
+                          size: textSizeSMedium.toInt(),
+                          color: colorScheme.onPrimary)),
                   // trailing: CircularPercentIndicator(
                   //   radius: 30.0,
                   //   lineWidth: 3.0,

@@ -6,7 +6,6 @@ import 'package:wink/utils/widgets.dart';
 
 import '../../utils/constant.dart';
 
-
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
 
@@ -20,7 +19,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Future<void> onRefresh() async {
     Future.delayed(Duration.zero);
     setState(() {
-      itemCount = 30;
+      itemCount = 3;
     });
   }
 
@@ -36,7 +35,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
             Get.back();
           },
         ),
-        title: Text("알림",),
+        title: Text(
+          "알림",
+        ),
       ),
       backgroundColor: colorScheme.primaryContainer,
       body: Scrollbar(
@@ -58,14 +59,17 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("알림 제목", style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text("WINK가 도착했어요",
+                              style: TextStyle(fontWeight: FontWeight.bold)),
                           Space(buttonMargin),
                           Text(
-                            "Thank you for order service using this app",
+                            "지금 바로 확인해보세요!",
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.normal,
-                              color: Get.isDarkMode ? Colors.white70 : Colors.grey.withOpacity(0.6),
+                              color: Get.isDarkMode
+                                  ? Colors.white70
+                                  : Colors.grey.withOpacity(0.6),
                             ),
                           ),
                         ],

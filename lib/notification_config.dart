@@ -43,12 +43,9 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 void onSelectNotification(NotificationResponse notificationResponse) async {
   print('push notification clicked!');
   final String? payload = notificationResponse.payload;
-  if (notificationResponse.payload != null) {
+  if (payload != null) {
     debugPrint('notificaiton routing payload: $payload');
-    if (payload != null) {
-      await Get.toNamed(payload);
-    }
-
+    await Get.toNamed(payload);
   }
   //밑에 푸시 알림 액션 구현
 }
@@ -117,9 +114,10 @@ Future<void> setupFlutterNotifications() async {
       iOS: initializationSettingsDarwin,
       macOS: initializationSettingsDarwin,
       linux: initializationSettingsLinux);
+
   flutterLocalNotificationsPlugin.initialize(
     initializationSettings,
-    //푸시 알림 클릭 액션 설정
+    //로컬 푸시 알림 클릭 액션 설정
     onDidReceiveNotificationResponse: onSelectNotification,
     onDidReceiveBackgroundNotificationResponse: onSelectNotification,
   );
@@ -141,48 +139,6 @@ Future<void> setupFlutterNotifications() async {
     sound: true,
   );
   isFlutterLocalNotificationsInitialized = true;
-}
-
-///Custom notifications for Android foreground
-void showFlutterNotification(RemoteMessage message) {
-  print("run showFlutterNotification");
-  RemoteNotification? notification = message.notification;
-  Map<String, dynamic>? data = message.data;
-  // AndroidNotification? android = message.notification?.android;
-  if (true) {
-    flutterLocalNotificationsPlugin.show(
-      notification?.hashCode ?? data.hashCode,
-      notification?.title ?? data['title'],
-      notification?.body ?? data['body'],
-      NotificationDetails(
-        android: AndroidNotificationDetails(
-          channel.id,
-          channel.name,
-          channelDescription: channel.description,
-          importance: Importance.max,
-          priority: Priority.high,
-          ticker: 'ticker',
-          // icon: '@mipmap/ic_launcher',
-          // actions: <AndroidNotificationAction>[
-          //   AndroidNotificationAction(
-          //       'id_1', data["key_1"] ?? '',
-          //   ),
-          //   AndroidNotificationAction('id_2', data["key_2"] ?? ''),
-          //   AndroidNotificationAction('id_3', 'Action 3'),
-          // ],
-          // TODO add a proper drawable resource to android, for now using
-          //      one that already exists in example app.
-        ),
-        iOS: DarwinNotificationDetails(
-          badgeNumber: 1,
-          //subtitle: 'the subtitle',
-          //sound: 'slow_spring_board.aiff',
-        ),
-      ),
-      payload: data['status'],
-      // payload: message?.data as String,
-    );
-  }
 }
 
 /// Initialize the [FlutterLocalNotificationsPlugin] package.
